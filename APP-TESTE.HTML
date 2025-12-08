@@ -1,0 +1,2938 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOX1111 - Soluções Imobiliárias Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            color: #f5f5f5;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: #0f0f0f;
+            min-height: 100vh;
+            box-shadow: 0 0 50px rgba(0, 255, 100, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Splash Screen Animação */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000 0%, #0a0f0a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 0.8s ease-out 2.5s forwards;
+        }
+        
+        .splash-logo {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .logo-box {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: pulse 2s infinite, rotate 3s linear infinite;
+            transform-style: preserve-3d;
+        }
+        
+        .logo-box-inner {
+            width: 100px;
+            height: 100px;
+            background: #000;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #00ff88;
+        }
+        
+        .splash-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #00ff88, #00ffaa, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 10px;
+            animation: slideUp 1s ease-out 0.5s both;
+        }
+        
+        .splash-subtitle {
+            color: #aaa;
+            font-size: 1.2rem;
+            text-align: center;
+            animation: slideUp 1s ease-out 0.7s both;
+        }
+        
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: #222;
+            border-radius: 2px;
+            margin-top: 40px;
+            overflow: hidden;
+            animation: slideUp 1s ease-out 0.9s both;
+        }
+        
+        .loading-progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(to right, #00ff88, #00ffaa);
+            border-radius: 2px;
+            animation: loading 2s ease-in-out forwards;
+        }
+        
+        /* Tela de Login */
+        .login-screen {
+            padding: 30px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a0a 0%, #111 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .login-logo-box {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #000;
+        }
+        
+        .login-logo h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .login-subtitle {
+            color: #aaa;
+            font-size: 1rem;
+            max-width: 300px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        .login-form {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .login-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ddd;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 16px;
+            background: rgba(34, 34, 34, 0.8);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #00ff88;
+            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        }
+        
+        .btn {
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            width: 100%;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-secondary {
+            background: rgba(51, 51, 51, 0.8);
+            color: #fff;
+            width: 100%;
+        }
+        
+        .btn-google {
+            background: linear-gradient(135deg, #4285F4, #2a56c6);
+            color: white;
+        }
+        
+        .btn-facebook {
+            background: linear-gradient(135deg, #3b5998, #2d4373);
+            color: white;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .social-login .btn {
+            flex: 1;
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #888;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-footer a {
+            color: #00ff88;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Cabeçalho do App */
+        .app-header {
+            background: linear-gradient(135deg, #000 0%, #111 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .app-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.05), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-box-small {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #000;
+            font-size: 1.2rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .user-profile:hover {
+            background: rgba(0, 255, 136, 0.1);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .user-role {
+            font-size: 0.7rem;
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+            margin-top: 3px;
+        }
+        
+        /* Barra de busca */
+        .search-bar {
+            padding: 15px 20px;
+            background: rgba(26, 26, 26, 0.9);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 14px 18px;
+            background: rgba(34, 34, 34, 0.8);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #00ff88;
+            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        }
+        
+        .search-btn {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            width: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .search-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Filtros */
+        .filters-section {
+            padding: 15px 20px;
+            background: rgba(26, 26, 26, 0.9);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        
+        .filter-tag {
+            background: rgba(34, 34, 34, 0.8);
+            color: #ccc;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+        
+        .filter-tag.active {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
+        }
+        
+        .filter-tag:hover {
+            transform: translateY(-2px);
+            border-color: #00ff88;
+        }
+        
+        /* Conteúdo principal */
+        .app-content {
+            padding: 20px;
+            padding-bottom: 90px;
+            min-height: calc(100vh - 200px);
+        }
+        
+        /* Cartões de propriedade */
+        .property-card {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 25px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.15);
+            border-color: rgba(0, 255, 136, 0.3);
+        }
+        
+        .property-image {
+            height: 220px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .property-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+        
+        .property-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #00ff88;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+            z-index: 2;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+        
+        .property-price {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.95), rgba(0, 204, 106, 0.95));
+            color: #000;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 1.4rem;
+            font-weight: 900;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .property-favorite {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
+            transition: all 0.3s;
+        }
+        
+        .property-favorite:hover {
+            transform: scale(1.1);
+        }
+        
+        .property-favorite.active {
+            color: #ff3366;
+            background: rgba(255, 51, 102, 0.2);
+            border-color: #ff3366;
+        }
+        
+        .property-info {
+            padding: 22px;
+        }
+        
+        .property-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #fff;
+            line-height: 1.3;
+        }
+        
+        .property-address {
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .property-description {
+            color: #ccc;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .property-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .property-tag {
+            background: rgba(0, 255, 136, 0.1);
+            color: #00ff88;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+        
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            padding-top: 18px;
+        }
+        
+        .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+        
+        .feature i {
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+            color: #00ff88;
+        }
+        
+        .property-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            border: none;
+        }
+        
+        .action-btn.primary {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+        }
+        
+        .action-btn.secondary {
+            background: rgba(51, 51, 51, 0.8);
+            color: #fff;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Área do Vendedor */
+        .seller-dashboard {
+            padding: 20px;
+        }
+        
+        .seller-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .seller-stat {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 18px;
+            padding: 22px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .seller-stat:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.1);
+        }
+        
+        .seller-stat.green {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 204, 106, 0.1));
+            border-color: rgba(0, 255, 136, 0.3);
+        }
+        
+        .seller-stat-value {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #00ff88;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        }
+        
+        .seller-stat-label {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .seller-properties {
+            margin-top: 30px;
+        }
+        
+        /* Sistema de Chat */
+        .chat-container {
+            height: calc(100vh - 180px);
+            display: flex;
+            flex-direction: column;
+            background: #0f0f0f;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+        
+        .chat-header {
+            background: rgba(26, 26, 26, 0.9);
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .chat-contact-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            font-size: 1.2rem;
+        }
+        
+        .chat-contact-info h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .chat-contact-info p {
+            color: #00ff88;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 15px;
+            border-radius: 18px;
+            position: relative;
+            animation: messageIn 0.3s ease-out;
+        }
+        
+        .message.sent {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .message.received {
+            background: rgba(51, 51, 51, 0.8);
+            color: #fff;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            margin-top: 5px;
+            opacity: 0.7;
+            text-align: right;
+        }
+        
+        .chat-input-area {
+            padding: 20px;
+            background: rgba(26, 26, 26, 0.9);
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            display: flex;
+            gap: 12px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 15px 20px;
+            background: rgba(34, 34, 34, 0.8);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 25px;
+            color: #fff;
+            font-size: 1rem;
+        }
+        
+        .chat-send-btn {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .chat-send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+        
+        .chats-list {
+            margin-top: 20px;
+        }
+        
+        .chat-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px;
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 15px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .chat-item:hover {
+            transform: translateX(5px);
+            border-color: rgba(0, 255, 136, 0.3);
+            background: rgba(0, 255, 136, 0.05);
+        }
+        
+        .chat-item.unread {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: rgba(0, 255, 136, 0.3);
+        }
+        
+        .chat-item-info {
+            flex: 1;
+        }
+        
+        .chat-item-name {
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chat-item-last-message {
+            color: #aaa;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+        
+        .chat-item-time {
+            color: #00ff88;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .chat-item-unread {
+            background: #00ff88;
+            color: #000;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        /* Sobre a Empresa */
+        .company-info {
+            padding: 25px;
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            margin-bottom: 25px;
+        }
+        
+        .company-logo-large {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #000;
+            margin: 0 auto 20px;
+        }
+        
+        .company-name {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .company-slogan {
+            color: #aaa;
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+        
+        .company-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .company-detail {
+            background: rgba(34, 34, 34, 0.8);
+            padding: 18px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+        
+        .company-detail i {
+            font-size: 1.8rem;
+            color: #00ff88;
+            margin-bottom: 10px;
+        }
+        
+        .company-detail h4 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .company-detail p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .team-members {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .team-member {
+            text-align: center;
+            width: 100px;
+        }
+        
+        .team-member-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            margin: 0 auto 10px;
+            font-size: 1.5rem;
+        }
+        
+        .team-member-name {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .team-member-role {
+            color: #00ff88;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        /* Menu inferior */
+        .bottom-menu {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 480px;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: space-around;
+            padding: 18px 0;
+            z-index: 100;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            backdrop-filter: blur(20px);
+        }
+        
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 12px;
+        }
+        
+        .menu-item.active, .menu-item:hover {
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+        
+        .menu-item i {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+        
+        .menu-item-badge {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            background: #00ff88;
+            color: #000;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .add-property-btn {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 3px solid #000;
+        }
+        
+        .add-property-btn:hover {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal-content {
+            background: rgba(26, 26, 26, 0.95);
+            border-radius: 25px;
+            width: 100%;
+            max-width: 450px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 255, 136, 0.1);
+            animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .modal-header h2 {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+        
+        .close-modal {
+            background: rgba(51, 51, 51, 0.8);
+            color: #aaa;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .close-modal:hover {
+            background: #00ff88;
+            color: #000;
+            transform: rotate(90deg);
+        }
+        
+        /* Animações */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; visibility: hidden; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(0, 255, 136, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+        }
+        
+        @keyframes rotate {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+        
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Utilitários */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .section-title i {
+            color: #00ff88;
+        }
+        
+        .green-text {
+            color: #00ff88;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 480px) {
+            .app-container {
+                box-shadow: none;
+            }
+            
+            .social-login {
+                flex-direction: column;
+            }
+            
+            .seller-stats, .company-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-members {
+                gap: 15px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-logo">
+            <div class="logo-box">
+                <div class="logo-box-inner">1111</div>
+            </div>
+        </div>
+        <h1 class="splash-title">BOX1111</h1>
+        <p class="splash-subtitle">Soluções Imobiliárias Premium</p>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+
+    <div class="app-container" id="app">
+        <!-- Conteúdo será renderizado pelo React -->
+    </div>
+
+    <script type="text/babel">
+        // Componente principal do aplicativo
+        const App = () => {
+            // Estados para splash screen
+            const [showSplash, setShowSplash] = React.useState(true);
+            
+            // Estados para autenticação
+            const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+            const [currentUser, setCurrentUser] = React.useState(null);
+            
+            // Estado para controle de navegação
+            const [activeTab, setActiveTab] = React.useState('home');
+            const [viewingProperty, setViewingProperty] = React.useState(null);
+            const [activeChat, setActiveChat] = React.useState(null);
+            
+            // Estados para modais
+            const [modalOpen, setModalOpen] = React.useState(false);
+            const [modalType, setModalType] = React.useState('addProperty');
+            
+            // Estado para busca
+            const [searchQuery, setSearchQuery] = React.useState('');
+            const [activeFilter, setActiveFilter] = React.useState('all');
+            
+            // Estado para favoritos
+            const [favorites, setFavorites] = React.useState([1, 3]);
+            
+            // Estado para mensagens
+            const [chats, setChats] = React.useState([
+                { 
+                    id: 1, 
+                    userId: 2, 
+                    userName: "Carlos Almeida", 
+                    userAvatar: "CA", 
+                    lastMessage: "Olá, gostaria de agendar uma visita...", 
+                    time: "10:30", 
+                    unread: 2 
+                },
+                { 
+                    id: 2, 
+                    userId: 5, 
+                    userName: "Ana Beatriz", 
+                    userAvatar: "AB", 
+                    lastMessage: "O apartamento ainda está disponível?", 
+                    time: "Ontem", 
+                    unread: 0 
+                },
+                { 
+                    id: 3, 
+                    userId: 1, 
+                    userName: "Admin Master", 
+                    userAvatar: "AM", 
+                    lastMessage: "Relatório mensal enviado", 
+                    time: "22/10", 
+                    unread: 1 
+                }
+            ]);
+            
+            const [messages, setMessages] = React.useState([
+                { id: 1, senderId: 2, text: "Olá, estou interessado no apartamento com vista para o mar", time: "10:15", sent: false },
+                { id: 2, senderId: 3, text: "Claro! Posso agendar uma visita para amanhã?", time: "10:20", sent: true },
+                { id: 3, senderId: 2, text: "Perfeito! Qual horário disponível?", time: "10:25", sent: false },
+                { id: 4, senderId: 3, text: "Temos disponível às 14h ou 16h. Qual prefere?", time: "10:30", sent: true },
+            ]);
+            
+            const [newMessage, setNewMessage] = React.useState('');
+            
+            // Dados de exemplo para propriedades
+            const [properties, setProperties] = React.useState([
+                {
+                    id: 1,
+                    title: "Apartamento Luxuoso com Vista para o Mar",
+                    address: "Av. Beira Mar, 1500 - Copacabana, Rio de Janeiro",
+                    price: "R$ 2.500.000",
+                    status: "Venda",
+                    type: "Apartamento",
+                    sellerId: 2,
+                    description: "Apartamento luxuoso com vista panorâmica para o mar, acabamentos em mármore, cozinha gourmet equipada, 3 suítes sendo uma master com closet, varanda ampla, 2 vagas de garagem.",
+                    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    images: [
+                        "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                        "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                    ],
+                    bedrooms: 3,
+                    bathrooms: 4,
+                    area: "220m²",
+                    tags: ["Vista para o mar", "Luxo", "Varanda", "Piscina", "Academia"],
+                    amenities: ["Piscina", "Academia", "Sauna", "Salão de festas", "Playground", "Portaria 24h", "Garagem coberta"],
+                },
+                {
+                    id: 2,
+                    title: "Casa Moderna em Condomínio Fechado",
+                    address: "Rua das Magnólias, 250 - Alphaville, São Paulo",
+                    price: "R$ 3.800.000",
+                    status: "Venda",
+                    type: "Casa",
+                    sellerId: 5,
+                    description: "Casa moderna em condomínio fechado com segurança 24h, acabamentos de alta qualidade, piscina aquecida, jardim projetado, churrasqueira gourmet, 4 suítes, home theater.",
+                    image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    images: [
+                        "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                        "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                    ],
+                    bedrooms: 4,
+                    bathrooms: 5,
+                    area: "450m²",
+                    tags: ["Condomínio fechado", "Piscina aquecida", "Jardim", "Churrasqueira", "Home theater"],
+                    amenities: ["Piscina aquecida", "Churrasqueira", "Home theater", "Jardim", "Quintal", "Garagem para 3 carros", "Área de serviço"],
+                },
+                {
+                    id: 3,
+                    title: "Loft Industrial no Centro Histórico",
+                    address: "Rua do Rosário, 80 - Centro Histórico, Porto Alegre",
+                    price: "R$ 4.200/mês",
+                    status: "Aluguel",
+                    type: "Loft",
+                    sellerId: 2,
+                    description: "Loft industrial com pé-direito alto, localizado em edifício histórico reformado, próxima a restaurantes, bares e centros culturais. Ambiente único e descolado.",
+                    image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    images: [
+                        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                        "https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                        "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                    ],
+                    bedrooms: 1,
+                    bathrooms: 1,
+                    area: "95m²",
+                    tags: ["Centro histórico", "Industrial", "Pé-direito alto", "Reformado", "Próximo a bares"],
+                    amenities: ["Varanda", "Lareira", "Cozinha americana", "Área de trabalho", "Iluminação industrial", "Vista para a cidade"],
+                }
+            ]);
+            
+            // Dados de exemplo para usuários
+            const [users, setUsers] = React.useState([
+                { id: 1, name: "BOX Admin", email: "admin@box1111.com", role: "admin", avatar: "BA" },
+                { id: 2, name: "Vendedor BOX", email: "vendedor@box1111.com", role: "vendedor", avatar: "VB", phone: "(11) 99999-0000" },
+                { id: 3, name: "Cliente Comprador", email: "cliente@box1111.com", role: "usuario", avatar: "CC", phone: "(11) 98888-0000" }
+            ]);
+            
+            // Estado para nova propriedade
+            const [newProperty, setNewProperty] = React.useState({
+                title: '',
+                address: '',
+                price: '',
+                status: 'Venda',
+                type: 'Apartamento',
+                description: '',
+                bedrooms: '',
+                bathrooms: '',
+                area: '',
+                tags: ''
+            });
+            
+            // Estado para formulário de login/cadastro
+            const [authForm, setAuthForm] = React.useState({
+                name: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+                role: 'usuario'
+            });
+            
+            // Estado para controle de login/cadastro
+            const [isRegistering, setIsRegistering] = React.useState(false);
+            
+            // Remover splash screen após 3 segundos
+            React.useEffect(() => {
+                const timer = setTimeout(() => {
+                    setShowSplash(false);
+                }, 3000);
+                
+                return () => clearTimeout(timer);
+            }, []);
+            
+            // Função para fazer login
+            const handleLogin = (e) => {
+                e.preventDefault();
+                
+                // Simulação de login
+                const user = users.find(u => u.email === authForm.email);
+                
+                if (user) {
+                    setCurrentUser(user);
+                    setIsLoggedIn(true);
+                    
+                    // Resetar formulário
+                    setAuthForm({
+                        name: '',
+                        email: '',
+                        password: '',
+                        confirmPassword: '',
+                        role: 'usuario'
+                    });
+                } else {
+                    alert("Usuário não encontrado. Use admin@box1111.com para admin ou cliente@box1111.com para usuário.");
+                }
+            };
+            
+            // Função para cadastro
+            const handleRegister = (e) => {
+                e.preventDefault();
+                
+                if (authForm.password !== authForm.confirmPassword) {
+                    alert("As senhas não coincidem!");
+                    return;
+                }
+                
+                // Criar novo usuário
+                const newUser = {
+                    id: users.length + 1,
+                    name: authForm.name,
+                    email: authForm.email,
+                    role: authForm.role,
+                    avatar: authForm.name.substring(0, 2).toUpperCase()
+                };
+                
+                // Adicionar à lista de usuários
+                setUsers([...users, newUser]);
+                
+                // Logar com o novo usuário
+                setCurrentUser(newUser);
+                setIsLoggedIn(true);
+                
+                // Resetar formulário
+                setAuthForm({
+                    name: '',
+                    email: '',
+                    password: '',
+                    confirmPassword: '',
+                    role: 'usuario'
+                });
+                
+                alert("Cadastro realizado com sucesso!");
+            };
+            
+            // Função para logout
+            const handleLogout = () => {
+                setIsLoggedIn(false);
+                setCurrentUser(null);
+                setViewingProperty(null);
+                setActiveChat(null);
+                setActiveTab('home');
+            };
+            
+            // Função para alternar entre login e cadastro
+            const toggleAuthMode = () => {
+                setIsRegistering(!isRegistering);
+                setAuthForm({
+                    name: '',
+                    email: '',
+                    password: '',
+                    confirmPassword: '',
+                    role: 'usuario'
+                });
+            };
+            
+            // Função para login social (simulação)
+            const handleSocialLogin = (provider) => {
+                // Simulação de login social
+                let user;
+                
+                if (provider === 'google') {
+                    user = users.find(u => u.email === "maria@cliente.com");
+                } else if (provider === 'facebook') {
+                    user = users.find(u => u.email === "joao@cliente.com");
+                }
+                
+                if (user) {
+                    setCurrentUser(user);
+                    setIsLoggedIn(true);
+                    alert(`Login com ${provider} realizado com sucesso!`);
+                }
+            };
+            
+            // Função para visualizar detalhes da propriedade
+            const viewPropertyDetails = (property) => {
+                setViewingProperty(property);
+            };
+            
+            // Função para voltar à lista
+            const backToList = () => {
+                setViewingProperty(null);
+                setActiveChat(null);
+            };
+            
+            // Função para alternar favorito
+            const toggleFavorite = (propertyId) => {
+                if (favorites.includes(propertyId)) {
+                    setFavorites(favorites.filter(id => id !== propertyId));
+                } else {
+                    setFavorites([...favorites, propertyId]);
+                }
+            };
+            
+            // Função para filtrar propriedades
+            const filteredProperties = properties.filter(property => {
+                // Filtro por busca
+                if (searchQuery && !property.title.toLowerCase().includes(searchQuery.toLowerCase()) && 
+                    !property.address.toLowerCase().includes(searchQuery.toLowerCase()) &&
+                    !property.description.toLowerCase().includes(searchQuery.toLowerCase())) {
+                    return false;
+                }
+                
+                // Filtro por tipo
+                if (activeFilter !== 'all' && property.type !== activeFilter && property.status !== activeFilter) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            // Função para abrir modal
+            const openModal = (type) => {
+                setModalType(type);
+                setModalOpen(true);
+            };
+            
+            // Função para fechar modal
+            const closeModal = () => {
+                setModalOpen(false);
+                setNewProperty({
+                    title: '',
+                    address: '',
+                    price: '',
+                    status: 'Venda',
+                    type: 'Apartamento',
+                    description: '',
+                    bedrooms: '',
+                    bathrooms: '',
+                    area: '',
+                    tags: ''
+                });
+            };
+            
+            // Função para adicionar propriedade
+            const handleAddProperty = (e) => {
+                e.preventDefault();
+                
+                // Verificar se é vendedor ou admin
+                if (currentUser.role !== 'vendedor' && currentUser.role !== 'admin') {
+                    alert("Apenas vendedores e administradores podem adicionar propriedades!");
+                    return;
+                }
+                
+                // Criar nova propriedade
+                const property = {
+                    id: properties.length + 1,
+                    title: newProperty.title,
+                    address: newProperty.address,
+                    price: newProperty.price,
+                    status: newProperty.status,
+                    type: newProperty.type,
+                    sellerId: currentUser.id,
+                    description: newProperty.description,
+                    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    images: [
+                        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                        "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                    ],
+                    bedrooms: parseInt(newProperty.bedrooms),
+                    bathrooms: parseInt(newProperty.bathrooms),
+                    area: newProperty.area,
+                    tags: newProperty.tags.split(',').map(tag => tag.trim()),
+                    amenities: ["Piscina", "Academia", "Garagem", "Varanda", "Churrasqueira"].slice(0, Math.floor(Math.random() * 5) + 1),
+                };
+                
+                // Adicionar à lista
+                setProperties([property, ...properties]);
+                closeModal();
+                alert("Propriedade adicionada com sucesso!");
+            };
+            
+            // Função para iniciar chat
+            const startChat = (userId) => {
+                const user = users.find(u => u.id === userId);
+                if (user) {
+                    setActiveChat(user);
+                    setActiveTab('chat');
+                    
+                    // Marcar como lido
+                    setChats(chats.map(chat => 
+                        chat.userId === userId ? {...chat, unread: 0} : chat
+                    ));
+                }
+            };
+            
+            // Função para enviar mensagem
+            const sendMessage = (e) => {
+                e.preventDefault();
+                
+                if (!newMessage.trim()) return;
+                
+                const newMsg = {
+                    id: messages.length + 1,
+                    senderId: currentUser.id,
+                    text: newMessage,
+                    time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                    sent: true
+                };
+                
+                setMessages([...messages, newMsg]);
+                setNewMessage('');
+                
+                // Simular resposta após 1 segundo
+                setTimeout(() => {
+                    const responses = [
+                        "Obrigado pela sua mensagem!",
+                        "Posso te ajudar com mais alguma coisa?",
+                        "Vou verificar essa informação e te retorno.",
+                        "Perfeito, anotei seu interesse."
+                    ];
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    
+                    const responseMsg = {
+                        id: messages.length + 2,
+                        senderId: activeChat.id,
+                        text: randomResponse,
+                        time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                        sent: false
+                    };
+                    
+                    setMessages(prev => [...prev, responseMsg]);
+                }, 1000);
+            };
+            
+            // Função para renderizar conteúdo baseado no tipo de usuário e aba
+            const renderContent = () => {
+                // Se estiver visualizando detalhes da propriedade
+                if (viewingProperty) {
+                    return <PropertyDetailView 
+                        property={viewingProperty} 
+                        onBack={backToList}
+                        isFavorite={favorites.includes(viewingProperty.id)}
+                        onToggleFavorite={() => toggleFavorite(viewingProperty.id)}
+                        currentUser={currentUser}
+                        onStartChat={startChat}
+                        users={users}
+                    />;
+                }
+                
+                // Se estiver em um chat ativo
+                if (activeChat) {
+                    return <ChatView 
+                        contact={activeChat}
+                        messages={messages}
+                        newMessage={newMessage}
+                        onNewMessageChange={setNewMessage}
+                        onSendMessage={sendMessage}
+                        onBack={backToList}
+                        currentUserId={currentUser.id}
+                    />;
+                }
+                
+                switch(activeTab) {
+                    case 'home':
+                        return <HomeView 
+                            properties={filteredProperties}
+                            onViewDetails={viewPropertyDetails}
+                            favorites={favorites}
+                            onToggleFavorite={toggleFavorite}
+                            searchQuery={searchQuery}
+                            onSearchChange={(e) => setSearchQuery(e.target.value)}
+                            activeFilter={activeFilter}
+                            onFilterChange={setActiveFilter}
+                            currentUser={currentUser}
+                        />;
+                    case 'seller':
+                        // Verificar se é vendedor ou admin
+                        if (currentUser.role !== 'vendedor' && currentUser.role !== 'admin') {
+                            return (
+                                <div className="app-content fade-in">
+                                    <div className="section-title">Acesso Restrito</div>
+                                    <p style={{color: '#aaa', textAlign: 'center', marginTop: '20px', padding: '0 20px'}}>
+                                        Esta área é exclusiva para vendedores e administradores.
+                                    </p>
+                                </div>
+                            );
+                        }
+                        
+                        return <SellerView 
+                            properties={properties.filter(p => p.sellerId === currentUser.id)}
+                            onViewDetails={viewPropertyDetails}
+                            currentUser={currentUser}
+                            chats={chats}
+                            onStartChat={startChat}
+                        />;
+                    case 'favorites':
+                        const favoriteProperties = properties.filter(p => favorites.includes(p.id));
+                        return <FavoritesView 
+                            properties={favoriteProperties}
+                            onViewDetails={viewPropertyDetails}
+                            favorites={favorites}
+                            onToggleFavorite={toggleFavorite}
+                        />;
+                    case 'chat':
+                        return <ChatsListView 
+                            chats={chats}
+                            onStartChat={startChat}
+                            users={users}
+                        />;
+                    case 'company':
+                        return <CompanyInfoView />;
+                    case 'profile':
+                        return <ProfileView user={currentUser} onLogout={handleLogout} />;
+                    default:
+                        return <HomeView 
+                            properties={filteredProperties}
+                            onViewDetails={viewPropertyDetails}
+                            favorites={favorites}
+                            onToggleFavorite={toggleFavorite}
+                            searchQuery={searchQuery}
+                            onSearchChange={(e) => setSearchQuery(e.target.value)}
+                            activeFilter={activeFilter}
+                            onFilterChange={setActiveFilter}
+                            currentUser={currentUser}
+                        />;
+                }
+            };
+            
+            // Renderizar splash screen se necessário
+            if (showSplash) {
+                return null;
+            }
+            
+            // Renderizar tela de login se não estiver logado
+            if (!isLoggedIn) {
+                return <LoginScreen 
+                    authForm={authForm}
+                    onAuthFormChange={(e) => setAuthForm({...authForm, [e.target.name]: e.target.value})}
+                    isRegistering={isRegistering}
+                    onToggleAuthMode={toggleAuthMode}
+                    onLogin={handleLogin}
+                    onRegister={handleRegister}
+                    onSocialLogin={handleSocialLogin}
+                />;
+            }
+            
+            return (
+                <div className="app">
+                    {/* Cabeçalho do aplicativo */}
+                    <header className="app-header">
+                        <div className="logo">
+                            <div className="logo-box-small">1111</div>
+                            <h1>Imobi<span className="green-text">Box1111</span></h1>
+                        </div>
+                        <div className="user-profile" onClick={() => setActiveTab('profile')}>
+                            <div className="user-avatar">{currentUser.avatar}</div>
+                            <div className="user-info">
+                                <div className="user-name">{currentUser.name.split(' ')[0]}</div>
+                                <div className="user-role">
+                                    {currentUser.role === 'admin' ? 'Administrador' : 
+                                     currentUser.role === 'vendedor' ? 'Vendedor' : 'Usuário'}
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    {/* Barra de busca (apenas na home) */}
+                    {activeTab === 'home' && !viewingProperty && !activeChat && (
+                        <div className="search-bar">
+                            <div className="search-container">
+                                <input 
+                                    type="text" 
+                                    className="search-input" 
+                                    placeholder="Buscar por local, tipo ou característica..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                                <button className="search-btn">
+                                    <i className="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Filtros (apenas na home) */}
+                    {activeTab === 'home' && !viewingProperty && !activeChat && (
+                        <div className="filters-section">
+                            <div className="filter-tags">
+                                <div 
+                                    className={`filter-tag ${activeFilter === 'all' ? 'active' : ''}`}
+                                    onClick={() => setActiveFilter('all')}
+                                >
+                                    Todos
+                                </div>
+                                <div 
+                                    className={`filter-tag ${activeFilter === 'Apartamento' ? 'active' : ''}`}
+                                    onClick={() => setActiveFilter('Apartamento')}
+                                >
+                                    Apartamentos
+                                </div>
+                                <div 
+                                    className={`filter-tag ${activeFilter === 'Casa' ? 'active' : ''}`}
+                                    onClick={() => setActiveFilter('Casa')}
+                                >
+                                    Casas
+                                </div>
+                                <div 
+                                    className={`filter-tag ${activeFilter === 'Venda' ? 'active' : ''}`}
+                                    onClick={() => setActiveFilter('Venda')}
+                                >
+                                    Para Vender
+                                </div>
+                                <div 
+                                    className={`filter-tag ${activeFilter === 'Aluguel' ? 'active' : ''}`}
+                                    onClick={() => setActiveFilter('Aluguel')}
+                                >
+                                    Para Alugar
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Conteúdo principal */}
+                    <div className="app-content">
+                        {renderContent()}
+                    </div>
+                    
+                    {/* Menu inferior */}
+                    <div className="bottom-menu">
+                        <div 
+                            className={`menu-item ${activeTab === 'home' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('home')}
+                        >
+                            <i className="fas fa-home"></i>
+                            <span>Início</span>
+                        </div>
+                        
+                        <div 
+                            className={`menu-item ${activeTab === 'seller' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('seller')}
+                        >
+                            <i className="fas fa-chart-line"></i>
+                            <span>Vendas</span>
+                        </div>
+                        
+                        {/* Botão de ação central - apenas para vendedores e admin */}
+                        {(currentUser.role === 'vendedor' || currentUser.role === 'admin') && (
+                            <div className="add-property-btn" onClick={() => openModal('addProperty')}>
+                                <i className="fas fa-plus"></i>
+                            </div>
+                        )}
+                        
+                        <div 
+                            className={`menu-item ${activeTab === 'chat' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('chat')}
+                        >
+                            <i className="fas fa-comments"></i>
+                            <span>Chat</span>
+                            {chats.filter(c => c.unread > 0).length > 0 && (
+                                <div className="menu-item-badge">{chats.filter(c => c.unread > 0).length}</div>
+                            )}
+                        </div>
+                        
+                        <div 
+                            className={`menu-item ${activeTab === 'company' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('company')}
+                        >
+                            <i className="fas fa-info-circle"></i>
+                            <span>Sobre</span>
+                        </div>
+                    </div>
+                    
+                    {/* Modal para adicionar propriedade */}
+                    {modalOpen && modalType === 'addProperty' && (
+                        <AddPropertyModal 
+                            newProperty={newProperty}
+                            onInputChange={(e) => setNewProperty({...newProperty, [e.target.name]: e.target.value})}
+                            onSubmit={handleAddProperty}
+                            onClose={closeModal}
+                        />
+                    )}
+                </div>
+            );
+        };
+        
+        // Componente de tela de login
+        const LoginScreen = ({ authForm, onAuthFormChange, isRegistering, onToggleAuthMode, onLogin, onRegister, onSocialLogin }) => {
+            return (
+                <div className="login-screen fade-in">
+                    <div className="login-background"></div>
+                    
+                    <div className="login-header">
+                            <div className="login-logo">
+                            <div className="login-logo-box">1111</div>
+                            <h1>BOX1111</h1>
+                        </div>
+                        <p className="login-subtitle">
+                            {isRegistering 
+                                ? "Junte-se à revolução imobiliária digital" 
+                                : "Conecte-se ao futuro dos negócios imobiliários"}
+                        </p>
+                    </div>
+                    
+                    {/* Login com redes sociais */}
+                    <div className="social-login">
+                        <button className="btn btn-google" onClick={() => onSocialLogin('google')}>
+                            <i className="fab fa-google"></i>
+                            Google
+                        </button>
+                        <button className="btn btn-facebook" onClick={() => onSocialLogin('facebook')}>
+                            <i className="fab fa-facebook-f"></i>
+                            Facebook
+                        </button>
+                    </div>
+                    
+                    <div style={{textAlign: 'center', marginBottom: '20px', color: '#666'}}>
+                        <span style={{padding: '0 10px', background: '#111'}}>ou</span>
+                    </div>
+                    
+                    <form onSubmit={isRegistering ? onRegister : onLogin} className="login-form">
+                        {isRegistering && (
+                            <div className="form-group">
+                                <label htmlFor="name">Nome Completo</label>
+                                <input 
+                                    type="text" 
+                                    id="name" 
+                                    name="name"
+                                    className="form-control" 
+                                    placeholder="Seu nome completo"
+                                    value={authForm.name}
+                                    onChange={onAuthFormChange}
+                                    required={isRegistering}
+                                />
+                            </div>
+                        )}
+                        
+                        <div className="form-group">
+                            <label htmlFor="email">E-mail</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email"
+                                className="form-control" 
+                                placeholder="seu@email.com"
+                                value={authForm.email}
+                                onChange={onAuthFormChange}
+                                required
+                            />
+                        </div>
+                        
+                        <div className="form-group">
+                            <label htmlFor="password">Senha</label>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password"
+                                className="form-control" 
+                                placeholder="Sua senha"
+                                value={authForm.password}
+                                onChange={onAuthFormChange}
+                                required
+                            />
+                        </div>
+                        
+                        {isRegistering && (
+                            <>
+                                <div className="form-group">
+                                    <label htmlFor="confirmPassword">Confirmar Senha</label>
+                                    <input 
+                                        type="password" 
+                                        id="confirmPassword" 
+                                        name="confirmPassword"
+                                        className="form-control" 
+                                        placeholder="Confirme sua senha"
+                                        value={authForm.confirmPassword}
+                                        onChange={onAuthFormChange}
+                                        required={isRegistering}
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label htmlFor="role">Tipo de Conta</label>
+                                    <select 
+                                        id="role" 
+                                        name="role"
+                                        className="form-control"
+                                        value={authForm.role}
+                                        onChange={onAuthFormChange}
+                                    >
+                                        <option value="usuario">Usuário (Buscar imóveis)</option>
+                                        <option value="vendedor">Vendedor (Anunciar imóveis)</option>
+                                        <option value="admin">Administrador</option>
+                                    </select>
+                                </div>
+                            </>
+                        )}
+                        
+                        <button type="submit" className="btn btn-primary">
+                            <i className={isRegistering ? "fas fa-user-plus" : "fas fa-sign-in-alt"}></i>
+                            {isRegistering ? "Criar Conta Premium" : "Acessar Plataforma"}
+                        </button>
+                    </form>
+                    
+                    <div className="login-footer">
+                        {isRegistering ? "Já tem uma conta premium?" : "Ainda não faz parte da revolução?"}
+                        <a href="#" onClick={onToggleAuthMode}>
+                            {isRegistering ? " Acesse agora" : " Cadastre-se gratuitamente"}
+                        </a>
+                    </div>
+                    
+                        <div className="login-footer" style={{marginTop: '20px'}}>
+                        <p style={{fontSize: '0.8rem', color: '#666'}}>
+                            <strong>Dicas para teste:</strong><br/>
+                            Use admin@box1111.com para acesso de administrador<br/>
+                            Use cliente@box1111.com para acesso de usuário comprador
+                        </p>
+                    </div>
+                </div>
+            );
+        };
+        
+        // Componente de visualização da home
+        const HomeView = ({ properties, onViewDetails, favorites, onToggleFavorite, searchQuery, onSearchChange, activeFilter, onFilterChange, currentUser }) => {
+            return (
+                <div>
+                    <div className="section-title" style={{marginBottom: '20px'}}>
+                        <span>Imóveis Premium</span>
+                        <span style={{color: '#00ff88', fontSize: '0.9rem', fontWeight: '700'}}>{properties.length} disponíveis</span>
+                    </div>
+                    
+                    {properties.length === 0 ? (
+                        <div style={{textAlign: 'center', padding: '60px 20px', color: '#aaa'}}>
+                            <i className="fas fa-search" style={{fontSize: '3.5rem', marginBottom: '25px', color: '#333'}}></i>
+                            <h3 style={{marginBottom: '15px', color: '#fff', fontSize: '1.4rem'}}>Nenhum imóvel encontrado</h3>
+                            <p style={{maxWidth: '300px', margin: '0 auto', lineHeight: '1.6'}}>
+                                Tente ajustar sua busca ou filtro para encontrar mais resultados.
+                            </p>
+                            <button 
+                                className="action-btn primary" 
+                                style={{marginTop: '25px', maxWidth: '200px'}}
+                                onClick={() => {
+                                    onFilterChange('all');
+                                    onSearchChange({target: {value: ''}});
+                                }}
+                            >
+                                <i className="fas fa-redo"></i> Limpar Filtros
+                            </button>
+                        </div>
+                    ) : (
+                        properties.map((property, index) => (
+                            <div 
+                                className="property-card" 
+                                key={property.id}
+                                style={{animationDelay: `${index * 0.1}s`}}
+                            >
+                                <div className="property-image" style={{backgroundImage: `url(${property.image})`}}>
+                                    <div className="property-badge">{property.type}</div>
+                                    <div className="property-price">{property.price}</div>
+                                    <div 
+                                        className={`property-favorite ${favorites.includes(property.id) ? 'active' : ''}`}
+                                        onClick={() => onToggleFavorite(property.id)}
+                                    >
+                                        <i className="fas fa-heart"></i>
+                                    </div>
+                                </div>
+                                <div className="property-info">
+                                    <h3 className="property-title">{property.title}</h3>
+                                    <p className="property-address">
+                                        <i className="fas fa-map-marker-alt green-text"></i>
+                                        {property.address}
+                                    </p>
+                                    <p className="property-description">{property.description.substring(0, 120)}...</p>
+                                    
+                                    <div className="property-tags">
+                                        {property.tags.slice(0, 3).map((tag, index) => (
+                                            <span key={index} className="property-tag">{tag}</span>
+                                        ))}
+                                    </div>
+                                    
+                                    <div className="property-features">
+                                        <div className="feature">
+                                            <i className="fas fa-bed"></i>
+                                            <span>{property.bedrooms} quartos</span>
+                                        </div>
+                                        <div className="feature">
+                                            <i className="fas fa-bath"></i>
+                                            <span>{property.bathrooms} banheiros</span>
+                                        </div>
+                                        <div className="feature">
+                                            <i className="fas fa-ruler-combined"></i>
+                                            <span>{property.area}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="property-actions">
+                                        <div className="action-btn secondary" onClick={() => onToggleFavorite(property.id)}>
+                                            <i className="fas fa-heart"></i>
+                                            {favorites.includes(property.id) ? 'Remover' : 'Favoritar'}
+                                        </div>
+                                        <div className="action-btn primary" onClick={() => onViewDetails(property)}>
+                                            <i className="fas fa-eye"></i> Ver Detalhes
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
+            );
+        };
+        
+        // Componente de visualização de detalhes da propriedade
+        const PropertyDetailView = ({ property, onBack, isFavorite, onToggleFavorite, currentUser, onStartChat, users }) => {
+            const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+            const seller = users.find(u => u.id === property.sellerId);
+            
+            const nextImage = () => {
+                setCurrentImageIndex((prevIndex) => 
+                    prevIndex === property.images.length - 1 ? 0 : prevIndex + 1
+                );
+            };
+            
+            const prevImage = () => {
+                setCurrentImageIndex((prevIndex) => 
+                    prevIndex === 0 ? property.images.length - 1 : prevIndex - 1
+                );
+            };
+            
+            return (
+                <div className="property-detail-container fade-in">
+                    <div className="detail-header">
+                        <div 
+                            className="detail-gallery" 
+                            style={{backgroundImage: `url(${property.images[currentImageIndex]})`}}
+                        >
+                            <div className="gallery-nav">
+                                <div className="gallery-btn" onClick={prevImage}>
+                                    <i className="fas fa-chevron-left"></i>
+                                </div>
+                                <div className="gallery-btn" onClick={nextImage}>
+                                    <i className="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div className="property-badge" style={{top: '15px'}}>{property.type} - {property.status}</div>
+                            <div 
+                                className="property-favorite" 
+                                style={{top: '60px'}}
+                                onClick={onToggleFavorite}
+                            >
+                                <i className={`fas fa-heart ${isFavorite ? 'active' : ''}`}></i>
+                            </div>
+                        </div>
+                        
+                        <button 
+                            onClick={onBack}
+                            style={{
+                                position: 'absolute',
+                                top: '20px',
+                                left: '20px',
+                                background: 'rgba(0,0,0,0.7)',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: '50%',
+                                width: '45px',
+                                height: '45px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '1.3rem',
+                                cursor: 'pointer',
+                                backdropFilter: 'blur(5px)',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                transition: 'all 0.3s'
+                            }}
+                        >
+                            <i className="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    
+                    <div className="detail-info">
+                        <h1 className="detail-title">{property.title}</h1>
+                        <div className="detail-price">{property.price}</div>
+                        
+                        <div className="property-address" style={{marginBottom: '20px'}}>
+                            <i className="fas fa-map-marker-alt green-text"></i>
+                            {property.address}
+                        </div>
+                        
+                        <div className="detail-section">
+                            <h3 className="section-title">
+                                <i className="fas fa-info-circle"></i>
+                                Descrição
+                            </h3>
+                            <p className="detail-description">{property.description}</p>
+                        </div>
+                        
+                        <div className="detail-section">
+                            <h3 className="section-title">
+                                <i className="fas fa-home"></i>
+                                Características
+                            </h3>
+                            <div className="property-features" style={{border: 'none', padding: '0'}}>
+                                <div className="feature">
+                                    <i className="fas fa-bed"></i>
+                                    <span>{property.bedrooms} quartos</span>
+                                </div>
+                                <div className="feature">
+                                    <i className="fas fa-bath"></i>
+                                    <span>{property.bathrooms} banheiros</span>
+                                </div>
+                                <div className="feature">
+                                    <i className="fas fa-ruler-combined"></i>
+                                    <span>{property.area}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="detail-section">
+                            <h3 className="section-title">
+                                <i className="fas fa-tags"></i>
+                                Tags
+                            </h3>
+                            <div className="property-tags">
+                                {property.tags.map((tag, index) => (
+                                    <span key={index} className="property-tag">{tag}</span>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        <div className="detail-section">
+                            <h3 className="section-title">
+                                <i className="fas fa-thumbs-up"></i>
+                                Comodidades
+                            </h3>
+                            <div className="amenities-grid">
+                                {property.amenities.map((amenity, index) => (
+                                    <div key={index} className="amenity-item">
+                                        <i className="fas fa-check green-text"></i>
+                                        <span>{amenity}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        <div className="contact-agent">
+                            <h3 className="section-title" style={{marginBottom: '15px'}}>
+                                <i className="fas fa-user-tie"></i>
+                                Entre em Contato
+                            </h3>
+                            
+                            {seller && (
+                                <div className="agent-info">
+                                    <div className="agent-avatar">
+                                        {seller.avatar}
+                                    </div>
+                                    <div>
+                                        <h4 style={{color: '#fff', marginBottom: '5px'}}>{seller.name}</h4>
+                                        <p style={{color: '#00ff88', fontSize: '0.9rem', fontWeight: '600'}}>
+                                            {seller.role === 'vendedor' ? 'Corretor Imobiliário' : 'Administrador'}
+                                        </p>
+                                        <p style={{color: '#aaa', fontSize: '0.85rem', marginTop: '5px'}}>{seller.phone}</p>
+                                    </div>
+                                </div>
+                            )}
+                            
+                            <div style={{display: 'flex', gap: '12px', flexWrap: 'wrap'}}>
+                                <button className="action-btn secondary" style={{flex: '1'}}>
+                                    <i className="fas fa-phone"></i> Ligar
+                                </button>
+                                <button className="action-btn primary" style={{flex: '1'}} onClick={() => seller && onStartChat(seller.id)}>
+                                    <i className="fas fa-comment"></i> Chat
+                                </button>
+                            </div>
+                            
+                            {currentUser.role === 'usuario' && (
+                                <button className="action-btn primary" style={{width: '100%', marginTop: '15px'}}>
+                                    <i className="fas fa-calendar-alt"></i> Agendar Visita
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+        
+        // Componente de visualização do vendedor
+        const SellerView = ({ properties, onViewDetails, currentUser, chats, onStartChat }) => {
+            const sellerProperties = properties.filter(p => p.sellerId === currentUser.id);
+            const totalValue = sellerProperties.reduce((sum, prop) => {
+                const price = parseFloat(prop.price.replace(/[^\d,]/g, '').replace(',', '.'));
+                return sum + (isNaN(price) ? 0 : price);
+            }, 0);
+            
+            return (
+                <div className="seller-dashboard fade-in">
+                    <div className="section-title" style={{marginBottom: '25px'}}>
+                        <span>Dashboard do Vendedor</span>
+                        <span className="property-tag" style={{background: 'rgba(0,255,136,0.2)', color: '#00ff88'}}>Premium</span>
+                    </div>
+                    
+                    <div className="seller-stats">
+                        <div className="seller-stat">
+                            <div className="seller-stat-value">{sellerProperties.length}</div>
+                            <div className="seller-stat-label">Imóveis Ativos</div>
+                        </div>
+                        <div className="seller-stat green">
+                            <div className="seller-stat-value">R$ {(totalValue / 1000000).toFixed(1)}M</div>
+                            <div className="seller-stat-label">Valor Total</div>
+                        </div>
+                        <div className="seller-stat">
+                            <div className="seller-stat-value">{chats.length}</div>
+                            <div className="seller-stat-label">Conversas</div>
+                        </div>
+                        <div className="seller-stat green">
+                            <div className="seller-stat-value">8</div>
+                            <div className="seller-stat-label">Visitas Agendadas</div>
+                        </div>
+                    </div>
+                    
+                    <div className="seller-properties">
+                        <h3 className="section-title">
+                            <i className="fas fa-home"></i>
+                            Meus Imóveis
+                        </h3>
+                        
+                        {sellerProperties.length === 0 ? (
+                            <div style={{textAlign: 'center', padding: '40px 20px', color: '#aaa'}}>
+                                <i className="fas fa-home" style={{fontSize: '3rem', marginBottom: '20px', color: '#333'}}></i>
+                                <h3 style={{marginBottom: '10px', color: '#fff'}}>Nenhum imóvel cadastrado</h3>
+                                <p>Adicione seu primeiro imóvel para começar a vender!</p>
+                            </div>
+                        ) : (
+                            sellerProperties.map(property => (
+                                <div className="property-card" key={property.id} style={{marginBottom: '15px'}}>
+                                    <div className="property-image" style={{backgroundImage: `url(${property.image})`, height: '150px'}}>
+                                        <div className="property-badge">{property.type}</div>
+                                        <div className="property-price">{property.price}</div>
+                                    </div>
+                                    <div className="property-info" style={{padding: '15px'}}>
+                                        <h3 className="property-title" style={{fontSize: '1.2rem'}}>{property.title}</h3>
+                                        <p className="property-address" style={{fontSize: '0.85rem'}}>
+                                            <i className="fas fa-map-marker-alt green-text"></i>
+                                            {property.address.substring(0, 40)}...
+                                        </p>
+                                        
+                                        <div className="property-actions" style={{marginTop: '12px'}}>
+                                            <div className="action-btn secondary" onClick={() => onViewDetails(property)}>
+                                                <i className="fas fa-eye"></i> Ver
+                                            </div>
+                                            <div className="action-btn primary">
+                                                <i className="fas fa-edit"></i> Editar
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                    
+                    <div style={{marginTop: '30px'}}>
+                        <h3 className="section-title">
+                            <i className="fas fa-comments"></i>
+                            Conversas Recentes
+                        </h3>
+                        
+                        <div className="chats-list">
+                            {chats.slice(0, 3).map(chat => (
+                                <div 
+                                    key={chat.id} 
+                                    className={`chat-item ${chat.unread > 0 ? 'unread' : ''}`}
+                                    onClick={() => onStartChat(chat.userId)}
+                                >
+                                    <div className="chat-contact-avatar" style={{width: '45px', height: '45px', fontSize: '1rem'}}>
+                                        {chat.userAvatar}
+                                    </div>
+                                    <div className="chat-item-info">
+                                        <div className="chat-item-name">{chat.userName}</div>
+                                        <div className="chat-item-last-message">{chat.lastMessage}</div>
+                                    </div>
+                                    <div className="chat-item-time">{chat.time}</div>
+                                    {chat.unread > 0 && (
+                                        <div className="chat-item-unread">{chat.unread}</div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+        
+        // Componente de chat
+        const ChatView = ({ contact, messages, newMessage, onNewMessageChange, onSendMessage, onBack, currentUserId }) => {
+            const messagesEndRef = React.useRef(null);
+            
+            const scrollToBottom = () => {
+                messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+            };
+            
+            React.useEffect(() => {
+                scrollToBottom();
+            }, [messages]);
+            
+            return (
+                <div className="chat-container fade-in">
+                    <div className="chat-header">
+                        <button 
+                            onClick={onBack}
+                            style={{
+                                background: 'none',
+                                border: 'none',
+                                color: '#fff',
+                                fontSize: '1.3rem',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            <i className="fas fa-arrow-left"></i>
+                        </button>
+                        <div className="chat-contact-avatar">{contact.avatar}</div>
+                        <div className="chat-contact-info">
+                            <h3>{contact.name}</h3>
+                            <p>{contact.role === 'vendedor' ? 'Corretor' : contact.role === 'admin' ? 'Administrador' : 'Cliente'}</p>
+                        </div>
+                    </div>
+                    
+                    <div className="chat-messages">
+                        {messages.map(msg => (
+                            <div 
+                                key={msg.id} 
+                                className={`message ${msg.senderId === currentUserId ? 'sent' : 'received'}`}
+                            >
+                                {msg.text}
+                                <div className="message-time">{msg.time}</div>
+                            </div>
+                        ))}
+                        <div ref={messagesEndRef} />
+                    </div>
+                    
+                    <form className="chat-input-area" onSubmit={onSendMessage}>
+                        <input 
+                            type="text" 
+                            className="chat-input" 
+                            placeholder="Digite sua mensagem..."
+                            value={newMessage}
+                            onChange={(e) => onNewMessageChange(e.target.value)}
+                        />
+                        <button type="submit" className="chat-send-btn">
+                            <i className="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            );
+        };
+        
+        // Componente de lista de chats
+        const ChatsListView = ({ chats, onStartChat, users }) => {
+            return (
+                <div className="fade-in">
+                    <div className="section-title" style={{marginBottom: '25px'}}>
+                        <span>Conversas</span>
+                        <span style={{color: '#00ff88', fontSize: '0.9rem', fontWeight: '700'}}>
+                            {chats.filter(c => c.unread > 0).length} não lidas
+                        </span>
+                    </div>
+                    
+                    <div className="chats-list">
+                        {chats.map(chat => {
+                            const user = users.find(u => u.id === chat.userId);
+                            return (
+                                <div 
+                                    key={chat.id} 
+                                    className={`chat-item ${chat.unread > 0 ? 'unread' : ''}`}
+                                    onClick={() => onStartChat(chat.userId)}
+                                >
+                                    <div className="chat-contact-avatar">{user?.avatar || 'U'}</div>
+                                    <div className="chat-item-info">
+                                        <div className="chat-item-name">{user?.name || chat.userName}</div>
+                                        <div className="chat-item-last-message">{chat.lastMessage}</div>
+                                    </div>
+                                    <div className="chat-item-time">{chat.time}</div>
+                                    {chat.unread > 0 && (
+                                        <div className="chat-item-unread">{chat.unread}</div>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                    
+                    {chats.length === 0 && (
+                        <div style={{textAlign: 'center', padding: '60px 20px', color: '#aaa'}}>
+                            <i className="fas fa-comments" style={{fontSize: '3.5rem', marginBottom: '25px', color: '#333'}}></i>
+                            <h3 style={{marginBottom: '15px', color: '#fff', fontSize: '1.4rem'}}>Nenhuma conversa</h3>
+                            <p style={{maxWidth: '300px', margin: '0 auto', lineHeight: '1.6'}}>
+                                Inicie uma conversa com um corretor para negociar imóveis.
+                            </p>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+        
+        // Componente de informações da empresa
+        const CompanyInfoView = () => {
+            return (
+                <div className="fade-in">
+                    <div className="company-info">
+                        <div className="company-logo-large">1111</div>
+                        <h1 className="company-name">BOX1111</h1>
+                        <p className="company-slogan">Revolucionando o mercado imobiliário com tecnologia premium</p>
+                        
+                        <div className="company-details">
+                            <div className="company-detail">
+                                <i className="fas fa-rocket"></i>
+                                <h4>Missão</h4>
+                                <p>Conectar pessoas aos seus sonhos imobiliários com excelência e inovação</p>
+                            </div>
+                            <div className="company-detail">
+                                <i className="fas fa-eye"></i>
+                                <h4>Visão</h4>
+                                <p>Ser referência nacional em soluções imobiliárias digitais até 2025</p>
+                            </div>
+                            <div className="company-detail">
+                                <i className="fas fa-star"></i>
+                                <h4>Valores</h4>
+                                <p>Transparência, Inovação, Excelência e Parceria</p>
+                            </div>
+                            <div className="company-detail">
+                                <i className="fas fa-calendar-alt"></i>
+                                <h4>Fundada em</h4>
+                                <p>15 de Março de 2020</p>
+                            </div>
+                        </div>
+                        
+                        <div style={{textAlign: 'center', marginTop: '30px'}}>
+                            <h3 className="section-title" style={{justifyContent: 'center'}}>
+                                <i className="fas fa-users"></i>
+                                Nossa Equipe
+                            </h3>
+                            
+                            <div className="team-members">
+                                <div className="team-member">
+                                    <div className="team-member-avatar">CA</div>
+                                    <div className="team-member-name">Carlos</div>
+                                    <div className="team-member-role">CEO & Founder</div>
+                                </div>
+                                <div className="team-member">
+                                    <div className="team-member-avatar">AB</div>
+                                    <div className="team-member-name">Ana</div>
+                                    <div className="team-member-role">Head of Sales</div>
+                                </div>
+                                <div className="team-member">
+                                    <div className="team-member-avatar">MS</div>
+                                    <div className="team-member-name">Maria</div>
+                                    <div className="team-member-role">Marketing</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style={{background: 'rgba(26,26,26,0.8)', borderRadius: '20px', padding: '25px', border: '1px solid rgba(0,255,136,0.1)'}}>
+                        <h3 className="section-title">
+                            <i className="fas fa-map-marker-alt"></i>
+                            Localização
+                        </h3>
+                        <p style={{color: '#ccc', marginBottom: '15px', lineHeight: '1.6'}}>
+                            Av. Paulista, 1000 - Bela Vista, São Paulo - SP, 01310-100
+                        </p>
+                        
+                        <div style={{height: '150px', background: '#222', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#aaa', marginBottom: '20px'}}>
+                            <i className="fas fa-map" style={{fontSize: '3rem'}}></i>
+                        </div>
+                        
+                        <div className="property-actions">
+                            <button className="action-btn secondary">
+                                <i className="fas fa-phone"></i> (11) 3333-1111
+                            </button>
+                            <button className="action-btn primary">
+                                <i className="fas fa-envelope"></i> contato@box1111.com
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+        
+        // Componente de perfil
+        const ProfileView = ({ user, onLogout }) => {
+            return (
+                <div className="fade-in">
+                    <div className="section-title" style={{marginBottom: '30px'}}>
+                        <span>Meu Perfil</span>
+                    </div>
+                    
+                    <div style={{textAlign: 'center', marginBottom: '30px'}}>
+                        <div className="user-avatar" style={{width: '100px', height: '100px', fontSize: '2.5rem', margin: '0 auto 20px'}}>
+                            {user.avatar}
+                        </div>
+                        <h2 style={{color: '#fff', marginBottom: '10px', fontSize: '1.8rem'}}>{user.name}</h2>
+                        <div className="user-role" style={{display: 'inline-block', fontSize: '0.9rem', padding: '8px 20px'}}>
+                            {user.role === 'admin' ? 'Administrador Premium' : 
+                             user.role === 'vendedor' ? 'Vendedor Certificado' : 'Cliente VIP'}
+                        </div>
+                        <p style={{color: '#aaa', marginTop: '15px'}}>{user.email}</p>
+                    </div>
+                    
+                    <div style={{background: 'rgba(26,26,26,0.8)', borderRadius: '20px', padding: '25px', border: '1px solid rgba(0,255,136,0.1)', marginBottom: '20px'}}>
+                        <h3 className="section-title">
+                            <i className="fas fa-cog"></i>
+                            Configurações
+                        </h3>
+                        
+                        <div style={{marginTop: '15px'}}>
+                            <div style={{padding: '18px 0', borderBottom: '1px solid rgba(0,255,136,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                <div>
+                                    <div style={{color: '#fff', fontWeight: '600', marginBottom: '5px'}}>Notificações</div>
+                                    <div style={{color: '#aaa', fontSize: '0.9rem'}}>Gerencie suas notificações</div>
+                                </div>
+                                <i className="fas fa-bell green-text" style={{fontSize: '1.2rem'}}></i>
+                            </div>
+                            <div style={{padding: '18px 0', borderBottom: '1px solid rgba(0,255,136,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                <div>
+                                    <div style={{color: '#fff', fontWeight: '600', marginBottom: '5px'}}>Privacidade</div>
+                                    <div style={{color: '#aaa', fontSize: '0.9rem'}}>Controle seus dados</div>
+                                </div>
+                                <i className="fas fa-shield-alt green-text" style={{fontSize: '1.2rem'}}></i>
+                            </div>
+                            <div style={{padding: '18px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                <div>
+                                    <div style={{color: '#fff', fontWeight: '600', marginBottom: '5px'}}>Preferências</div>
+                                    <div style={{color: '#aaa', fontSize: '0.9rem'}}>Ajuste suas preferências</div>
+                                </div>
+                                <i className="fas fa-sliders-h green-text" style={{fontSize: '1.2rem'}}></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        className="btn btn-secondary" 
+                        style={{width: '100%', marginTop: '20px', background: 'rgba(255,51,102,0.2)', color: '#ff3366', borderColor: '#ff3366'}}
+                        onClick={onLogout}
+                    >
+                        <i className="fas fa-sign-out-alt"></i> Sair da Conta
+                    </button>
+                </div>
+            );
+        };
+        
+        // Componente de modal para adicionar propriedade
+        const AddPropertyModal = ({ newProperty, onInputChange, onSubmit, onClose }) => {
+            return (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h2>Adicionar Imóvel Premium</h2>
+                            <button className="close-modal" onClick={onClose}>
+                                <i className="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <form onSubmit={onSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="title">Título do Imóvel *</label>
+                                <input 
+                                    type="text" 
+                                    id="title" 
+                                    name="title"
+                                    className="form-control" 
+                                    placeholder="Ex: Apartamento Moderno com Vista para o Mar"
+                                    value={newProperty.title}
+                                    onChange={onInputChange}
+                                    required
+                                />
+                            </div>
+                            
+                            <div className="form-group">
+                                <label htmlFor="address">Endereço Completo *</label>
+                                <input 
+                                    type="text" 
+                                    id="address" 
+                                    name="address"
+                                    className="form-control" 
+                                    placeholder="Ex: Av. Paulista, 1000 - São Paulo, SP"
+                                    value={newProperty.address}
+                                    onChange={onInputChange}
+                                    required
+                                />
+                            </div>
+                            
+                            <div className="form-group">
+                                <label htmlFor="price">Preço *</label>
+                                <input 
+                                    type="text" 
+                                    id="price" 
+                                    name="price"
+                                    className="form-control" 
+                                    placeholder="Ex: R$ 850.000 ou R$ 3.500/mês"
+                                    value={newProperty.price}
+                                    onChange={onInputChange}
+                                    required
+                                />
+                            </div>
+                            
+                            <div style={{display: 'flex', gap: '12px'}}>
+                                <div className="form-group" style={{flex: 1}}>
+                                    <label htmlFor="status">Status *</label>
+                                    <select 
+                                        id="status" 
+                                        name="status"
+                                        className="form-control"
+                                        value={newProperty.status}
+                                        onChange={onInputChange}
+                                    >
+                                        <option value="Venda">Venda</option>
+                                        <option value="Aluguel">Aluguel</option>
+                                    </select>
+                                </div>
+                                
+                                <div className="form-group" style={{flex: 1}}>
+                                    <label htmlFor="type">Tipo *</label>
+                                    <select 
+                                        id="type" 
+                                        name="type"
+                                        className="form-control"
+                                        value={newProperty.type}
+                                        onChange={onInputChange}
+                                    >
+                                        <option value="Apartamento">Apartamento</option>
+                                        <option value="Casa">Casa</option>
+                                        <option value="Loft">Loft</option>
+                                        <option value="Cobertura">Cobertura</option>
+                                        <option value="Comercial">Comercial</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div style={{display: 'flex', gap: '12px'}}>
+                                <div className="form-group" style={{flex: 1}}>
+                                    <label htmlFor="bedrooms">Quartos *</label>
+                                    <input 
+                                        type="number" 
+                                        id="bedrooms" 
+                                        name="bedrooms"
+                                        className="form-control" 
+                                        placeholder="3"
+                                        value={newProperty.bedrooms}
+                                        onChange={onInputChange}
+                                        required
+                                    />
+                                </div>
+                                
+                                <div className="form-group" style={{flex: 1}}>
+                                    <label htmlFor="bathrooms">Banheiros *</label>
+                                    <input 
+                                        type="number" 
+                                        id="bathrooms" 
+                                        name="bathrooms"
+                                        className="form-control" 
+                                        placeholder="2"
+                                        value={newProperty.bathrooms}
+                                        onChange={onInputChange}
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div className="form-group">
+                                <label htmlFor="area">Área (m²) *</label>
+                                <input 
+                                    type="text" 
+                                    id="area" 
+                                    name="area"
+                                    className="form-control" 
+                                    placeholder="Ex: 120m²"
+                                    value={newProperty.area}
+                                    onChange={onInputChange}
+                                    required
+                                />
+                            </div>
+                            
+                            <div className="form-group">
+                                <label htmlFor="description">Descrição *</label>
+                                <textarea 
+                                    id="description" 
+                                    name="description"
+                                    className="form-control" 
+                                    placeholder="Descreva o imóvel em detalhes..."
+                                    rows="4"
+                                    value={newProperty.description}
+                                    onChange={onInputChange}
+                                    required
+                                ></textarea>
+                            </div>
+                            
+                            <div className="form-group">
+                                <label htmlFor="tags">Tags (separadas por vírgula)</label>
+                                <input 
+                                    type="text" 
+                                    id="tags" 
+                                    name="tags"
+                                    className="form-control" 
+                                    placeholder="Ex: Vista para o mar, Luxo, Varanda, Piscina"
+                                    value={newProperty.tags}
+                                    onChange={onInputChange}
+                                />
+                            </div>
+                            
+                            <button type="submit" className="btn btn-primary">
+                                <i className="fas fa-plus-circle"></i> Adicionar Imóvel Premium
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            );
+        };
+        
+        // Renderizar o aplicativo
+        ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+</body>
+</html>
