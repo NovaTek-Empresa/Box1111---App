@@ -265,36 +265,27 @@ export default function App() {
     <div className="app-container">
       <header className="app-header">
         <div className="logo">
-          <div className="logo-box-small">1111</div>
-          <h1>BOX1111</h1>
+          <div className="logo-box-small">BOX</div>
+          <h1 id='login-title'>BOX1111</h1>
         </div>
         <div className="user-profile" onClick={() => setActiveTab('profile')}>
           <div className="user-avatar">{currentUser.avatar}</div>
           <div style={{display:'flex',flexDirection:'column'}}>
-            <div style={{fontWeight:700}}>{currentUser.name.split(' ')[0]}</div>
-            <div style={{fontSize:'.8rem',color:'#00ff88'}}>{currentUser.role}</div>
+            <div style={{fontWeight:700, color:'#000'}}>{currentUser.name.split(' ')[0]}</div>
+            <div style={{fontSize:'.8rem',color:'#000000ff'}}>{currentUser.role}</div>
           </div>
         </div>
       </header>
 
       {/* Barra de busca centralizada: sempre visível (atende mobile em qualquer tela) */}
-      <div className="search-bar" style={{padding:'12px 18px'}}>
+      <div className="search-bar" style={{padding:'12px 18px', backgroundColor: '#fff'}}>
         <div style={{display:'flex',gap:10}}>
           <input className="search-input" placeholder="Buscar por local, tipo ou característica..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
           <button className="search-btn" onClick={() => {}}><i className="fas fa-search"></i></button>
         </div>
       </div>
 
-      {/* Pequena seção de filtros rápida (mantida, mas a busca principal ficou global) */}
-      <div className="filters-section" style={{padding:'0 18px'}}>
-        <div style={{display:'flex',gap:10}}>
-          {['all','Apartamento','Casa','Venda','Aluguel'].map(f => (
-            <div key={f} className={`filter-tag ${activeFilter===f?'active':''}`} onClick={() => setActiveFilter(f)}>
-              {f === 'all' ? 'Todos' : f}
-            </div>
-          ))}
-        </div>
-      </div>
+
 
       <main className="app-content">
         {activeTab === 'home' && (

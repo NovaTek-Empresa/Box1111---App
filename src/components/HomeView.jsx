@@ -25,7 +25,7 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}>
         <div>
           <h2 style={{margin:0}}>Imóveis Premium</h2>
-          <div style={{color:'#00ff88',fontWeight:700,fontSize:13}}>{properties.length} disponíveis</div>
+          <div style={{color:'#000000ff',fontWeight:700,fontSize:13}}>{properties.length} disponíveis</div>
         </div>
       </div>
 

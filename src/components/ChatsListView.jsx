@@ -7,7 +7,7 @@ export default function ChatsListView({ chats, users, onStartChat }){
   // Renderiza cada item de chat com nome, último texto e badge de não lidos
   return (
     <div className="fade-in">
-      <h3 style={{marginBottom:12}}>Conversas</h3>
+      <h3 style={{marginBottom:12, color: '#000'}}>Conversas</h3>
       {chats.length === 0 ? (
         <div style={{color:'#aaa',padding:20}}>Nenhuma conversa iniciada</div>
       ) : (

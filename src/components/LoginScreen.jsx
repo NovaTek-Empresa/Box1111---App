@@ -10,7 +10,7 @@ export default function LoginScreen({ authForm, setAuthForm, isRegistering, setI
       <div style={{textAlign:'center',marginBottom:25}}>
         {/* Logo simplificada */}
         <div style={{display:'inline-flex',alignItems:'center',gap:12}}>
-          <div style={{width:50,height:50,background:'linear-gradient(135deg,#00ff88,#00cc6a)',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',color:'#000',fontWeight:900}}>1111</div>
+          <div style={{width:50,height:50,background:'linear-gradient(135deg,#000,#6900cc)',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',color:'#ffffffff',fontWeight:900}}>BOX</div>
           <h1>BOX1111</h1>
         </div>
         <p style={{color:'#aaa'}}>Conecte-se ao futuro dos negócios imobiliários</p>
@@ -62,7 +62,7 @@ export default function LoginScreen({ authForm, setAuthForm, isRegistering, setI
       </form>
 
       <div style={{textAlign:'center',marginTop:12}}>
-        <a href="#" onClick={(e)=>{e.preventDefault(); setIsRegistering(prev=>!prev)}}>{isRegistering ? 'Já tem conta? Acesse' : 'Ainda não tem conta? Cadastre-se'}</a>
+        <a class='registro' href="#" onClick={(e)=>{e.preventDefault(); setIsRegistering(prev=>!prev)}}>{isRegistering ? 'Já tem conta? Acesse' : 'Ainda não tem conta? Cadastre-se'}</a>
       </div>
 
       <div style={{color:'#666',fontSize:'.85rem',marginTop:15}}>
