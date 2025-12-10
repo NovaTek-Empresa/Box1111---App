@@ -176,9 +176,6 @@ export default function App() {
     })
   }
 
-  function bloqsearchbar() {
-    
-  }
   
 
   // Função: marcar conversa como lida (zera unread)
