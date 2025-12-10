@@ -2,12 +2,9 @@ import React from 'react'
 
 // Lista completa de imóveis, com filtro de preço e busca
 export default function AllPropertiesView({ properties, onViewDetails, searchQuery, setSearchQuery, priceOrder, setPriceOrder }) {
-  // Filtra por busca
-  const filtered = properties.filter(p => {
-    if (!searchQuery) return true;
-    const q = searchQuery.toLowerCase();
-    return p.title.toLowerCase().includes(q) || p.address.toLowerCase().includes(q) || p.description.toLowerCase().includes(q);
-  });
+  // Filtros avançados
+  // Filtro apenas por preço
+  const filtered = properties;
 
   // Ordena por preço
   const sorted = [...filtered].sort((a, b) => {
@@ -20,27 +17,25 @@ export default function AllPropertiesView({ properties, onViewDetails, searchQue
   return (
     <div>
       <style>{`
-        .all-properties-header { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
-        .all-properties-search { display: flex; gap: 10px; align-items: center; }
-        .all-properties-filter { display: flex; gap: 10px; align-items: center; }
+        .all-properties-header { display: flex; flex-direction: column; gap: 18px; margin-bottom: 24px; }
+        .all-properties-filter {
+          display: flex;
+          gap: 18px;
+          align-items: center;
+          background: #f8f8f8;
+          border-radius: 14px;
+          padding: 18px 16px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
         .all-properties-list { display: flex; flex-direction: column; gap: 24px; }
+        .filter-label { font-size: 0.95rem; color: #222; font-weight: 600; }
+        .filter-input { padding: 8px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 1rem; }
+        .filter-btns { display: flex; gap: 10px; }
       `}</style>
       <div className="all-properties-header">
         <h2 style={{margin:0}}>Todos os Imóveis Disponíveis</h2>
-        <div className="all-properties-search">
-          <input
-            className="search-input"
-            type="text"
-            placeholder="Buscar por título, endereço ou descrição..."
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            style={{padding:'8px 14px',borderRadius:8,border:'1px solid #ddd',width:260}}
-          />
-        </div>
-        <div>
-          <span id='ordenar'>Ordenar por preço:</span>
-        </div>
         <div className="all-properties-filter">
+          <span className="filter-label">Ordenar por preço:</span>
           <button
             className={priceOrder==='asc' ? 'btn btn-primary' : 'btn btn-secondary'}
             onClick={() => setPriceOrder('asc')}

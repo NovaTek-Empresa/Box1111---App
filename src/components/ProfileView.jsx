@@ -8,6 +8,10 @@ export default function ProfileView({ user, onLogout, onUpdateUser }){
   const [email, setEmail] = React.useState(user?.email || '')
   const [cpf, setCpf] = React.useState(user?.cpf || '')
   const [address, setAddress] = React.useState(user?.address || '')
+  const [bairro, setBairro] = React.useState(user?.bairro || '')
+  const [cidade, setCidade] = React.useState(user?.cidade || '')
+  const [estado, setEstado] = React.useState(user?.estado || '')
+  const [cep, setCep] = React.useState(user?.cep || '')
   const [avatar, setAvatar] = React.useState(user?.avatarImg || '')
 
   // Converte arquivo para base64 e guarda no state correspondente
@@ -21,7 +25,7 @@ export default function ProfileView({ user, onLogout, onUpdateUser }){
   // Salva alterações do perfil
   function handleSaveProfile(e){
     e?.preventDefault()
-    const updated = { ...user, name, email, cpf, address, avatarImg: avatar }
+    const updated = { ...user, name, email, cpf, address, bairro, cidade, estado, cep, avatarImg: avatar }
     if (onUpdateUser) onUpdateUser(updated)
     alert('Perfil atualizado com sucesso!')
   }
@@ -45,7 +49,11 @@ export default function ProfileView({ user, onLogout, onUpdateUser }){
           <input className="form-control" value={name} onChange={e => setName(e.target.value)} placeholder="Nome completo" style={{maxWidth:320,padding:'10px 16px',borderRadius:8,fontSize:'1.1rem',fontWeight:600}} />
           <input className="form-control" value={email} onChange={e => setEmail(e.target.value)} placeholder="E-mail" style={{maxWidth:320,padding:'10px 16px',borderRadius:8}} />
           <input className="form-control" value={cpf} onChange={e => setCpf(e.target.value)} placeholder="CPF" style={{maxWidth:320,padding:'10px 16px',borderRadius:8}} />
-          <input className="form-control" value={address} onChange={e => setAddress(e.target.value)} placeholder="Endereço completo" style={{maxWidth:320,padding:'10px 16px',borderRadius:8}} />
+          <input className="form-control" value={address} onChange={e => setAddress(e.target.value)} placeholder="Endereço" style={{maxWidth:320,padding:'10px 16px',borderRadius:8}} />
+          <input className="form-control" value={bairro} onChange={e => setBairro(e.target.value)} placeholder="Bairro" style={{maxWidth:320,padding:'10px 16px',borderRadius:8}} />
+          <input className="form-control" value={cidade} onChange={e => setCidade(e.target.value)} placeholder="Cidade" style={{maxWidth:320,padding:'10px 16px',borderRadius:8}} />
+          <input className="form-control" value={estado} onChange={e => setEstado(e.target.value)} placeholder="Estado" style={{maxWidth:320,padding:'10px 16px',borderRadius:8}} />
+          <input className="form-control" value={cep} onChange={e => setCep(e.target.value)} placeholder="CEP" style={{maxWidth:320,padding:'10px 16px',borderRadius:8}} />
           <button className="btn btn-primary" type="submit" style={{width:180,marginTop:8}}>Salvar alterações</button>
         </form>
         <div style={{fontSize:'.9rem',color:'#00ff88',fontWeight:700,marginTop:18}}>{user.role}</div>
