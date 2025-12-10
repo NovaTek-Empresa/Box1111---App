@@ -176,6 +176,11 @@ export default function App() {
     })
   }
 
+  function bloqsearchbar() {
+    
+  }
+  
+
   // Função: marcar conversa como lida (zera unread)
   function markChatRead(userId){
     setChats(prev => {
@@ -274,19 +279,6 @@ export default function App() {
             </div>
           </div>
         )}
-        {/* Se não estiver logado, ao clicar no perfil, abre tela de login/cadastro */}
-        {activeTab === 'profile' && !currentUser && (
-          <div className="app-container">
-            <LoginScreen
-              authForm={authForm}
-              setAuthForm={setAuthForm}
-              isRegistering={isRegistering}
-              setIsRegistering={setIsRegistering}
-              onLogin={handleLogin}
-              onRegister={handleRegister}
-            />
-          </div>
-        )}
       </header>
 
       {/* Barra de busca centralizada: sempre visível (atende mobile em qualquer tela) */}
@@ -296,8 +288,6 @@ export default function App() {
           <button className="search-btn" onClick={() => {}}><i className="fas fa-search"></i></button>
         </div>
       </div>
-
-
 
       <main className="app-content">
         <div>
@@ -350,6 +340,7 @@ export default function App() {
                   onViewDetails={viewPropertyDetails}
                 />
               )}
+              
 
               {/* Visualização detalhada do imóvel (galeria maior) */}
               {activeTab === 'detail' && viewingProperty && (
@@ -398,6 +389,7 @@ export default function App() {
             </>
           )}
         </div>
+        
       </main>
 
       <div className="bottom-menu">

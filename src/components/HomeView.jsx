@@ -132,11 +132,11 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
           transition: background 0.2s, color 0.2s;
         }
         .action-btn.primary {
-          background: linear-gradient(90deg,#1e90ff 60%,#00c6fb 100%);
+          background: linear-gradient(135deg, #000000, #22c55e);
           color: #fff;
         }
         .action-btn.primary:hover {
-          background: linear-gradient(90deg,#00c6fb 60%,#1e90ff 100%);
+          background: linear-gradient(135deg, #000000, #22c55e);
         }
         .action-btn.secondary {
           background: #f2f2f2;
@@ -230,7 +230,7 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
             {/* Título clicável também abre detalhes */}
             <h3 className="property-title" style={{cursor:'pointer'}} onClick={() => onViewDetails(p)}>{p.title}</h3>
             <p className="property-address">{p.address}</p>
-            <p style={{color:'#ccc'}}>{p.description.substring(0,220)}...</p>
+            <p style={{color:'#000000ff'}}>{p.description.substring(0,220)}...</p>
             {/* Tags do imóvel para ajudar na busca visual */}
             <div className="property-tags" style={{marginTop:8}}>
               {(p.tags || []).slice(0,4).map((t,i) => (

@@ -37,8 +37,10 @@ export default function AllPropertiesView({ properties, onViewDetails, searchQue
             style={{padding:'8px 14px',borderRadius:8,border:'1px solid #ddd',width:260}}
           />
         </div>
+        <div>
+          <span id='ordenar'>Ordenar por preço:</span>
+        </div>
         <div className="all-properties-filter">
-          <span>Ordenar por preço:</span>
           <button
             className={priceOrder==='asc' ? 'btn btn-primary' : 'btn btn-secondary'}
             onClick={() => setPriceOrder('asc')}
