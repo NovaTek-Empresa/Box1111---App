@@ -5,6 +5,14 @@ import React from 'react'
 export default function HomeView({ properties, onViewDetails, favorites, onToggleFavorite, searchQuery = '', setSearchQuery = () => {}, activeFilter = 'all', setActiveFilter = () => {}, showAdvanced = false, setShowAdvanced = () => {}, priceMin = '', setPriceMin = () => {}, priceMax = '', setPriceMax = () => {}, bedroomsFilter = '', setBedroomsFilter = () => {} }){
   return (
     <div>
+      {/* Estilo para grid de 2 colunas responsivo */}
+      <style>{`
+        .properties-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+      `}</style>
       {/* Estilos locais e responsivos específicos para o HomeView */}
       <style>{`
         /* Ajustes responsivos para a busca e filtros */
@@ -12,13 +20,148 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
         .home-search .search-input { width:220px; max-width:60vw; }
         .home-filters { display:flex; gap:12px; align-items:center; }
         .home-advanced { padding:12px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+
+        .property-card {
+          background: #fff;
+          border-radius: 18px;
+          box-shadow: 0 4px 18px rgba(0,0,0,0.10), 0 1.5px 4px rgba(0,0,0,0.08);
+          overflow: hidden;
+          transition: box-shadow 0.2s, transform 0.2s;
+          border: 1px solid #f2f2f2;
+          display: flex;
+          flex-direction: column;
+          min-width: 0;
+        }
+        .property-card:hover {
+          box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.12);
+          transform: translateY(-2px) scale(1.01);
+        }
+        .property-image {
+          border-top-left-radius: 18px;
+          border-top-right-radius: 18px;
+          height: 220px;
+          background-size: cover;
+          background-position: center;
+          position: relative;
+          display: flex;
+          align-items: flex-end;
+          padding: 0 0 12px 0;
+        }
+        .property-badge {
+          position: absolute;
+          top: 16px;
+          left: 16px;
+          background: #222;
+          color: #fff;
+          font-size: 0.95rem;
+          padding: 5px 14px;
+          border-radius: 12px;
+          font-weight: 600;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        }
+        .property-price {
+          background: rgba(255,255,255,0.95);
+          color: #222;
+          font-size: 1.15rem;
+          font-weight: 700;
+          padding: 8px 18px;
+          border-radius: 12px;
+          margin-left: 16px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .property-favorite {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          background: rgba(255,255,255,0.85);
+          border-radius: 50%;
+          width: 38px;
+          height: 38px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .property-favorite:hover {
+          background: #ffe6ee;
+        }
+        .property-info {
+          padding: 18px 18px 12px 18px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .property-title {
+          font-size: 1.15rem;
+          font-weight: 700;
+          margin: 0 0 4px 0;
+          color: #222;
+        }
+        .property-address {
+          font-size: 0.95rem;
+          color: #888;
+          margin-bottom: 2px;
+        }
+        .property-tags {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .property-tag {
+          background: #f2f2f2;
+          color: #444;
+          font-size: 0.85rem;
+          padding: 4px 12px;
+          border-radius: 10px;
+          font-weight: 500;
+        }
+        .property-actions {
+          display: flex;
+          gap: 10px;
+          margin-top: 10px;
+        }
+        .action-btn {
+          padding: 8px 18px;
+          border-radius: 10px;
+          font-weight: 600;
+          font-size: 0.95rem;
+          cursor: pointer;
+          border: none;
+          transition: background 0.2s, color 0.2s;
+        }
+        .action-btn.primary {
+          background: linear-gradient(90deg,#1e90ff 60%,#00c6fb 100%);
+          color: #fff;
+        }
+        .action-btn.primary:hover {
+          background: linear-gradient(90deg,#00c6fb 60%,#1e90ff 100%);
+        }
+        .action-btn.secondary {
+          background: #f2f2f2;
+          color: #222;
+        }
+        .action-btn.secondary:hover {
+          background: #e0e0e0;
+        }
+        .properties-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 24px;
+        }
+        @media (max-width: 700px) {
+          .properties-grid {
+            grid-template-columns: 1fr;
+          }
+        }
         @media (max-width: 520px) {
           .home-search { width:100%; }
           .home-search .search-input { width:100%; max-width:100%; }
           .home-filters { flex-direction:column; align-items:flex-start; gap:10px; }
           .home-advanced { flex-direction:column; align-items:stretch; }
           .property-card { margin-left:10px; margin-right:10px; }
-          .property-image { height:220px !important; }
+          .property-image { height:180px !important; }
         }
       `}</style>
       {/* Cabeçalho com título e busca compacta */}
@@ -70,7 +213,7 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
         </div>
       )}
 
-      {/* Listagem de imóveis */}
+      {/* Listagem de imóveis em lista vertical (1 por coluna) */}
       {properties.length === 0 ? (
         <div style={{textAlign:'center',padding:40,color:'#aaa'}}>Nenhum imóvel encontrado</div>
       ) : properties.map((p,idx) => (

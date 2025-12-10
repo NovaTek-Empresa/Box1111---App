@@ -9,11 +9,16 @@ import AddPropertyModal from './components/AddPropertyModal'
 import ChatsListView from './components/ChatsListView'
 import SellerView from './components/SellerView'
 import CompanyInfoView from './components/CompanyInfoView'
+import AllPropertiesView from './components/AllPropertiesView'
+import FavoritesView from './components/FavoritesView'
 
 // App principal: converte a lógica do HTML original para React moderno
 // Comentários e explicações em PT-BR em cada função/parte importante
 
 export default function App() {
+    // Estado para tela de todos os imóveis
+    const [allSearchQuery, setAllSearchQuery] = React.useState('')
+    const [allPriceOrder, setAllPriceOrder] = React.useState('')
   // Estado: usuário logado e dados iniciais (simulados)
   const [isLoggedIn, setIsLoggedIn] = React.useState(false) // controla interface de login
   const [currentUser, setCurrentUser] = React.useState(null) // dados do usuário atual
@@ -252,13 +257,17 @@ export default function App() {
     <div className="app-container">
       <header className="app-header">
         {/* Logo do app em imagem PNG, estilizada. O arquivo está na pasta /logo. */}
-        <div className="logo">
-          <img src={logoImg} alt="Logo BOX1111" className="logo-img" />
+        <div className="logo" style={{height:60, width:60, display:'flex', alignItems:'center', justifyContent:'center', marginRight:18}}>
+          <img src={logoImg} alt="Logo BOX1111" className="logo-img" style={{height:50, width:50, objectFit:'contain', borderRadius:12, boxShadow:'0 2px 8px rgba(0,0,0,0.08)'}} />
         </div>
         {/* Só mostra o bloco de visitante se não estiver na tela de login/cadastro */}
         {!(activeTab === 'profile' && !currentUser) && (
           <div className="user-profile" onClick={() => setActiveTab('profile')}>
-            <div className="user-avatar">{currentUser ? currentUser.avatar : <i className="fas fa-user"></i>}</div>
+            <div className="user-avatar">
+              {currentUser && currentUser.avatarImg ? (
+                <img src={currentUser.avatarImg} alt="avatar" style={{width:36,height:36,borderRadius:'50%',objectFit:'cover'}} />
+              ) : currentUser ? currentUser.avatar : <i className="fas fa-user"></i>}
+            </div>
             <div style={{display:'flex',flexDirection:'column'}}>
               <div style={{fontWeight:700, color:'#000'}}>{currentUser ? currentUser.name.split(' ')[0] : 'Visitante'}</div>
               <div style={{fontSize:'.8rem',color:'#000000ff'}}>{currentUser ? currentUser.role : 'Não logado'}</div>
@@ -324,6 +333,23 @@ export default function App() {
                   setBedroomsFilter={setBedroomsFilter}
                 />
               )}
+              {activeTab === 'all' && (
+                <AllPropertiesView
+                  properties={properties}
+                  onViewDetails={viewPropertyDetails}
+                  searchQuery={allSearchQuery}
+                  setSearchQuery={setAllSearchQuery}
+                  priceOrder={allPriceOrder}
+                  setPriceOrder={setAllPriceOrder}
+                />
+              )}
+              {activeTab === 'favorites' && (
+                <FavoritesView
+                  properties={properties}
+                  favorites={favorites}
+                  onViewDetails={viewPropertyDetails}
+                />
+              )}
 
               {/* Visualização detalhada do imóvel (galeria maior) */}
               {activeTab === 'detail' && viewingProperty && (
@@ -378,6 +404,14 @@ export default function App() {
         <div className={`menu-item ${activeTab==='home'?'active':''}`} onClick={() => setActiveTab('home')}>
           <i className="fas fa-home"></i>
           <span>Início</span>
+        </div>
+        <div className={`menu-item ${activeTab==='all'?'active':''}`} onClick={() => setActiveTab('all')}>
+          <i className="fas fa-th-list"></i>
+          <span>Todos Imóveis</span>
+        </div>
+        <div className={`menu-item ${activeTab==='favorites'?'active':''}`} onClick={() => setActiveTab('favorites')}>
+          <i className="fas fa-heart"></i>
+          <span>Favoritos</span>
         </div>
         <div className={`menu-item ${activeTab==='chat'?'active':''}`} onClick={() => setActiveTab('chat')}>
           <i className="fas fa-comments"></i>
