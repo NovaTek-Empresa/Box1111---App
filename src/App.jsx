@@ -257,6 +257,7 @@ export default function App() {
   // Render quando logado
   return (
     <div className="app-container">
+      {activeTab !== "company" && (
       <header className="app-header">
         {/* Logo do app em imagem PNG, estilizada. O arquivo está na pasta /logo. */}
         <div className="logo" style={{height:60, width:60, display:'flex', alignItems:'center', justifyContent:'center', marginRight:18}}>
@@ -277,7 +278,8 @@ export default function App() {
           </div>
         )}
       </header>
-
+      )
+    }
       {/* Barra de busca só aparece nas telas de imóveis, nunca no perfil ou login/cadastro. */}
       {(activeTab === 'home' || activeTab === 'all') && (
         <div className="search-bar" style={{padding:'12px 18px', backgroundColor: '#fff'}}>
@@ -287,8 +289,11 @@ export default function App() {
           </div>
         </div>
       )}
+      
 
-      <main className="app-content">
+      {activeTab !== "company" && (
+      
+      <main className="app-content"> 
         <div>
           {/* Se visitante clicar no perfil, mostra tela de login/cadastro */}
           {activeTab === 'profile' && !currentUser ? (
@@ -390,6 +395,7 @@ export default function App() {
         </div>
         
       </main>
+  )}
 
       <div className="bottom-menu">
         <div className={`menu-item ${activeTab==='home'?'active':''}`} onClick={() => setActiveTab('home')}>
@@ -414,12 +420,13 @@ export default function App() {
         </div>
       </div>
 
-      {activeTab === 'company' && (
+      {activeTab === 'company' && ( 
         <CompanyInfoView />
       )}
     </div>
   )
 }
+
 
 // --- Helpers e dados iniciais ---
 
