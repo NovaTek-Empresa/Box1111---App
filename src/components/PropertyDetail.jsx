@@ -8,6 +8,8 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
   const [index, setIndex] = React.useState(initialIndex)
   // Estado para fullscreen simples (exibe imagem em overlay)
   const [fullscreen, setFullscreen] = React.useState(false)
+  // Estado para modal de reserva
+  const [showReserve, setShowReserve] = React.useState(false)
 
   // Função: avança para próxima imagem (roda)
   const next = () => setIndex(i => (i + 1) % (property.images ? property.images.length : 1))
@@ -75,6 +77,7 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
         <div style={{marginTop:18,display:'flex',gap:12}} className="property-actions">
           <div className="action-btn primary" onClick={() => onStartChat(seller.id)}>Conversar com vendedor</div>
           <div className="action-btn secondary">Agendar visita</div>
+          <div className="action-btn green" style={{background:'#22c55e',color:'#fff'}} onClick={() => setShowReserve(true)}>Alugar</div>
         </div>
       </div>
 
@@ -83,6 +86,16 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
         <div className="modal-overlay" onClick={() => setFullscreen(false)}>
           <div className="modal-content" style={{maxWidth:'95%',padding:6,background:'transparent',boxShadow:'none',border:'none'}}>
             <img src={(property.images && property.images[index]) || property.image} alt="imagem" style={{width:'100%',height:'auto',borderRadius:12}} />
+          </div>
+        </div>
+      )}
+
+      {/* Modal de reserva */}
+      {showReserve && (
+        <div className="modal-overlay">
+          <div className="modal-content" style={{maxWidth:600,padding:0}}>
+            {/* Importa o modal de reserva */}
+            {React.createElement(require('./ReserveModal').default, { property, onClose: () => setShowReserve(false) })}
           </div>
         </div>
       )}

@@ -1,3 +1,13 @@
+/* Logo principal do app (imagem PNG) */
+.logo-img {
+    width: 120px; /* Largura da logo */
+    height: auto; /* Altura automática para manter proporção */
+    display: block;
+    margin: 0 auto 8px auto; /* Centraliza e dá espaçamento inferior */
+    border-radius: 24px; /* Bordas arredondadas para visual moderno */
+    box-shadow: 0 2px 16px rgba(0,255,136,0.12); /* Sombra leve para destaque */
+}
+/* Comentário: a classe .logo-img é usada no App.jsx para exibir o logo PNG do app, localizado na pasta /logo. */
 /* CSS completo copiado da tag <style> do APP-TESTE.HTML */
 /* CSS completo copiado da tag <style> do APP-TESTE.HTML */
 * {

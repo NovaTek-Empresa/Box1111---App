@@ -1,4 +1,5 @@
 import React from 'react'
+import logoImg from '../logo/Logo.png'
 import LoginScreen from './components/LoginScreen'
 import HomeView from './components/HomeView'
 import ProfileView from './components/ProfileView'
@@ -243,38 +244,40 @@ export default function App() {
     localStorage.setItem('box1111_currentUser', JSON.stringify(currentUser))
   }, [currentUser])
 
-  // Render: se não logado mostra tela de login/registro
-  // Se não estiver logado, mostra componente de login/registro
-  if (!isLoggedIn) {
-    return (
-      <div className="app-container">
-        <LoginScreen
-          authForm={authForm}
-          setAuthForm={setAuthForm}
-          isRegistering={isRegistering}
-          setIsRegistering={setIsRegistering}
-          onLogin={handleLogin}
-          onRegister={handleRegister}
-        />
-      </div>
-    )
-  }
+  // Fluxo alterado: inicia direto no app, sem tela de login
+  // Se o usuário não estiver logado, só pede login ao tentar ver detalhes de imóvel
 
   // Render quando logado
   return (
     <div className="app-container">
       <header className="app-header">
+        {/* Logo do app em imagem PNG, estilizada. O arquivo está na pasta /logo. */}
         <div className="logo">
-          <div className="logo-box-small">BOX</div>
-          <h1 id='login-title'>BOX1111</h1>
+          <img src={logoImg} alt="Logo BOX1111" className="logo-img" />
         </div>
-        <div className="user-profile" onClick={() => setActiveTab('profile')}>
-          <div className="user-avatar">{currentUser.avatar}</div>
-          <div style={{display:'flex',flexDirection:'column'}}>
-            <div style={{fontWeight:700, color:'#000'}}>{currentUser.name.split(' ')[0]}</div>
-            <div style={{fontSize:'.8rem',color:'#000000ff'}}>{currentUser.role}</div>
+        {/* Só mostra o bloco de visitante se não estiver na tela de login/cadastro */}
+        {!(activeTab === 'profile' && !currentUser) && (
+          <div className="user-profile" onClick={() => setActiveTab('profile')}>
+            <div className="user-avatar">{currentUser ? currentUser.avatar : <i className="fas fa-user"></i>}</div>
+            <div style={{display:'flex',flexDirection:'column'}}>
+              <div style={{fontWeight:700, color:'#000'}}>{currentUser ? currentUser.name.split(' ')[0] : 'Visitante'}</div>
+              <div style={{fontSize:'.8rem',color:'#000000ff'}}>{currentUser ? currentUser.role : 'Não logado'}</div>
+            </div>
           </div>
-        </div>
+        )}
+        {/* Se não estiver logado, ao clicar no perfil, abre tela de login/cadastro */}
+        {activeTab === 'profile' && !currentUser && (
+          <div className="app-container">
+            <LoginScreen
+              authForm={authForm}
+              setAuthForm={setAuthForm}
+              isRegistering={isRegistering}
+              setIsRegistering={setIsRegistering}
+              onLogin={handleLogin}
+              onRegister={handleRegister}
+            />
+          </div>
+        )}
       </header>
 
       {/* Barra de busca centralizada: sempre visível (atende mobile em qualquer tela) */}
@@ -288,64 +291,87 @@ export default function App() {
 
 
       <main className="app-content">
-        {activeTab === 'home' && (
-          <HomeView
-            properties={filteredProperties}
-            onViewDetails={(p, i) => { viewPropertyDetails(p, i) }}
-            favorites={favorites}
-            onToggleFavorite={toggleFavorite}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            activeFilter={activeFilter}
-            setActiveFilter={setActiveFilter}
-            showAdvanced={showAdvancedFilters}
-            setShowAdvanced={setShowAdvancedFilters}
-            priceMin={priceMin}
-            setPriceMin={setPriceMin}
-            priceMax={priceMax}
-            setPriceMax={setPriceMax}
-            bedroomsFilter={bedroomsFilter}
-            setBedroomsFilter={setBedroomsFilter}
-          />
-        )}
+        <div>
+          {/* Se visitante clicar no perfil, mostra tela de login/cadastro */}
+          {activeTab === 'profile' && !currentUser ? (
+            <LoginScreen
+              authForm={authForm}
+              setAuthForm={setAuthForm}
+              isRegistering={isRegistering}
+              setIsRegistering={setIsRegistering}
+              onLogin={handleLogin}
+              onRegister={handleRegister}
+            />
+          ) : (
+            <>
+              {activeTab === 'home' && (
+                <HomeView
+                  properties={filteredProperties}
+                  onViewDetails={(p, i) => { viewPropertyDetails(p, i) }}
+                  favorites={favorites}
+                  onToggleFavorite={toggleFavorite}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  activeFilter={activeFilter}
+                  setActiveFilter={setActiveFilter}
+                  showAdvanced={showAdvancedFilters}
+                  setShowAdvanced={setShowAdvancedFilters}
+                  priceMin={priceMin}
+                  setPriceMin={setPriceMin}
+                  priceMax={priceMax}
+                  setPriceMax={setPriceMax}
+                  bedroomsFilter={bedroomsFilter}
+                  setBedroomsFilter={setBedroomsFilter}
+                />
+              )}
 
-        {/* Visualização detalhada do imóvel (galeria maior) */}
-        {activeTab === 'detail' && viewingProperty && (
-          <PropertyDetail
-            property={viewingProperty}
-            initialIndex={viewingImageIndex}
-            onBack={() => { setViewingProperty(null); setViewingImageIndex(0); setActiveTab('home') }}
-            isFavorite={favorites.includes(viewingProperty.id)}
-            onToggleFavorite={toggleFavorite}
-            onStartChat={startChat}
-            users={users}
-          />
-        )}
+              {/* Visualização detalhada do imóvel (galeria maior) */}
+              {activeTab === 'detail' && viewingProperty && (
+                !isLoggedIn ? (
+                  <LoginScreen
+                    authForm={authForm}
+                    setAuthForm={setAuthForm}
+                    isRegistering={isRegistering}
+                    setIsRegistering={setIsRegistering}
+                    onLogin={handleLogin}
+                    onRegister={handleRegister}
+                  />
+                ) : (
+                  <PropertyDetail
+                    property={viewingProperty}
+                    initialIndex={viewingImageIndex}
+                    onBack={() => { setViewingProperty(null); setViewingImageIndex(0); setActiveTab('home') }}
+                    isFavorite={favorites.includes(viewingProperty.id)}
+                    onToggleFavorite={toggleFavorite}
+                    onStartChat={startChat}
+                    users={users}
+                  />
+                )
+              )}
 
-        {activeTab === 'seller' && (
-          <div className="fade-in">Área do vendedor (exibida para vendedores/admin)</div>
-        )}
+              {/* Chat: se a aba for 'chat' exibimos lista ou conversa ativa */}
+              {activeTab === 'chat' && (
+                <div>
+                  {activeChat ? (
+                    <Chat
+                      contact={activeChat}
+                      messages={messages.filter(m => m.chatWith === activeChat.id)}
+                      onSendMessage={handleSendMessage}
+                      onBack={() => { setActiveChat(null); setActiveTab('chat') }}
+                      currentUserId={currentUser?.id}
+                    />
+                  ) : (
+                    <ChatsListView chats={chats} users={users} onStartChat={(userId) => { startChat(userId); markChatRead(userId); }} />
+                  )}
+                </div>
+              )}
 
-        {/* Chat: se a aba for 'chat' exibimos lista ou conversa ativa */}
-        {activeTab === 'chat' && (
-          <div>
-            {activeChat ? (
-              <Chat
-                contact={activeChat}
-                messages={messages.filter(m => m.chatWith === activeChat.id)}
-                onSendMessage={handleSendMessage}
-                onBack={() => { setActiveChat(null); setActiveTab('chat') }}
-                currentUserId={currentUser?.id}
-              />
-            ) : (
-              <ChatsListView chats={chats} users={users} onStartChat={(userId) => { startChat(userId); markChatRead(userId); }} />
-            )}
-          </div>
-        )}
-
-        {activeTab === 'profile' && (
-          <ProfileView user={currentUser} onLogout={handleLogout} onUpdateUser={updateUser} />
-        )}
+              {activeTab === 'profile' && currentUser && (
+                <ProfileView user={currentUser} onLogout={handleLogout} onUpdateUser={updateUser} />
+              )}
+            </>
+          )}
+        </div>
       </main>
 
       <div className="bottom-menu">
@@ -353,17 +379,6 @@ export default function App() {
           <i className="fas fa-home"></i>
           <span>Início</span>
         </div>
-        {/* Menu 'Vendas' visível apenas para administradores e vendedores aprovados */}
-        {(currentUser && (currentUser.role === 'admin' || (currentUser.role === 'vendedor' && currentUser.approved))) && (
-          <div className={`menu-item ${activeTab==='seller'?'active':''}`} onClick={() => setActiveTab('seller')}>
-            <i className="fas fa-chart-line"></i>
-            <span>Vendas</span>
-          </div>
-        )}
-        {/* Botão de adicionar imóvel visível apenas para admin e vendedores aprovados */}
-        {(currentUser.role === 'admin' || (currentUser.role === 'vendedor' && currentUser.approved)) && (
-          <div className="add-property-btn" onClick={openAddProperty}><i className="fas fa-plus"></i></div>
-        )}
         <div className={`menu-item ${activeTab==='chat'?'active':''}`} onClick={() => setActiveTab('chat')}>
           <i className="fas fa-comments"></i>
           <span>Chat</span>
@@ -373,19 +388,6 @@ export default function App() {
           <span>Sobre</span>
         </div>
       </div>
-
-      {modalOpen && (
-        <AddPropertyModal
-          newProperty={newProperty}
-          setNewProperty={setNewProperty}
-          onSubmit={handleAddProperty}
-          onClose={closeModal}
-        />
-      )}
-      {/* Selecione as views adicionais por aba */}
-      {activeTab === 'seller' && currentUser && (currentUser.role === 'vendedor' || currentUser.role === 'admin') && (
-        <SellerView properties={properties} currentUser={currentUser} onViewDetails={viewPropertyDetails} chats={chats} onStartChat={startChat} users={users} onUpdateUser={updateUser} />
-      )}
 
       {activeTab === 'company' && (
         <CompanyInfoView />
@@ -473,6 +475,92 @@ function initialProperties(){
           "https://images.unsplash.com/photo-1505691723518-36a6f3a0a6b8?auto=format&fit=crop&w=1600&q=90"
         ],
         bedrooms:1, bathrooms:1, area:'95m²', tags:['Centro histórico','Industrial','Pé-direito alto']
-    }
+       },
+      // --- Novas propriedades baseadas no Loft Industrial ---
+      {
+        id: 4,
+        title: "Studio Moderno no Centro",
+        address: "Av. Independência, 120 - Centro, Belo Horizonte",
+        price: "R$ 2.100/mês",
+        status: "Aluguel",
+        type: "Studio",
+        sellerId: 2,
+        description: "Studio moderno com decoração minimalista, próximo a universidades e comércio. Ideal para estudantes e jovens profissionais.",
+        image: "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1000&q=80",
+        images: [
+          "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1600&q=90",
+          "https://images.unsplash.com/photo-1505691723518-36a6f3a0a6b8?auto=format&fit=crop&w=1600&q=90",
+          "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1600&q=90"
+        ],
+        bedrooms: 1, bathrooms: 1, area: '38m²', tags: ['Minimalista','Centro','Próximo à universidade']
+      },
+      {
+        id: 5,
+        title: "Apartamento Compacto com Varanda",
+        address: "Rua das Palmeiras, 45 - Botafogo, Rio de Janeiro",
+        price: "R$ 2.800/mês",
+        status: "Aluguel",
+        type: "Apartamento",
+        sellerId: 2,
+        description: "Apartamento compacto, recém-reformado, com varanda e vista para o bairro. Ótima localização e acesso ao metrô.",
+        image: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1000&q=80",
+        images: [
+          "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1600&q=90",
+          "https://images.unsplash.com/photo-1505691723518-36a6f3a0a6b8?auto=format&fit=crop&w=1600&q=90",
+          "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1600&q=90"
+        ],
+        bedrooms: 2, bathrooms: 1, area: '55m²', tags: ['Varanda','Reformado','Próximo ao metrô']
+      },
+      {
+        id: 6,
+        title: "Loft Colorido no Bairro Boêmio",
+        address: "Rua Augusta, 300 - Consolação, São Paulo",
+        price: "R$ 3.500/mês",
+        status: "Aluguel",
+        type: "Loft",
+        sellerId: 2,
+        description: "Loft colorido e descolado, com decoração artística e espaço aberto. Próximo a bares, restaurantes e vida noturna.",
+        image: "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1000&q=80",
+        images: [
+          "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1600&q=90",
+          "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1600&q=90",
+          "https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=1600&q=90"
+        ],
+        bedrooms: 1, bathrooms: 1, area: '60m²', tags: ['Boêmio','Artístico','Vida noturna']
+      },
+      {
+        id: 7,
+        title: "Apartamento Industrial com Mezanino",
+        address: "Rua XV de Novembro, 200 - Centro, Curitiba",
+        price: "R$ 3.900/mês",
+        status: "Aluguel",
+        type: "Apartamento",
+        sellerId: 2,
+        description: "Apartamento estilo industrial, com mezanino, pé-direito duplo e grandes janelas. Próximo ao centro comercial e transporte público.",
+        image: "https://images.unsplash.com/photo-1499955085172-a104c9463ece?auto=format&fit=crop&w=1000&q=80",
+        images: [
+          "https://images.unsplash.com/photo-1499955085172-a104c9463ece?auto=format&fit=crop&w=1600&q=90",
+          "https://images.unsplash.com/photo-1505691723518-36a6f3a0a6b8?auto=format&fit=crop&w=1600&q=90",
+          "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1600&q=90"
+        ],
+        bedrooms: 2, bathrooms: 2, area: '110m²', tags: ['Industrial','Mezanino','Centro']
+      },
+      {
+        id: 8,
+        title: "Studio Compacto Próximo ao Parque",
+        address: "Av. Ipiranga, 900 - Jardim Botânico, Porto Alegre",
+        price: "R$ 1.800/mês",
+        status: "Aluguel",
+        type: "Studio",
+        sellerId: 2,
+        description: "Studio compacto, ideal para quem busca praticidade e proximidade com áreas verdes. Ambiente aconchegante e funcional.",
+        image: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1000&q=80",
+        images: [
+          "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1600&q=90",
+          "https://images.unsplash.com/photo-1505691723518-36a6f3a0a6b8?auto=format&fit=crop&w=1600&q=90",
+          "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1600&q=90"
+        ],
+        bedrooms: 1, bathrooms: 1, area: '32m²', tags: ['Próximo ao parque','Compacto','Aconchegante']
+      }
   ]
 }
