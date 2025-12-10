@@ -176,9 +176,6 @@ export default function App() {
     })
   }
 
-  function bloqsearchbar() {
-    
-  }
   
 
   // Função: marcar conversa como lida (zera unread)
@@ -282,12 +279,14 @@ export default function App() {
       </header>
 
       {/* Barra de busca centralizada: sempre visível (atende mobile em qualquer tela) */}
-      <div className="search-bar" style={{padding:'12px 18px', backgroundColor: '#fff'}}>
-        <div style={{display:'flex',gap:10}}>
-          <input className="search-input" placeholder="Buscar por local, tipo ou característica..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
-          <button className="search-btn" onClick={() => {}}><i className="fas fa-search"></i></button>
+      {activeTab === 'app-container' && (
+        <div id='search' className="search-bar" style={{padding:'12px 18px', backgroundColor: '#fff'}}>
+          <div style={{display:'flex',gap:10}}>
+            <input className="search-input" placeholder="Buscar por local, tipo ou característica..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+            <button className="search-btn" onClick={() => {}}><i className="fas fa-search"></i></button>
+          </div>
         </div>
-      </div>
+      )}
 
       <main className="app-content">
         <div>
