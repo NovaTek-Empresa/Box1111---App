@@ -758,7 +758,10 @@ h2 {
 
 /* Sistema de Chat */
 .chat-container {
-    height: 530px;
+    top: 20px;
+    left: 18px;
+    height: 720px;
+    width: 373px;
     display: flex;
     flex-direction: column;
     background: #0f0f0f;
@@ -766,6 +769,8 @@ h2 {
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.1);
     margin: -25px;
+    position: fixed;
+    z-index: 99999;
 }
 
 .chat-header {
