@@ -770,7 +770,7 @@ h2 {
     border: 1px solid rgba(0, 0, 0, 0.1);
     margin: -25px;
     position: fixed;
-    z-index: 99999;
+    z-index: 99998;
 }
 
 .chat-header {
