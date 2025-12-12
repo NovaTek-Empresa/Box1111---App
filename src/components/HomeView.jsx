@@ -219,7 +219,7 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
       ) : properties.map((p,idx) => (
         <div key={p.id} className="property-card" style={{marginBottom:20}}>
           {/* Imagem maior e clicável para abrir detalhes */}
-          <div className="property-image" style={{backgroundImage:`url(${(p.images && p.images[0]) || p.image})`, height: 300, cursor: 'pointer'}} onClick={() => onViewDetails(p)}>
+          <div className="property-image" style={{backgroundImage:`url(${(p.images && p.images[0]) || p.image})`, height: 300, cursor: 'pointer'}}>
             <div className="property-badge">{p.type}</div>
             <div className="property-price">{p.price}</div>
             <div className="property-favorite" onClick={() => onToggleFavorite(p.id)}>
@@ -228,7 +228,7 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
           </div>
           <div className="property-info">
             {/* Título clicável também abre detalhes */}
-            <h3 className="property-title" style={{cursor:'pointer'}} onClick={() => onViewDetails(p)}>{p.title}</h3>
+            <h3 className="property-title" style={{cursor:'pointer'}}></h3>
             <p className="property-address">{p.address}</p>
             <p style={{color:'#000000ff'}}>{p.description.substring(0,220)}...</p>
             {/* Tags do imóvel para ajudar na busca visual */}
