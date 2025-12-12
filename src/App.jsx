@@ -336,6 +336,8 @@ export default function App() {
                   setSearchQuery={setAllSearchQuery}
                   priceOrder={allPriceOrder}
                   setPriceOrder={setAllPriceOrder}
+                  favorites={favorites}
+                  onToggleFavorite={toggleFavorite}
                 />
               )}
               {activeTab === 'favorites' && (
