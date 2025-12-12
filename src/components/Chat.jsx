@@ -31,7 +31,7 @@ export default function Chat({ contact, messages, onSendMessage, onBack, current
           <div className="chat-contact-avatar">{contact.avatar}</div>
           <div className="chat-contact-info">
             <h3>{contact.name}</h3>
-            <p>Vendedor</p>
+            <p id='chat-vendor'>Vendedor</p>
           </div>
         </div>
       </div>

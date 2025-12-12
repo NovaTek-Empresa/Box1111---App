@@ -758,17 +758,23 @@ h2 {
 
 /* Sistema de Chat */
 .chat-container {
-    height: calc(100vh - 180px);
+    top: 20px;
+    left: 18px;
+    height: 720px;
+    width: 373px;
     display: flex;
     flex-direction: column;
     background: #0f0f0f;
     border-radius: 20px;
     overflow: hidden;
-    border: 1px solid rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin: -25px;
+    position: fixed;
+    z-index: 99998;
 }
 
 .chat-header {
-    background: rgba(0, 0, 0, 0.9);
+    background: linear-gradient(135deg, #000000, #22c55e);
     padding: 20px;
     border-bottom: 1px solid rgba(0, 255, 136, 0.1);
     display: flex;
@@ -846,7 +852,7 @@ p {
 
 .chat-input-area {
     padding: 20px;
-    background: rgb(0, 0, 0);
+    background: linear-gradient(135deg, #000000, #22c55e);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     gap: 12px;
@@ -864,7 +870,7 @@ p {
 
 .chat-send-btn {
     background: linear-gradient(135deg, #ffffff, #ffffff);
-    color: #000;
+    color: #10642f;
     border: none;
     border-radius: 50%;
     width: 55px;
@@ -1066,7 +1072,7 @@ p {
     bottom: 0;
     width: 100%;
     max-width: 480px;
-    background: rgba(0, 0, 0, 0.95);
+    background: linear-gradient(135deg, #000000, #22c55e);
     display: flex;
     justify-content: space-around;
     padding: 18px 0;
@@ -1338,6 +1344,10 @@ p {
     .team-members {
         gap: 15px;
     }
+}
+
+#chat-vendor {
+    color: white !important;
 }
 
 /* Fim do CSS copiado do HTML */

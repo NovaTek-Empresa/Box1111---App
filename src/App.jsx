@@ -66,6 +66,7 @@ export default function App() {
     return raw ? JSON.parse(raw) : initialUsers()
   })
 
+
   // Função utilitária: atualiza um usuário na lista e persiste
   function updateUser(updated) {
     setUsers(prev => {
@@ -393,10 +394,12 @@ export default function App() {
             </>
           )}
         </div>
-        
       </main>
   )}
 
+
+
+      {activeTab !== "" && (
       <div className="bottom-menu">
         <div className={`menu-item ${activeTab==='home'?'active':''}`} onClick={() => setActiveTab('home')}>
           <i className="fas fa-home"></i>
@@ -419,12 +422,17 @@ export default function App() {
           <span>Sobre</span>
         </div>
       </div>
+      )}
 
       {activeTab === 'company' && ( 
         <CompanyInfoView />
       )}
     </div>
   )
+}
+
+function ocultarchat() {
+  document.getElementById()
 }
 
 
@@ -596,3 +604,5 @@ function initialProperties(){
       }
   ]
 }
+
+
