@@ -52,22 +52,16 @@ export default function CompanyInfoView() {
         </div>
 
         {/* Equipe */}
-        <div style={{fontWeight:700, fontSize:15, marginBottom:6}}>Equipe</div>
+        
         <div style={{display:'flex', justifyContent:'center', gap:18, marginBottom:24}}>
           <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
-            <div style={{width:44, height:44, borderRadius:'50%', background:'#1e90ff', color:'#fff', fontWeight:700, fontSize:18, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:2}}>
-              <i className="fas fa-user-tie"></i>
-            </div>
-            <div style={{fontWeight:700, fontSize:14}}>Bruno Alves</div>
-            <div style={{color:'#888', fontSize:13}}>CEO</div>
+            
+           
           </div>
             {/* ...outros membros da equipe, se desejar... */}
             <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
-              <div style={{width:44, height:44, borderRadius:'50%', background:'#ff3366', color:'#fff', fontWeight:700, fontSize:18, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:2}}>
-                <i className="fas fa-user"></i>
-              </div>
-              <div style={{fontWeight:700, fontSize:14}}>Vanessa Brito</div>
-              <div style={{color:'#888', fontSize:13}}>Atendimento</div>
+             
+            
             </div>
           </div>
       </div>
