@@ -74,10 +74,10 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
           </div>
         </div>
 
-        <div style={{marginTop:18,display:'flex',gap:12}} className="property-actions">
-          <div className="action-btn primary" onClick={() => onStartChat(seller.id)}>Conversar com vendedor</div>
-          <div className="action-btn secondary">Agendar visita</div>
-          <div className="action-btn green" style={{background:'#22c55e',color:'#fff'}} onClick={() => setShowReserve(true)}>Alugar</div>
+        <div style={{marginTop:18,display:'block',gap:12}} className="property-actions">
+          <div className="action-btn green" style={{background:'#22c55e',color:'#000000ff',}} onClick={() => setShowReserve(true)}><i class="fas fa-key"></i>Alugar
+          </div>
+          <div className="action-btn primary" onClick={() => onStartChat(seller.id)}><i class="fas fa-comments"></i>Conversar com Vendedor</div> 
         </div>
       </div>
 
