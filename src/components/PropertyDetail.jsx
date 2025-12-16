@@ -11,8 +11,6 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
   // Estado para modal de reserva
   const [showReserve, setShowReserve] = React.useState(false)
 
-  const [activeTab, setActiveTab] = React.useState(null);
-
   // Função: avança para próxima imagem (roda)
   const next = () => setIndex(i => (i + 1) % (property.images ? property.images.length : 1))
   // Função: volta para imagem anterior
@@ -77,8 +75,7 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
         </div>
 
         <div style={{marginTop:18,display:'block',gap:12}} className="property-actions">
-          <div className="action-btn green"  style={{background:'#22c55e',color:'#000000ff',}} onClick={() => setShowReserve(true)}>
-            <i class="fas fa-key"></i>Alugar
+          <div className="action-btn green" style={{background:'#22c55e',color:'#000000ff',}} onClick={() => setShowReserve(true)}><i class="fas fa-key"></i>Alugar
           </div>
           <div className="action-btn primary" onClick={() => onStartChat(seller.id)}><i class="fas fa-comments"></i>Conversar com Vendedor</div> 
         </div>
