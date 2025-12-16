@@ -11,6 +11,7 @@ import SellerView from './components/SellerView'
 import CompanyInfoView from './components/CompanyInfoView'
 import AllPropertiesView from './components/AllPropertiesView'
 import FavoritesView from './components/FavoritesView'
+import Pagamento from './components/Pagamento'
 
 
 // App principal: converte a lógica do HTML original para React moderno
