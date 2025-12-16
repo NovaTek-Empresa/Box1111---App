@@ -57,7 +57,6 @@ export default function LoginScreen({ authForm, setAuthForm, isRegistering, setI
             </div>
           </>
         )}
-
         <button type="submit" className="btn btn-primary" style={{width:'100%'}}>{isRegistering ? 'Criar Conta' : 'Acessar Plataforma'}</button>
       </form>
 

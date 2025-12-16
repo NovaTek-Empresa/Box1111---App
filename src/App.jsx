@@ -11,6 +11,7 @@ import SellerView from './components/SellerView'
 import CompanyInfoView from './components/CompanyInfoView'
 import AllPropertiesView from './components/AllPropertiesView'
 import FavoritesView from './components/FavoritesView'
+import Pagamento from './components/Pagamento'
 
 // App principal: converte a lógica do HTML original para React moderno
 // Comentários e explicações em PT-BR em cada função/parte importante
@@ -264,6 +265,10 @@ export default function App() {
         <div className="logo" style={{height:60, width:60, display:'flex', alignItems:'center', justifyContent:'center', marginRight:18}}>
           <img src={logoImg} alt="Logo BOX1111" className="logo-img" style={{height:50, width:50, objectFit:'contain', borderRadius:12, boxShadow:'0 2px 8px rgba(0,0,0,0.08)'}} />
         </div>
+        <button onClick={() => setActiveTab('Pagamento')}>
+          Pagamento
+        </button>
+
         {/* Só mostra o bloco de visitante se não estiver na tela de login/cadastro */}
         {!(activeTab === 'profile' && !currentUser) && (
           <div className="user-profile" onClick={() => setActiveTab('profile')}>
@@ -328,6 +333,11 @@ export default function App() {
                   setBedroomsFilter={setBedroomsFilter}
                 />
               )}
+
+              {activeTab === 'Pagamento' && (
+                <Pagamento />
+              )}
+
               {activeTab === 'all' && (
                 <AllPropertiesView
                   properties={properties}
@@ -432,6 +442,8 @@ export default function App() {
     </div>
   )
 }
+
+
 
 function ocultarchat() {
   document.getElementById()
