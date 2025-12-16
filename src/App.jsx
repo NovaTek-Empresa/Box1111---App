@@ -11,7 +11,11 @@ import SellerView from './components/SellerView'
 import CompanyInfoView from './components/CompanyInfoView'
 import AllPropertiesView from './components/AllPropertiesView'
 import FavoritesView from './components/FavoritesView'
+<<<<<<< HEAD
+import ConfirmacaoDeReserva from './components/ConfirmacaoDeReserva'
+=======
 import Pagamento from './components/Pagamento'
+>>>>>>> 18b1f431dfd801f2d066cb6409a95c859ff15113
 
 // App principal: converte a lógica do HTML original para React moderno
 // Comentários e explicações em PT-BR em cada função/parte importante
@@ -382,6 +386,12 @@ export default function App() {
                   />
                 )
               )}
+
+                {activeTab === 'confirmacao' && 
+                 <ConfirmacaoDeReserva 
+                    
+                 />
+              }
 
               {/* Chat: se a aba for 'chat' exibimos lista ou conversa ativa */}
               {activeTab === 'chat' && (
