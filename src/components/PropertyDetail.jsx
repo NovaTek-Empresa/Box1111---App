@@ -1,7 +1,9 @@
 import React from 'react'
+import ConfirmacaoDeReserva from './ConfirmacaoDeReserva';
 
 // PropertyDetail: exibe o imóvel com galeria maior e controles
 // Comentários em PT-BR explicam cada função e linha chave
+
 
 export default function PropertyDetail({ property, onBack, isFavorite, onToggleFavorite, onStartChat, users, initialIndex = 0 }){
   // Estado para índice da imagem atual na galeria
@@ -11,7 +13,7 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
   // Estado para modal de reserva
   const [showReserve, setShowReserve] = React.useState(false)
 
-  const [activeTab, setActiveTab] = React.useState(null);
+  const [activeTab, setActiveTab] = React.useState('detalhes');
 
   // Função: avança para próxima imagem (roda)
   const next = () => setIndex(i => (i + 1) % (property.images ? property.images.length : 1))
@@ -25,6 +27,10 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
     setIndex(initialIndex || 0)
   }, [initialIndex])
 
+    if (activeTab === 'confirmacao') {
+    return <ConfirmacaoDeReserva />;
+  }
+  
   return (
     <div className="property-detail-container fade-in" style={{paddingBottom:120}}>
       <button className="btn btn-secondary" onClick={onBack} style={{marginBottom:12}}>Voltar</button>
@@ -77,7 +83,7 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
         </div>
 
         <div style={{marginTop:18,display:'block',gap:12}} className="property-actions">
-          <div className="action-btn green"  style={{background:'#22c55e',color:'#000000ff',}} onClick={() => setShowReserve(true)}>
+          <div className="action-btn green"  style={{background:'#22c55e',color:'#000000ff',}} onClick={() => setActiveTab('confirmacao')}>
             <i class="fas fa-key"></i>Alugar
           </div>
           <div className="action-btn primary" onClick={() => onStartChat(seller.id)}><i class="fas fa-comments"></i>Conversar com Vendedor</div> 

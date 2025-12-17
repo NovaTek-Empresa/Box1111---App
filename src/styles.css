@@ -1461,4 +1461,98 @@ background-color: #22c55e;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.192);
 }
 
+
+
+
+/* Confirmação de Reserva */
+
+.conf-page {
+    padding: 16px;
+    padding-bottom: 140px;
+    max-width: 420px;
+    margin: 0 auto;
+    background: #f6f7f8;
+}
+
+.conf-title h2 {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.conf-progress {
+    height: 3px;
+    background: #22c55e;
+    width: 100%;
+    border-radius: 2px;
+}
+.header-conf {
+    display: flex;
+    background-color: #fff;
+    position: relative;
+    margin: 30px;
+    margin-top: 0px;
+}
+
+.conf-title h2 {
+    font-family: sans-serif;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.card-label{
+    font-weight: 600;
+    display: block;
+    margin-bottom: 12px
+}
+
+.reserva-content {
+    display: flex;
+    gap: 12px;
+}
+
+.reserva-thumb {
+    background: #4ade80;
+    border-radius: 12px;
+    width: 85px;
+    height: 85px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.badge{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-left: 30px;
+    margin-bottom: 60px;
+    font-size: 10px;
+    background: rgba(0,0,0,0.6);
+    padding: 2px 8px;
+    border-radius: 8px;
+}
+
+.reserva-info h3 {
+    display: flex;
+    position: relative;
+    margin-bottom: 1px;
+    margin: 1;
+    font-size: medium;
+    color: #000000;
+}
+
+.cidade{
+    font-size: small;
+    color: #ff0101 !important;
+}
+
 /* Fim do CSS copiado do HTML */
