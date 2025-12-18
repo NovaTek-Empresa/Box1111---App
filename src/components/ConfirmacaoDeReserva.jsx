@@ -20,9 +20,9 @@ export default function ConfirmacaoDeReserva(){
               </div>
               <div className="reserva-info">
                 <h3>Pindamongaba</h3>
-                <p className="cidade">Xique-Xique, BA</p>
-                <p className="valor">R$4000,00</p>
-               <span className="sub">Valor total da estadia</span> 
+                <p className="cidade-info">Xique-Xique, BA</p>
+                <p className="valor-info">R$4000,00</p>
+               <span className="sub-info">Valor total da estadia</span> 
               </div>
             </div>
 
