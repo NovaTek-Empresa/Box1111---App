@@ -65,7 +65,7 @@ export default function LoginScreen({ authForm, setAuthForm, isRegistering, setI
       </div>
 
       <div style={{color:'#666',fontSize:'.85rem',marginTop:15}}>
-        <strong>Dica:</strong> use admin@box1111.com para admin ou cliente@box1111.com para usuário
+       
       </div>
     </div>
   )
