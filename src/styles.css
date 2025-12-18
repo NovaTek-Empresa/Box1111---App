@@ -449,6 +449,21 @@ body {
     cursor: pointer;
     transition: all 0.3s;
 }
+html, body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
 
 .search-btn:hover {
     transform: scale(1.05);
