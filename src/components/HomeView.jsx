@@ -1,6 +1,6 @@
 import React from 'react'
 
-// HomeView: lista de imóveis e cartões com filtros modernos
+// HomeView: lista de imóveis e cartões com filtros moderno
 // Inclui estilos responsivos locais para funcionar bem em mobile/app
 export default function HomeView({ properties, onViewDetails, favorites, onToggleFavorite, searchQuery = '', setSearchQuery = () => {}, activeFilter = 'all', setActiveFilter = () => {}, showAdvanced = false, setShowAdvanced = () => {}, priceMin = '', setPriceMin = () => {}, priceMax = '', setPriceMax = () => {}, bedroomsFilter = '', setBedroomsFilter = () => {} }){
   return (
