@@ -76,7 +76,7 @@ export default function Pagamento() {
                     </div>
                     <div>
                         <div className="name-cartao"><label className="endereco-cob">Data de Validade (MM/AA)</label> <label className="cvv-text">CVV</label></div>
-                        <input className="btn-date" type="date" placeholder="MM/AA" /> <input className="btn-cvv" type="password" placeholder="123" />
+                        <input className="btn-date" type="month" placeholder="MM/AA" /> <input className="btn-cvv" type="password" placeholder="123" />
                     </div>
                     <div className="end-cob">
                         <label className="endereco-cob">Endereço de Cobrança</label>
@@ -95,9 +95,107 @@ export default function Pagamento() {
                 </div>
             )}
 
-            {forma === "pix" && <p>Pagamento via Pix</p>}
-            {forma === "boleto" && <p>Pagamento via Boleto</p>}
-            {forma === "dinheiro" && <p>Pagamento em Dinheiro</p>}
+            {forma === "pix" && (
+                <div className="campos-pix">
+                    <div className="details">
+                        <h3 className="details-card">Dados PIX</h3>
+                        <div className="div-label-pix"><label className="details-pix">O PIX sera gerado no nome do titular abaixo.</label></div>
+                    </div>
+                    <div className="number-card">
+                    <div className="linha-nomes">
+                        <div>
+                            <label className="text-px">Nome</label>
+                            <input className="input-names" type="text" placeholder="Nome do titular" />
+                        </div>
+
+                        <div>
+                            <label className="text-px">Sobrenome</label>
+                            <input className="input-names2" type="text" placeholder="Sobrenome do titular" />
+                        </div>
+                    </div>
+                    </div>
+                    <div className="nome-card">
+                        <label className="form-name-text">Chave PIX (CPF/CNPJ, E-mail ou Telefone)</label>
+                        <input className="forma-cartao-btn" type="text" placeholder="Ex: 000.000.000-00 ou email@exemplo.com" />
+                    </div>
+                    <div className="confirmacao">
+                        <label className="confirmacao-text">3. Confirmação</label>
+                        <div className="check-box">
+                            <input className="check-btn" type="checkbox" />
+                            <label className="termos">Aceito os <a id="termos" href="#">termos e condições</a> e as políticas de cancelamento e regra do imovel</label>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
+            {forma === "boleto" && (
+                <div className="campos-pix">
+                    <div className="details">
+                        <h3 className="details-card">Dados para Boleto</h3>
+                        <div className="div-label-pix"><label className="details-pix">O Boleto será emitido para o seguinte nome e documento.</label></div>
+                    </div>
+                    <div className="number-card">
+                    <div className="linha-nomes">
+                        <div>
+                            <label className="text-px">Nome Completo para Boleto</label>
+                            <input className="input-boleto-name" type="text" placeholder="Nome Completo" />
+                        </div>
+                    </div>
+                    </div>
+                    <div className="nome-card">
+                        <label className="form-name-text">CPF/CNPJ para Boleto</label>
+                        <input className="forma-cartao-btn" type="text" placeholder="Ex: 000.000.000-00 ou CNPJ" />
+                    </div>
+                    <div className="confirmacao">
+                        <label className="confirmacao-text">3. Confirmação</label>
+                        <div className="check-box">
+                            <input className="check-btn" type="checkbox" />
+                            <label className="termos">Aceito os <a id="termos" href="#">termos e condições</a> e as políticas de cancelamento e regra do imovel</label>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {forma === "dinheiro" && (
+                <div className="campos-cartao">
+                    <div className="details">
+                        <h3 className="payment-text-h3">Pagamento em Dinheiro Físico</h3>
+
+                    <div className="div-label-pix">
+                        <label className="payment-text-label">
+                            Atenção: Esta opção depende de confirmação e acordo direto com o vendedor/anfitrião.
+                        </label>
+                    </div>
+
+                    {/* Mensagem para o vendedor */}
+                    <div className="mensagem-vendedor">
+                            <label className="payment-text-label2">
+                                Mensagem para o Vendedor (opcional)
+                            </label>
+
+                            <textarea
+                                className="textarea-vendedor"
+                                placeholder="Ex: Chegarei com o valor trocado. A que horas podemos fazer o acerto?"
+                            />
+
+                            <button className="btn-enviar-vendedor">
+                                Enviar Mensagem para o Vendedor
+                            </button>
+
+                            <div className="confirmacao">
+                                <label className="confirmacao-text">3. Confirmação</label>
+                                <div className="check-box">
+                                    <input className="check-btn" type="checkbox" />
+                                    <label className="termos">Aceito os <a id="termos" href="#">termos e condições</a> e as políticas de cancelamento e regra do imovel</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
         </div>
     );
 }
