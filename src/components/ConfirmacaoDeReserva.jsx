@@ -6,12 +6,12 @@ export default function ConfirmacaoDeReserva(){
         
       {/* Titulo */}
       <div className="conf-title">
-        <h2>Confirmação de Reserva</h2>
+        <h2 id="title-reserv">Confirmação de Reserva</h2>
         <div className="conf-progress"/>
      </div>
 
         {/* Info da Reserva */}
-          <div className="card card-reserva">
+          <div className="card card-info">
             <span className="card-label">Sua Reserva</span>
 
             <div className="reserva-content">
@@ -19,7 +19,7 @@ export default function ConfirmacaoDeReserva(){
                 <span className="badge">5 fotos</span>
               </div>
               <div className="reserva-info">
-                <h3>Pindamongaba</h3>
+                <h3 id="lugar-info">Pindamongaba</h3>
                 <p className="cidade-info">Xique-Xique, BA</p>
                 <p className="valor-info">R$4000,00</p>
                <span className="sub-info">Valor total da estadia</span> 
@@ -36,12 +36,12 @@ export default function ConfirmacaoDeReserva(){
           <div className="datas">
             <div className="campo">
               <label>Chekck-in</label>
-              <input type="date"/>
+              <input className="check-in" type="date"/>
             </div>
 
           <div className="campo">
             <label>Check-out</label>
-            <input type="date"/>
+            <input className="check-out"  type="date"/>
           </div>
       </div>     
          <p className= "noites"> 5 noites (Simulado)</p>
@@ -49,34 +49,27 @@ export default function ConfirmacaoDeReserva(){
 
         {/* Contadores */}
         <div className="contadores">
-          <label>Hóspedes (Adultos)</label>
-          <div className="controle">
-            <button>-</button>
-            <button className="plus">+</button>  
-          </div>
-        </div>
-                <div className="contador">
-          <label>Bebês (Opcional)</label>
-          <div className="controle">
-            <button>-</button>    
-            <button className="plus">+</button>
-          </div>
-        </div>
+          <label id="hóspedes">Hóspedes (Adultos)</label>
+          <input id="total-adultos" type="text" placeholder="Total de Adultos"/>
+          <button id="menos">-</button>
+          <button id="mais">+</button>
 
-        <div className="contador">
-          <label>Pets (Opcional)</label>
-          <div className="controle">
-            <button>-</button>
-            <button className="plus">+</button>
-          </div>
-        </div>
+          <label id="bebes">Bebês (Opcional)</label>
+          <input id="total-bebes" type="text" placeholder="Crianças até 2 anos"/>
+          <button id="menos">-</button>
+          <button id="mais">+</button>
 
+          <label id="pets">Pets (Opcional)</label>
+          <input id="total-adultos" type="text" placeholder="Total de Adultos"/>
+          <button id="menos">-</button>
+          <button id="mais">+</button>
+      </div>
 
               {/* Footer */}
-      <div className="conf-footer">
+      <div className="card card-footer">
         <div className="total">
           <span>Total a pagar:</span>
-          <strong>R$ 3.200,00</strong>
+          <label id="valor-total">R$3.200,00</label>
         </div>
 
         <button className="btn-confirmar">
