@@ -12,6 +12,7 @@ import CompanyInfoView from './components/CompanyInfoView'
 import AllPropertiesView from './components/AllPropertiesView'
 import FavoritesView from './components/FavoritesView'
 import Pagamento from './components/Pagamento'
+import ConfirmacaoDeReserva from './components/ConfirmacaoDeReserva'
 
 
 
