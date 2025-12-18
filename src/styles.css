@@ -1382,7 +1382,7 @@ p {
     border-radius: 20px;
     padding: 10px;
     margin: 25px;
-    height: 1100px;
+    height: auto;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.192);
     border: 1px solid #fff;
 }
@@ -1491,7 +1491,7 @@ p {
   color: #777;
 }
 
-/* Fim do CSS copiado do HTML */
+/* Tela feita do zero. */
 
 .btn-div {
     padding-bottom: 20px;
@@ -1515,8 +1515,48 @@ p {
     position: relative;
 }
 
+.linha-nomes {
+  display: flex;
+  gap: 12px;
+}
+
+
+.input-names {
+    width: 133px;
+    height: 50px;
+    margin-top: 10px;
+    padding-left: 10px;
+    border-radius: 7px;
+    border: 1px solid rgba(0, 0, 0, 0.671);
+    position: relative;
+}
+
+.input-names2 {
+    width: 133px;
+    height: 50px;
+    margin-top: 10px;
+    padding-left: 10px;
+    border-radius: 7px;
+    border: 1px solid rgba(0, 0, 0, 0.671);
+    position: relative;
+}
+
+
+
 .input-name {
     height: 75px;
+}
+
+.div-label-pix {
+    margin-top: 10px;
+    font-family: sans-serif;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.493);
+}
+
+.input-names2::placeholder {
+    font-size: 12px;
+
 }
 
 .input-pgt::placeholder,
@@ -1557,7 +1597,35 @@ p {
     position: relative;
 }
 
+.input-boleto-name {
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    padding-left: 10px;
+    border-radius: 7px;
+    border: 1px solid rgba(0, 0, 0, 0.671);
+    position: relative;
+}
+
 .forma-cartao-btn:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 1px #10b981;
+}
+
+.input-boleto-name:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 1px #10b981;
+}
+
+.input-names:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 1px #10b981;
+}
+
+.input-names2:focus {
     outline: none;
     border-color: #10b981;
     box-shadow: 0 0 0 1px #10b981;
@@ -1597,6 +1665,57 @@ p {
     border-radius: 7px;
     border: 1px solid rgba(0, 0, 0, 0.671);
 }
+
+.payment-text-h3 {
+    font-family: sans-serif;
+    font-size: medium;
+    color: rgba(0, 0, 0, 0.651);
+}
+
+.payment-text-label {
+    font-family: sans-serif;
+    font-size: small;
+    color: rgba(255, 0, 0, 0.623);
+}
+
+.payment-text-label2 {
+    font-family: sans-serif;
+    font-size: medium;
+    color: rgb(0, 0, 0);
+}
+
+.mensagem-vendedor {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.textarea-vendedor {
+    width: 100%;
+    min-height: 90px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    resize: none;
+    font-size: 14px;
+}
+
+.btn-enviar-vendedor {
+    background-color: #1aa34a;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-enviar-vendedor:hover {
+    background-color: #158a3d;
+}
+
 
 .end-cob {
     margin-top: 15px;
