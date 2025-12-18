@@ -4,7 +4,7 @@
     height: auto; /* Altura automática para manter proporção */
     display: block;
     margin: 0 auto 8px auto; /* Centraliza e dá espaçamento inferior */
-    border-radius: 0px; /* Bordas arredondadas para visual moderno */
+    border-radius: 24px; /* Bordas arredondadas para visual moderno */
     box-shadow: 0 2px 16px rgba(0,255,136,0.12); /* Sombra leve para destaque */
 }
 /* Comentário: a classe .logo-img é usada no App.jsx para exibir o logo PNG do app, localizado na pasta /logo. */
@@ -98,22 +98,6 @@ body {
     text-align: center;
     animation: slideUp 1s ease-out 0.7s both;
 }
-/* removendo barra de rolagem horizontal e vertical */
-html, body {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-/* Chrome, Edge, Safari */
-::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
-}
-
-/* Firefox */
-* {
-  scrollbar-width: none;
-}
 
 .loading-bar {
     width: 200px;
@@ -133,7 +117,90 @@ html, body {
     animation: loading 2s ease-in-out forwards;
 }
 
+/* Tela de Login */
+.login-screen {
+    padding: 30px 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+    position: relative;
+    overflow: hidden;
+}
 
+.login-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.05;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.login-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.login-logo-box {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #000;
+}
+
+.login-logo h1 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    background: linear-gradient(to right, #00ff88, #00cc6a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-subtitle {
+    color: #aaa;
+    font-size: 1rem;
+    max-width: 300px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+.login-form {
+    background: rgb(255, 255, 255);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid rgb(0, 0, 0);
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.login-form:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.199);
+}
 
 /* Continuação do CSS extraído do APP-TESTE.HTML */
 .form-group {
@@ -382,6 +449,21 @@ html, body {
     cursor: pointer;
     transition: all 0.3s;
 }
+html, body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
 
 .search-btn:hover {
     transform: scale(1.05);
@@ -389,69 +471,41 @@ html, body {
 
 /* Filtros */
 .filters-section {
-    padding: 12px 16px; /* ↓ um pouco menor */
+    padding: 15px 20px;
     background: rgba(245, 245, 245, 0.9);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
 }
-.filters-advanced {
-    display: none !important;
-}
 
-/* Container dos filtros */
 .filter-tags {
     display: flex;
-    gap: 8px; /* ↓ menor para caber melhor */
+    gap: 10px;
     overflow-x: auto;
-    padding-bottom: 6px;
-
-    -webkit-overflow-scrolling: touch;
+    padding-bottom: 5px;
 }
 
-/* Esconde a barra horizontal */
-.filter-tags::-webkit-scrollbar {
-    display: none;
-}
-.filter-tags {
-    scrollbar-width: none;
-}
-
-/* Botões */
 .filter-tag {
     background: rgba(255, 255, 255, 0.8);
     color: #000000;
-
-    padding: 8px 14px; /* ↓ padding */
+    padding: 10px 18px;
     border-radius: 25px;
-
-    font-size: 0.8rem; /* ↓ fonte levemente menor */
+    font-size: 0.85rem;
     white-space: nowrap;
-
     cursor: pointer;
     transition: all 0.3s;
     border: 1px solid rgb(0, 0, 0);
-
-    flex-shrink: 0; /* IMPORTANTÍSSIMO no mobile */
 }
 
-/* Ativo */
 .filter-tag.active {
     background: linear-gradient(135deg, #000000, #22c55e);
     color: #ffffff;
     font-weight: 700;
 }
 
-/* Hover (desktop) */
 .filter-tag:hover {
     transform: translateY(-2px);
     border-color: #000000;
-}
-
-@media (max-width: 360px) {
-    .filter-tag {
-        font-size: 0.75rem;
-        padding: 7px 12px;
-    }
+    
 }
 
 /* Conteúdo principal */
@@ -727,18 +781,20 @@ h2 {
 
 /* Sistema de Chat */
 .chat-container {
-    position: fixed;
-    inset: 0; /* ocupa a tela toda */
-
+    top: 20px;
+    left: 18px;
+    height: 720px;
+    width: 373px;
     display: flex;
     flex-direction: column;
-
     background: #0f0f0f;
+    border-radius: 20px;
     overflow: hidden;
-
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin: -25px;
+    position: fixed;
     z-index: 99998;
 }
-
 
 .chat-header {
     background: linear-gradient(135deg, #000000, #22c55e);
@@ -1358,6 +1414,12 @@ p {
     box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
+.card-info {
+   background-color: #00ffaa;
+   height: 150px;
+   width: 300px;
+}
+
 .card-label{
     font-weight: 600;
     display: block;
@@ -1421,75 +1483,13 @@ p {
   color: #777;
 }
 
-/* inicio da tela do zero */
-
-#titulo-pgt {
-    color: rgb(26, 26, 26);
-    font-size: 16px;
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    text-align: left;
-    margin-top: 7px;
+.card-etapa1{
+    background-color: red;
+    margin-top: 50px;
 }
 
-#termos {
-    color: rgb(18, 219, 62);
-}
-
-#dados-pgt {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    font-size: medium;
-    color: rgb(26, 26, 26);
-    margin-top: 20px;
-}
-
-#Nome-pgt {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    font-size: medium;
-    color: rgb(0, 0, 0);
-}
-
-#sobrenome {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    font-size: medium;
-    color: rgb(0, 0, 0);
-}
-
-#forma-pgt {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    font-size: 16px;
-    color: rgb(26, 26, 26);
-    margin-top: 20px;
-}
-
-#text-pgt {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    font-size: 13px;
-    margin-top: 10px;
-    color: rgba(0, 0, 0, 0.411);
-}
-
-.details-card {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    font-size: 17px;
-    color: rgb(0, 0, 0);
-}
-
-.titulo {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    font-size: 13px;
-    height: 40px;
-    border-bottom: 1px solid rgba(145, 145, 145, 0.473);
-}
-
-.etapa2 {
-    background: rgb(255, 255, 255);
-    border-radius: 20px;
-    padding: 10px;
-    margin: 25px;
-    height: auto;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.192);
-    border: 1px solid #ffffff;
-}
+/* Fim do CSS copiado do HTML */
+/* Tela feita do zero. */
 
 
 .btn-div {
