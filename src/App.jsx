@@ -448,6 +448,7 @@ export default function App() {
   )
 }
 
+/* Remove scroll horizontal e vertical */
 
 
 function ocultarchat() {
@@ -478,9 +479,9 @@ function initialProperties(){
         type: "Apartamento",
         sellerId:2,
         description: "Apartamento luxuoso com vista panorâmica para o mar, acabamentos em mármore, cozinha gourmet equipada, 3 suítes...",
-        image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1000&q=80",
+        image: "https://imgbr.imovelwebcdn.com/avisos/resize/2/29/75/29/22/73/1200x1200/4719373938.jpg?isFirstImage=true",
             images: [
-              "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1600&q=90",
+              "https://imgbr.imovelwebcdn.com/avisos/resize/2/29/75/29/22/73/1200x1200/4719373938.jpg?isFirstImage=true",
               "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1600&q=90",
               "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1600&q=90",
               "https://images.unsplash.com/photo-1499955085172-a104c9463ece?auto=format&fit=crop&w=1600&q=90",

@@ -173,9 +173,9 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
       </div>
 
       {/* Filtros rápidos + botão para filtros avançados */}
-      <div className="filters-section" style={{display:'flex',gap:12,alignItems:'center',marginBottom:12}}>
+      <div className="filters-section" style={{display:'flex',gap:12,alignItems:'center',marginBottom:1}}>
         <div style={{display:'flex',gap:10}}>
-          {['all','Apartamento','Casa','Venda','Aluguel'].map(f => (
+          {['all','Apartamento','Casa','Aluguel'].map(f => (
             <div key={f} className={`filter-tag ${activeFilter===f?'active':''}`} onClick={() => setActiveFilter(f)} style={{cursor:'pointer'}}>
               {f === 'all' ? 'Todos' : f}
             </div>
