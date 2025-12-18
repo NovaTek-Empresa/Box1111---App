@@ -1,6 +1,0 @@
-{
-	"appId": "com.box1111.app",
-	"appName": "Box App",
-	"webDir": "dist",
-	"bundledWebRuntime": false
-}

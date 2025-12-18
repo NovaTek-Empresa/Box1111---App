@@ -13,8 +13,6 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
   // Estado para modal de reserva
   const [showReserve, setShowReserve] = React.useState(false)
 
-  const [activeTab, setActiveTab] = React.useState('detalhes');
-
   // Função: avança para próxima imagem (roda)
   const next = () => setIndex(i => (i + 1) % (property.images ? property.images.length : 1))
   // Função: volta para imagem anterior
@@ -26,11 +24,13 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
   React.useEffect(() => {
     setIndex(initialIndex || 0)
   }, [initialIndex])
+  
+const [activeTab, setActiveTab] = React.useState('detalhes');
 
     if (activeTab === 'confirmacao') {
     return <ConfirmacaoDeReserva />;
   }
-  
+
   return (
     <div className="property-detail-container fade-in" style={{paddingBottom:120}}>
       <button className="btn btn-secondary" onClick={onBack} style={{marginBottom:12}}>Voltar</button>
@@ -82,11 +82,11 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
           </div>
         </div>
 
-        <div style={{marginTop:18,display:'block',gap:12}} className="property-actions">
+        <div style={{marginTop:18,display:'grid',gap:12}} className="property-actions">
           <div className="action-btn green"  style={{background:'#22c55e',color:'#000000ff',}} onClick={() => setActiveTab('confirmacao')}>
-            <i class="fas fa-key"></i>Alugar
+            <i className="fas fa-key"></i>Alugar
           </div>
-          <div className="action-btn primary" onClick={() => onStartChat(seller.id)}><i class="fas fa-comments"></i>Conversar com Vendedor</div> 
+          <div className="action-btn primary" onClick={() => onStartChat(seller.id)}><i className="fas fa-comments"></i>Conversar com Vendedor</div> 
         </div>
       </div>
 
@@ -108,6 +108,5 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
           </div>
         </div>
       )}
-    </div>
-  )
-}
+  </div>
+)} 
