@@ -1375,6 +1375,14 @@ p {
 
 /* Confirmação de Reserva */
 
+.conf-page{
+    background: #f6f7f8;
+    min-height: 100vh;
+    padding-bottom: 120px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
 /* 🔴 Remove header e footer SOMENTE nesta página */
 .page-sem-layout header,
 .page-sem-layout footer,
@@ -1384,129 +1392,236 @@ p {
   display: none !important;
 }
 
-.conf-page {
-    padding: 16px;
-    padding-bottom: 140px;
-    max-width: 420px;
-    margin: 0 auto;
-    background-color: #f7f8f6;
+.card-reserva{
+    background-color: #fff;
+    padding: 14px 16px 10px;
+    text-align: center;
 }
 
-.conf-title h2 {
-  text-align: center;
-  margin-bottom: 8px;
+#title-reserv{
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
 }
 
 .conf-progress {
+    margin-top: 10px;
     height: 3px;
-    background: #22c55e;
     width: 100%;
-    border-radius: 2px;
-}
-.header-conf {
-    display: flex;
-    background-color: #fff;
-    position: relative;
-    margin: 30px;
-    margin-top: 0px;
+    background: #22c55e;
+    border-radius: 100px;
 }
 
-.conf-title h2 {
-    font-family: sans-serif;
-}
-
-.card {
+.card{
     background-color: #fff;
     border-radius: 14px;
     padding: 16px;
-    margin-top: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    margin: 12px 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 }
 
-.card-info {
-   background-color: #ffffff;
-   height: 150px;
-   width: 300px;
+.card-info{
+    margin-top: 10px;
 }
 
-.card-label{
+.card-label {
+    font-size: 13px;
     font-weight: 600;
+    color: #555;
     display: block;
-    margin-bottom: 12px
+    margin-bottom: 12px;
 }
 
-.card-etapa1{
-    background-color: rgb(255, 255, 255);
-    margin-top: 50px;
-}
-
-.card-footer{
-    position: fixed;
-    background-color: #fff;
-    margin-top: 125px;
-    left: 0;
-    width: 100%;
-    max-width: 420px;
-    box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
-    padding: 16px;
-}
-
-.reserva-content {
+.reserva-content{
     display: flex;
     gap: 12px;
 }
 
 .reserva-thumb {
-    background: #4ade80;
+    width: 80px;
+    height: 80px;
+    background: #22c55e;
     border-radius: 12px;
-    width: 85px;
-    height: 85px;
-    color: #fff;
     display: flex;
-    flex-direction: column;
+    text-align: center;
     justify-content: center;
-    align-items: center;
+    color: #fff;
+    font-weight: 600;
     position: relative;
 }
 
-.badge{
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin-left: 30px;
-    margin-bottom: 60px;
-    font-size: 10px;
-    background: rgba(0,0,0,0.6);
-    padding: 2px 8px;
-    border-radius: 8px;
+.badge {
+  position: absolute;
+  top: 3px;
+  left: 29px;
+  background: rgba(0,0,0,0.25);
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
 }
 
 .reserva-info h3 {
-    margin-bottom: 1px;
-    margin: 1;
-    font-size: medium;
-    color: #000000;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.reserva-info p {
-    margin: 0;
+.cidade-info {
+    font-size: 16px;
+    font-weight: 700;
+    color: #22c55e;
+    margin: 0; 
 }
 
-.reserva-info .cidade-info {
-    color: #666;
-    font-size: small;
+.sub-info {
+  font-size: 12px;
+  color: #888;
 }
 
-.reserva-info .valor-info {
-  color: #22c55e;
-  font-size: large;
-  font-weight: 700;
+.card-etapa1 h3 {
+    font-size: 15px;
+    margin-bottom: 14px;
 }
 
-.reserva-info .sub-info{
+.datas {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.campo{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.campo label{
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.campo input{
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.noites {
+    font-size: 12px;
+    color: #777;
+    margin: 6px 0 14px
+}
+
+.contadores label{
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.contadores input{
+    width: 100%;
+    height: 45px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 12px;
+    margin-bottom: 14px;
+    font-size: 14px;
+}   
+
+.card-footer {
+  position: fixed;
+  bottom: 80px;
+  left: 0px;
+  right: 0px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.total {
+  display: flex;
+  flex-direction: column;
+}
+
+.total span {
   font-size: 12px;
   color: #777;
 }
+
+.total label {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.btn-confirmar {
+  width: 100%;
+  margin-top: 12px;
+  height: 48px;
+  background: #22c55e;
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.etapa {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  margin-top: 6px;
+}
+
+.contador {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+
+.contador span {
+  font-size: 14px;
+  color: #555;
+}
+
+.acoes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.acoes button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  background: #f0f0f0;
+}
+
+.acoes button:last-child {
+  background: #22c55e;
+  color: #fff;
+}
+
+.acoes strong {
+  font-size: 16px;
+  min-width: 16px;
+  text-align: center;
+}
+
 
 
 /* Fim do CSS copiado do HTML */

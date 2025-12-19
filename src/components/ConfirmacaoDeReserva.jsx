@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function ConfirmacaoDeReserva() {
 
@@ -12,12 +12,29 @@ export default function ConfirmacaoDeReserva() {
       document.body.classList.remove('page-sem-layout')
     }
   }, [])
+  
+
+  const [adultos, setAdultos] = useState(1)
+  const [bebes, setBebes] = useState(0)
+  const [pets, setPets] = useState(0)
+
+  const aumentar = (tipo) => {
+  if (tipo === 'adultos') setAdultos(adultos + 1)
+  if (tipo === 'bebes') setBebes(bebes + 1)
+  if (tipo === 'pets') setPets(pets + 1)
+}
+
+  const diminuir = (tipo) => {
+  if (tipo === 'adultos' && adultos > 1) setAdultos(adultos - 1)
+  if (tipo === 'bebes' && bebes > 0) setBebes(bebes - 1)
+  if (tipo === 'pets' && pets > 0) setPets(pets - 1)
+}
 
   return (
     <div className="conf-page"   >
 
       {/* Título */}
-      <div className="conf-title">
+      <div className="card card-reserva">
         <h2 id="title-reserv">Confirmação de Reserva</h2>
         <div className="conf-progress" />
       </div>
@@ -60,17 +77,37 @@ export default function ConfirmacaoDeReserva() {
         <p className="noites">5 noites (Simulado)</p>
 
         {/* Contadores */}
-        <div className="contadores">
-          <label>Hóspedes (Adultos)</label>
-          <input type="text" placeholder="Total de Adultos" />
+<div className="contador">
+  <span>Total de Adultos</span>
 
-          <label>Bebês (Opcional)</label>
-          <input type="text" placeholder="Crianças até 2 anos" />
+  <div className="acoes">
+    <button onClick={() => diminuir('adultos')}>−</button>
+    <strong>{adultos}</strong>
+    <button onClick={() => aumentar('adultos')}>+</button>
+  </div>
+</div>
 
-          <label>Pets (Opcional)</label>
-          <input type="text" placeholder="Total de Pets" />
-        </div>
-      </div>
+<div className="contador">
+  <span>Crianças até 2 anos</span>
+
+  <div className="acoes">
+    <button onClick={() => diminuir('bebes')}>−</button>
+    <strong>{bebes}</strong>
+    <button onClick={() => aumentar('bebes')}>+</button>
+  </div>
+</div>
+
+
+<div className="contador">
+  <span>Animais de estimação</span>
+
+  <div className="acoes">
+    <button onClick={() => diminuir('pets')}>−</button>
+    <strong>{pets}</strong>
+    <button onClick={() => aumentar('pets')}>+</button>
+  </div>
+</div>
+</div>
 
       {/* Rodapé da etapa (este continua, é interno da página) */}
       <div className="card card-footer">
