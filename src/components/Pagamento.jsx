@@ -27,7 +27,7 @@ export default function Pagamento() {
                         <h2 id="forma-pgt">2. Forma de pagamento</h2>
                     </div>
                     <div className="class-text">
-                        <h3 id="text-pgt">Escolha a forma de pagamento:</h3>
+                        <h3 id="text-pgt">Escolha a forma de pagamento e preencha os dados abaixo:</h3>
                     </div>
 
                 <div className="btn-div">
@@ -74,13 +74,20 @@ export default function Pagamento() {
                         <label className="form-name-text">Nome do Dono do Cartão</label>
                         <input className="forma-cartao-btn" type="text" placeholder="Conforme impresso no cartão" />
                     </div>
-                    <div>
-                        <div className="name-cartao"><label className="endereco-cob">Data de Validade (MM/AA)</label> <label className="cvv-text">CVV</label></div>
-                        <input className="btn-date" type="month" placeholder="MM/AA" /> <input className="btn-cvv" type="password" placeholder="123" />
+                    <div className="div-cartao">
+                        <div className="campo">
+                            <label className="date-text">Data de Validade (MM/AA)</label>
+                            <input className="btn-date" type="month" placeholder="MM/AA" />
+                        </div>
+                        <div className="campo-cvv">
+                            <label className="cvv-text">CVV</label>
+                            <input className="btn-cvv" type="number" placeholder="123" />
+                        </div>
                     </div>
                     <div className="end-cob">
                         <label className="endereco-cob">Endereço de Cobrança</label>
                     </div>
+                    
                     <div className="name-cartao">
                         <label className="endereco-cob">Endereço Completo</label>
                         <input className="forma-cartao-btn" type="text" placeholder="Rua, Número, Bairro, Cidade - UF" />
@@ -110,7 +117,7 @@ export default function Pagamento() {
 
                         <div>
                             <label className="text-px">Sobrenome</label>
-                            <input className="input-names2" type="text" placeholder="Sobrenome do titular" />
+                            <input className="input-names2" type="text" placeholder="Sobrenome do Titular" />
                         </div>
                     </div>
                     </div>
