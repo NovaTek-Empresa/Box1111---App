@@ -702,6 +702,7 @@ h2 {
     font-size: 0.9rem;  
     font-family: Arial, sans-serif;
     margin-top: 10px;
+    width: 200px;
 }
 
 .action-btn.primary {
