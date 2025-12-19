@@ -14,7 +14,7 @@ export default function ConfirmacaoDeReserva() {
   }, [])
 
   return (
-    <div className="conf-page">
+    <div className="conf-page"   >
 
       {/* Título */}
       <div className="conf-title">
