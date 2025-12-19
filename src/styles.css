@@ -1518,10 +1518,12 @@ p {
 
 #titulo-pgt {
     color: rgb(26, 26, 26);
-    font-size: 16px;
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     text-align: left;
     margin-top: 7px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: medium;
+
 }
 
 #termos {
@@ -1529,56 +1531,56 @@ p {
 }
 
 #dados-pgt {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: medium;
     color: rgb(26, 26, 26);
     margin-top: 20px;
 }
 
 #Nome-pgt {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: medium;
     color: rgb(0, 0, 0);
 }
 
 #sobrenome {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: medium;
     color: rgb(0, 0, 0);
 }
 
 #forma-pgt {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 16px;
     color: rgb(26, 26, 26);
     margin-top: 20px;
 }
 
 #text-pgt {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 13px;
     margin-top: 10px;
     color: rgba(0, 0, 0, 0.411);
 }
 
 .details-card {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 17px;
     color: rgb(0, 0, 0);
 }
 
 .titulo {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 13px;
     height: 40px;
-    border-bottom: 1px solid rgba(145, 145, 145, 0.473);
+    border-bottom: 1px solid rgba(145, 145, 145, 0.253);
 }
 
 .etapa2 {
     background: rgb(255, 255, 255);
     border-radius: 20px;
     padding: 10px;
-    margin: 25px;
+    margin: 15px;
     height: auto;
     box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.192);
     border: 1px solid #ffffff;
@@ -1587,7 +1589,7 @@ p {
 
 .btn-div {
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(145, 145, 145, 0.473);
+    border-bottom: 1px solid rgba(145, 145, 145, 0.253);
     margin-top: -20px;
 }
 
@@ -1614,7 +1616,7 @@ p {
 
 
 .input-names {
-    width: 133px;
+    width: 142px;
     height: 50px;
     margin-top: 10px;
     padding-left: 10px;
@@ -1624,13 +1626,14 @@ p {
 }
 
 .input-names2 {
-    width: 133px;
+    width: 142px;
     height: 50px;
     margin-top: 10px;
     padding-left: 10px;
     border-radius: 7px;
     border: 1px solid rgba(0, 0, 0, 0.671);
     position: relative;
+    font-family: 'Inter', sans-serif;
 }
 
 
@@ -1640,13 +1643,13 @@ p {
 
 .div-label-pix {
     margin-top: 10px;
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 15px;
     color: rgba(0, 0, 0, 0.493);
 }
 
 .input-names2::placeholder {
-    font-size: 12px;
+    font-size: small;
 
 }
 
@@ -1654,18 +1657,18 @@ p {
 .forma-cartao-btn::placeholder,
 .btn-date::placeholder,
 .btn-cvv::placeholder {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 15px;
     color: rgba(0, 0, 0, 0.493);
 }
 
 .btn-pgt {
-    width: 57px;
+    width: 62px;
     height: 57px;
     margin: 40px 6px 6px;
-    border-radius: 9px;
+    border-radius: 7px;
     border: 1px solid rgba(0, 0, 0, 0.192);
-    background-color: #fff;
+    background-color: #dbdbdb17;
 }
 
 .btn-pgt:hover {
@@ -1734,13 +1737,19 @@ p {
     box-shadow: 0 0 0 1px #10b981;
 }
 
+.textarea-vendedor:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 1px #10b981;
+}
+
 .number-card {
     margin-top: 15px;
     padding-bottom: 20px;
 }
 
 .btn-date {
-    width: 64%;
+    width: 100%;
     height: 50px;
     margin-top: 10px;
     padding-left: 10px;
@@ -1749,7 +1758,7 @@ p {
 }
 
 .btn-cvv {
-    width: 96px;
+    width: 90px;
     height: 50px;
     margin-top: 10px;
     padding-left: 10px;
@@ -1758,19 +1767,19 @@ p {
 }
 
 .payment-text-h3 {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: medium;
     color: rgba(0, 0, 0, 0.651);
 }
 
 .payment-text-label {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: small;
     color: rgba(255, 0, 0, 0.623);
 }
 
 .payment-text-label2 {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: medium;
     color: rgb(0, 0, 0);
 }
@@ -1817,9 +1826,29 @@ p {
     font-size: smaller;
 }
 
+.date-text {
+    font-size: smaller;
+}
+
 .cvv-text {
+    position: flex;
     
 }
+
+.div-cartao {
+    display: flex;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.class-name {
+    margin-top: 12px;
+}
+
+.class-sobrenome {
+    margin-top: 12px;
+}
+
 
 .name-cartao {
     margin-top: 20px;
