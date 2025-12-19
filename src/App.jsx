@@ -262,13 +262,13 @@ export default function App() {
   // Render quando logado
   return (
     <div className="app-container">
-      {activeTab !== 'company' && activeTab !== 'confirmacao' && (
+      {!["company", "confirmar"].includes(activeTab) && (
       <header className="app-header">
         {/* Logo do app em imagem PNG, estilizada. O arquivo está na pasta /logo. */}
         <div className="logo" style={{height:60, width:60, display:'flex', alignItems:'center', justifyContent:'center', marginRight:18}}>
           <img src={logoImg} alt="Logo BOX1111" className="logo-img" style={{height:50, width:50, objectFit:'contain', borderRadius:12, boxShadow:'0 2px 8px rgba(0,0,0,0.08)'}} />
         </div>
-        <button onClick={() => setActiveTab('Pagamento')}>
+        <button onClick={() => setActiveTab('pagamento')}>
           Pagamento
         </button>
 
@@ -337,14 +337,10 @@ export default function App() {
                 />
               )}
 
-              {activeTab === 'confirmacao' && (
-              <ConfirmacaoDeReserva      
-              />
-              )}
 
-              {activeTab === 'Pagamento' && (
-                <Pagamento />
-              )}
+              {activeTab === "confirmar" && <ConfirmacaoReserva />}
+
+              {activeTab === "pagamento" && <Pagamento />}
 
               {activeTab === 'all' && (
                 <AllPropertiesView

@@ -1445,6 +1445,15 @@ p {
 
 /* Confirmação de Reserva */
 
+/* 🔴 Remove header e footer SOMENTE nesta página */
+.page-sem-layout header,
+.page-sem-layout footer,
+.page-sem-layout .app-header,
+.page-sem-layout .app-footer,
+.page-sem-layout .bottom-nav {
+  display: none !important;
+}
+
 .conf-page {
     padding: 16px;
     padding-bottom: 140px;
@@ -1559,6 +1568,7 @@ p {
 }
 
 /* Fim do CSS copiado do HTML */
+
 /* Tela feita do zero. */
 
 

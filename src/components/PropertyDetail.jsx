@@ -27,7 +27,7 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
   
 const [activeTab, setActiveTab] = React.useState('detalhes');
 
-    if (activeTab === 'confirmacao') {
+    if (activeTab === 'confirmar') {
     return <ConfirmacaoDeReserva />;
   }
 
@@ -83,7 +83,7 @@ const [activeTab, setActiveTab] = React.useState('detalhes');
         </div>
 
         <div style={{marginTop:18,display:'grid',gap:12}} className="property-actions">
-          <div className="action-btn green"  style={{background:'#22c55e',color:'#000000ff',}} onClick={() => setActiveTab('confirmacao')}>
+          <div className="action-btn green"  style={{background:'#22c55e',color:'#000000ff',}} onClick={() => setActiveTab('confirmar')}>
             <i className="fas fa-key"></i>Alugar
           </div>
           <div className="action-btn primary" onClick={() => onStartChat(seller.id)}><i className="fas fa-comments"></i>Conversar com Vendedor</div> 
