@@ -1,28 +1,39 @@
-/* Logo principal do app (imagem PNG) */
-.logo-img {
-    width: 120px; /* Largura da logo */
-    height: auto; /* Altura automática para manter proporção */
-    display: block;
-    margin: 0 auto 8px auto; /* Centraliza e dá espaçamento inferior */
-    border-radius: 24px; /* Bordas arredondadas para visual moderno */
-    box-shadow: 0 2px 16px rgba(0,255,136,0.12); /* Sombra leve para destaque */
-}
-/* Comentário: a classe .logo-img é usada no App.jsx para exibir o logo PNG do app, localizado na pasta /logo. */
-/* CSS completo copiado da tag <style> do APP-TESTE.HTML */
-/* CSS completo copiado da tag <style> do APP-TESTE.HTML */
+/* ============================================
+   RESET E CONFIGURAÇÕES GERAIS
+   ============================================ */
+
+/* Reset básico para todos os elementos */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scrollbar-width: none; /* Remove scrollbar no Firefox */
 }
 
+/* Estilos base do body */
 body {
     background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
     color: #000000;
     max-width: 100%;
     overflow-x: hidden;
 }
+
+/* Controle de scroll global */
+html, body {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Remove scrollbar no Chrome/Edge/Safari */
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+/* ============================================
+   CONTAINER PRINCIPAL DO APLICATIVO
+   ============================================ */
 
 .app-container {
     max-width: 480px;
@@ -34,7 +45,102 @@ body {
     overflow: hidden;
 }
 
-/* Splash Screen Animação */
+/* ============================================
+   ANIMAÇÕES PERSONALIZADAS
+   ============================================ */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; visibility: hidden; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(0, 255, 136, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+}
+
+@keyframes rotate {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+
+@keyframes loading {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes messageIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   LOGO DO APLICATIVO
+   ============================================ */
+
+.logo-img {
+    width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto 8px auto;
+    border-radius: 24px;
+    box-shadow: 0 2px 16px rgba(0, 255, 136, 0.12);
+}
+
+/* ============================================
+   SPLASH SCREEN (TELA DE INICIALIZAÇÃO)
+   ============================================ */
+
 .splash-screen {
     position: fixed;
     top: 0;
@@ -117,7 +223,10 @@ body {
     animation: loading 2s ease-in-out forwards;
 }
 
-/* Tela de Login */
+/* ============================================
+   TELA DE LOGIN
+   ============================================ */
+
 .login-screen {
     padding: 30px 20px;
     min-height: 100vh;
@@ -141,6 +250,7 @@ body {
         radial-gradient(circle at 80% 70%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
 }
 
+/* Cabeçalho do Login */
 .login-header {
     text-align: center;
     margin-bottom: 40px;
@@ -185,6 +295,7 @@ body {
     line-height: 1.5;
 }
 
+/* Formulário de Login */
 .login-form {
     background: rgb(255, 255, 255);
     border-radius: 20px;
@@ -202,7 +313,6 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.199);
 }
 
-/* Continuação do CSS extraído do APP-TESTE.HTML */
 .form-group {
     margin-bottom: 20px;
 }
@@ -232,11 +342,7 @@ body {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-#ordenar {
-    font-size: 17px;
-    margin-left: 6px;
-}
-
+/* Botões Gerais */
 .btn {
     padding: 16px 24px;
     border: none;
@@ -282,6 +388,7 @@ body {
     color: white;
 }
 
+/* Login Social */
 .social-login {
     display: flex;
     gap: 15px;
@@ -292,6 +399,7 @@ body {
     flex: 1;
 }
 
+/* Rodapé do Login */
 .login-footer {
     text-align: center;
     margin-top: 25px;
@@ -307,7 +415,10 @@ body {
     font-weight: 600;
 }
 
-/* Cabeçalho do App */
+/* ============================================
+   CABEÇALHO DO APLICATIVO
+   ============================================ */
+
 .app-header {
     background: linear-gradient(135deg, #F9F9F9 0%, #F9F9F9 100%);
     color: white;
@@ -358,6 +469,7 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+/* Perfil do Usuário */
 .user-profile {
     display: flex;
     align-items: center;
@@ -406,7 +518,10 @@ body {
     margin-top: 3px;
 }
 
-/* Barra de busca */
+/* ============================================
+   BARRA DE BUSCA E FILTROS
+   ============================================ */
+
 .search-bar {
     padding: 15px 20px;
     background: rgba(26, 26, 26, 0.9);
@@ -449,21 +564,6 @@ body {
     cursor: pointer;
     transition: all 0.3s;
 }
-html, body {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-/* Chrome, Edge, Safari */
-::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
-}
-
-/* Firefox */
-* {
-  scrollbar-width: none;
-}
 
 .search-btn:hover {
     transform: scale(1.05);
@@ -471,7 +571,8 @@ html, body {
 
 /* Filtros */
 .filters-section {
-    padding: 10px 1%; position: inherit;
+    padding: 10px 1%;
+    position: inherit;
     background: rgba(245, 245, 245, 0.9);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
@@ -505,10 +606,12 @@ html, body {
 .filter-tag:hover {
     transform: translateY(-2px);
     border-color: #000000;
-    
 }
 
-/* Conteúdo principal */
+/* ============================================
+   CONTEÚDO PRINCIPAL
+   ============================================ */
+
 .app-content {
     padding: 20px;
     padding-bottom: 90px;
@@ -520,7 +623,10 @@ h2 {
     color: #000;
 }
 
-/* Cartões de propriedade */
+/* ============================================
+   CARTÕES DE PROPRIEDADES
+   ============================================ */
+
 .property-card {
     background: rgba(26, 26, 26, 0.8);
     border-radius: 20px;
@@ -541,9 +647,10 @@ h2 {
     border-color: rgba(0, 0, 0, 0.3);
 }
 
+/* Imagem da Propriedade */
 .property-image {
-    height: px;
     width: 100%;
+    height: 200px;
     background-size: cover;
     background-position: center;
     position: relative;
@@ -560,6 +667,7 @@ h2 {
     background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
 }
 
+/* Elementos da Imagem */
 .property-badge {
     position: absolute;
     top: 15px;
@@ -618,10 +726,10 @@ h2 {
     border-color: #ff3366;
 }
 
+/* Informações da Propriedade */
 .property-info {
     padding: 22px;
     background-color: #F9F9F9;
-
 }
 
 .property-title {
@@ -648,6 +756,7 @@ h2 {
     line-height: 1.6;
 }
 
+/* Tags da Propriedade */
 .property-tags {
     display: flex;
     flex-wrap: wrap;
@@ -656,7 +765,7 @@ h2 {
 }
 
 .property-tag {
-    background:  #f1f5f9;
+    background: #f1f5f9;
     color: #000000;
     padding: 6px 12px;
     border-radius: 20px;
@@ -665,6 +774,7 @@ h2 {
     border: 1px solid rgba(48, 48, 48, 0.2);
 }
 
+/* Características da Propriedade */
 .property-features {
     display: flex;
     justify-content: space-between;
@@ -686,6 +796,7 @@ h2 {
     color: #00ff88;
 }
 
+/* Ações da Propriedade */
 .property-actions {
     display: flex;
     gap: 12px;
@@ -704,18 +815,18 @@ h2 {
     margin-top: 10px;
 }
 
-.action-btn.primary {
-    background:  rgb(255, 255, 255);
-    color: #000;
-    border: 2px solid #000000;
-}
-
-.action-btn i{
+.action-btn i {
     position: flex;
     left: 15px; 
     top: 50%;
     font-size: 18px;
     margin-right: 10px; 
+}
+
+.action-btn.primary {
+    background: rgb(255, 255, 255);
+    color: #000;
+    border: 2px solid #000000;
 }
 
 .action-btn.secondary {
@@ -729,7 +840,10 @@ h2 {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Área do Vendedor */
+/* ============================================
+   PAINEL DO VENDEDOR
+   ============================================ */
+
 .seller-dashboard {
     padding: 20px;
 }
@@ -779,7 +893,10 @@ h2 {
     margin-top: 30px;
 }
 
-/* Sistema de Chat */
+/* ============================================
+   SISTEMA DE CHAT
+   ============================================ */
+
 .chat-container {
     top: 20px;
     left: 18px;
@@ -796,6 +913,7 @@ h2 {
     z-index: 99998;
 }
 
+/* Cabeçalho do Chat */
 .chat-header {
     background: linear-gradient(135deg, #000000, #22c55e);
     padding: 20px;
@@ -803,10 +921,6 @@ h2 {
     display: flex;
     align-items: center;
     gap: 15px;
-}
-
-p {
-    color: rgb(0, 0, 0) !important;
 }
 
 .chat-contact-avatar {
@@ -834,6 +948,7 @@ p {
     font-weight: 600;
 }
 
+/* Mensagens */
 .chat-messages {
     flex: 1;
     padding: 20px;
@@ -873,6 +988,7 @@ p {
     text-align: right;
 }
 
+/* Área de Input do Chat */
 .chat-input-area {
     padding: 20px;
     background: linear-gradient(135deg, #000000, #22c55e);
@@ -911,6 +1027,7 @@ p {
     box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
 }
 
+/* Lista de Chats */
 .chats-list {
     margin-top: 20px;
 }
@@ -977,7 +1094,10 @@ p {
     font-weight: bold;
 }
 
-/* Sobre a Empresa */
+/* ============================================
+   INFORMAÇÕES DA EMPRESA
+   ============================================ */
+
 .company-info {
     padding: 25px;
     background: rgba(26, 26, 26, 0.8);
@@ -1050,6 +1170,7 @@ p {
     font-size: 0.9rem;
 }
 
+/* Equipe */
 .team-members {
     display: flex;
     justify-content: center;
@@ -1089,7 +1210,10 @@ p {
     font-weight: 600;
 }
 
-/* Menu inferior */
+/* ============================================
+   MENU INFERIOR (NAVEGAÇÃO)
+   ============================================ */
+
 .bottom-menu {
     position: fixed;
     bottom: 0;
@@ -1169,7 +1293,10 @@ p {
     box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
 }
 
-/* Modal */
+/* ============================================
+   MODAIS
+   ============================================ */
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -1234,171 +1361,33 @@ p {
     transform: rotate(90deg);
 }
 
-.creditos {
-  font-style: normal;
-  color: #333; 
-  font-size: 14px;
-}
+/* ============================================
+   TELA DE CONFIRMAÇÃO DE RESERVA
+   ============================================ */
 
-.novatek a {
-  color: #28a745;
-  text-decoration: none;
-  font-weight: bold;
-  margin-left: 4px;
-}
-
-.novatek a:hover {
-  color: #218838;
-}
-
-/* Animações */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; visibility: hidden; }
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
-    70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(0, 255, 136, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
-}
-
-@keyframes rotate {
-    from { transform: rotateY(0deg); }
-    to { transform: rotateY(360deg); }
-}
-
-@keyframes loading {
-    0% { width: 0%; }
-    100% { width: 100%; }
-}
-
-@keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-}
-
-@keyframes modalIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-@keyframes messageIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Utilitários */
-.fade-in {
-    animation: fadeIn 0.5s ease-out;
-}
-
-.section-title {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 20px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.section-title i {
-    color: #00ff88;
-}
-
-.green-text {
-    color: #00ff88;
-}
-
-/* Responsividade */
-@media (max-width: 480px) {
-    .app-container {
-        box-shadow: none;
-    }
-    
-    .social-login {
-        flex-direction: column;
-    }
-    
-    .seller-stats, .company-details {
-        grid-template-columns: 1fr;
-    }
-    
-    .team-members {
-        gap: 15px;
-    }
-}
-
-#chat-vendor {
-    color: white !important;
-}
-
-/* Confirmação de Reserva */
-
-.conf-page{
+.conf-page {
     background: #f6f7f8;
     min-height: 100vh;
     padding-bottom: 120px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
 }
 
-/* 🔴 Remove header e footer SOMENTE nesta página */
+/* Remove header/footer na página de reserva */
 .page-sem-layout header,
 .page-sem-layout footer,
 .page-sem-layout .app-header,
 .page-sem-layout .app-footer,
 .page-sem-layout .bottom-nav {
-  display: none !important;
+    display: none !important;
 }
 
-.card-reserva{
+.card-reserva {
     background-color: #fff;
     padding: 14px 16px 10px;
     text-align: center;
 }
 
-#title-reserv{
+#title-reserv {
     font-size: 16px;
     font-weight: 600;
     margin: 0;
@@ -1412,7 +1401,7 @@ p {
     border-radius: 100px;
 }
 
-.card{
+.card {
     background-color: #fff;
     border-radius: 14px;
     padding: 16px;
@@ -1420,7 +1409,7 @@ p {
     box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 }
 
-.card-info{
+.card-info {
     margin-top: 10px;
 }
 
@@ -1432,7 +1421,8 @@ p {
     margin-bottom: 12px;
 }
 
-.reserva-content{
+/* Layout da Reserva */
+.reserva-content {
     display: flex;
     gap: 12px;
 }
@@ -1451,20 +1441,20 @@ p {
 }
 
 .badge {
-  position: absolute;
-  top: 3px;
-  left: 29px;
-  background: rgba(0,0,0,0.25);
-  color: #fff;
-  font-size: 11px;
-  padding: 2px 6px;
-  border-radius: 10px;
+    position: absolute;
+    top: 3px;
+    left: 29px;
+    background: rgba(0,0,0,0.25);
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 10px;
 }
 
 .reserva-info h3 {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 600;
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .cidade-info {
@@ -1475,34 +1465,30 @@ p {
 }
 
 .sub-info {
-  font-size: 12px;
-  color: #888;
+    font-size: 12px;
+    color: #888;
 }
 
-.card-etapa1 h3 {
-    font-size: 15px;
-    margin-bottom: 14px;
-}
-
+/* Datas e Contadores */
 .datas {
     display: flex;
     gap: 10px;
     margin-bottom: 8px;
 }
 
-.campo{
+.campo {
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.campo label{
+.campo label {
     font-size: 12px;
     color: #555;
     margin-bottom: 4px;
 }
 
-.campo input{
+.campo input {
     height: 44px;
     border-radius: 10px;
     border: 1px solid #ddd;
@@ -1513,17 +1499,17 @@ p {
 .noites {
     font-size: 12px;
     color: #777;
-    margin: 6px 0 14px
+    margin: 6px 0 14px;
 }
 
-.contadores label{
+.contadores label {
     font-size: 13px;
     font-weight: 500;
     margin-bottom: 6px;
     display: block;
 }
 
-.contadores input{
+.contadores input {
     width: 100%;
     height: 45px;
     border-radius: 8px;
@@ -1531,105 +1517,101 @@ p {
     padding: 12px;
     margin-bottom: 14px;
     font-size: 14px;
-}   
-
-.card-footer {
-  position: fixed;
-  bottom: 80px;
-  left: 0px;
-  right: 0px;
-  background: #fff;
-  border-radius: 16px;
-  padding: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.total {
-  display: flex;
-  flex-direction: column;
-}
-
-.total span {
-  font-size: 12px;
-  color: #777;
-}
-
-.total label {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.btn-confirmar {
-  width: 100%;
-  margin-top: 12px;
-  height: 48px;
-  background: #22c55e;
-  border: none;
-  border-radius: 999px;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.etapa {
-  display: block;
-  text-align: center;
-  font-size: 12px;
-  color: #777;
-  margin-top: 6px;
 }
 
 .contador {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 12px;
-  margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 14px;
 }
 
 .contador span {
-  font-size: 14px;
-  color: #555;
+    font-size: 14px;
+    color: #555;
 }
 
 .acoes {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .acoes button {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  background: #f0f0f0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    background: #f0f0f0;
 }
 
 .acoes button:last-child {
-  background: #22c55e;
-  color: #fff;
+    background: #22c55e;
+    color: #fff;
 }
 
 .acoes strong {
-  font-size: 16px;
-  min-width: 16px;
-  text-align: center;
+    font-size: 16px;
+    min-width: 16px;
+    text-align: center;
 }
 
+/* Rodapé da Reserva */
+.card-footer {
+    position: fixed;
+    bottom: 80px;
+    left: 0px;
+    right: 0px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
 
+.total {
+    display: flex;
+    flex-direction: column;
+}
 
-/* Fim do CSS copiado do HTML */
+.total span {
+    font-size: 12px;
+    color: #777;
+}
 
+.total label {
+    font-size: 18px;
+    font-weight: 700;
+}
 
-/* Tela feita do zero. */
+.btn-confirmar {
+    width: 100%;
+    margin-top: 12px;
+    height: 48px;
+    background: #22c55e;
+    border: none;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
 
-/* inicio da tela do zero */
+.etapa {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+    margin-top: 6px;
+}
+
+/* ============================================
+   TELA DE PAGAMENTO (NOVA SEÇÃO)
+   ============================================ */
 
 #titulo-pgt {
     color: rgb(26, 26, 26);
@@ -1638,7 +1620,6 @@ p {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: medium;
-
 }
 
 #termos {
@@ -1652,13 +1633,7 @@ p {
     margin-top: 20px;
 }
 
-#Nome-pgt {
-    font-family: 'Inter', sans-serif;
-    font-size: medium;
-    color: rgb(0, 0, 0);
-}
-
-#sobrenome {
+#Nome-pgt, #sobrenome {
     font-family: 'Inter', sans-serif;
     font-size: medium;
     color: rgb(0, 0, 0);
@@ -1701,19 +1676,18 @@ p {
     border: 1px solid #ffffff;
 }
 
-
 .btn-div {
     padding-bottom: 20px;
     border-bottom: 1px solid rgba(145, 145, 145, 0.253);
     margin-top: -20px;
 }
 
-.dados-text,
-.forma-text {
+.dados-text, .forma-text {
     height: 40px;
     margin-top: 23px;
 }
 
+/* Campos de Entrada - Pagamento */
 .input-pgt {
     width: 100%;
     height: 50px;
@@ -1725,22 +1699,11 @@ p {
 }
 
 .linha-nomes {
-  display: flex;
-  gap: 12px;
+    display: flex;
+    gap: 12px;
 }
 
-
-.input-names {
-    width: 142px;
-    height: 50px;
-    margin-top: 10px;
-    padding-left: 10px;
-    border-radius: 7px;
-    border: 1px solid rgba(0, 0, 0, 0.671);
-    position: relative;
-}
-
-.input-names2 {
+.input-names, .input-names2 {
     width: 142px;
     height: 50px;
     margin-top: 10px;
@@ -1749,23 +1712,10 @@ p {
     border: 1px solid rgba(0, 0, 0, 0.671);
     position: relative;
     font-family: 'Inter', sans-serif;
-}
-
-
-.input-name {
-    height: 75px;
-}
-
-.div-label-pix {
-    margin-top: 10px;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    color: rgba(0, 0, 0, 0.493);
 }
 
 .input-names2::placeholder {
     font-size: small;
-
 }
 
 .input-pgt::placeholder,
@@ -1777,6 +1727,7 @@ p {
     color: rgba(0, 0, 0, 0.493);
 }
 
+/* Botões de Forma de Pagamento */
 .btn-pgt {
     width: 62px;
     height: 57px;
@@ -1796,7 +1747,8 @@ p {
     border-color: #00cc6a;
 }
 
-.forma-cartao-btn {
+/* Campos de Cartão */
+.forma-cartao-btn, .input-boleto-name {
     width: 100%;
     height: 50px;
     margin-top: 10px;
@@ -1804,63 +1756,6 @@ p {
     border-radius: 7px;
     border: 1px solid rgba(0, 0, 0, 0.671);
     position: relative;
-}
-
-.input-boleto-name {
-    width: 100%;
-    height: 50px;
-    margin-top: 10px;
-    padding-left: 10px;
-    border-radius: 7px;
-    border: 1px solid rgba(0, 0, 0, 0.671);
-    position: relative;
-}
-
-.forma-cartao-btn:focus {
-    outline: none;
-    border-color: #10b981;
-    box-shadow: 0 0 0 1px #10b981;
-}
-
-.input-boleto-name:focus {
-    outline: none;
-    border-color: #10b981;
-    box-shadow: 0 0 0 1px #10b981;
-}
-
-.input-names:focus {
-    outline: none;
-    border-color: #10b981;
-    box-shadow: 0 0 0 1px #10b981;
-}
-
-.input-names2:focus {
-    outline: none;
-    border-color: #10b981;
-    box-shadow: 0 0 0 1px #10b981;
-}
-
-.btn-date:focus {
-    outline: none;
-    border-color: #10b981;
-    box-shadow: 0 0 0 1px #10b981;
-}
-
-.btn-cvv:focus {
-    outline: none;
-    border-color: #10b981;
-    box-shadow: 0 0 0 1px #10b981;
-}
-
-.textarea-vendedor:focus {
-    outline: none;
-    border-color: #10b981;
-    box-shadow: 0 0 0 1px #10b981;
-}
-
-.number-card {
-    margin-top: 15px;
-    padding-bottom: 20px;
 }
 
 .btn-date {
@@ -1881,6 +1776,20 @@ p {
     border: 1px solid rgba(0, 0, 0, 0.671);
 }
 
+/* Estilos de Foco */
+.forma-cartao-btn:focus,
+.input-boleto-name:focus,
+.input-names:focus,
+.input-names2:focus,
+.btn-date:focus,
+.btn-cvv:focus,
+.textarea-vendedor:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 1px #10b981;
+}
+
+/* Textos de Pagamento */
 .payment-text-h3 {
     font-family: 'Inter', sans-serif;
     font-size: medium;
@@ -1899,6 +1808,7 @@ p {
     color: rgb(0, 0, 0);
 }
 
+/* Mensagem ao Vendedor */
 .mensagem-vendedor {
     margin-top: 20px;
     display: flex;
@@ -1931,6 +1841,20 @@ p {
     background-color: #158a3d;
 }
 
+/* Layout do Cartão */
+.div-cartao {
+    display: flex;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.class-name, .class-sobrenome {
+    margin-top: 12px;
+}
+
+.name-cartao {
+    margin-top: 20px;
+}
 
 .end-cob {
     margin-top: 15px;
@@ -1945,44 +1869,308 @@ p {
     font-size: smaller;
 }
 
-.cvv-text {
-    position: flex;
-    
-}
-
-.div-cartao {
-    display: flex;
-    gap: 14px;
-    margin-top: 14px;
-}
-
-.class-name {
-    margin-top: 12px;
-}
-
-.class-sobrenome {
-    margin-top: 12px;
-}
-
-
-.name-cartao {
-    margin-top: 20px;
-}
-
 .check-btn {
     margin-top: 20px;
     margin-right: 6px;
 }
 
-.confirmacao {
-    margin-top: 20px;
-}
-
-.details {
+.confirmacao, .details {
     margin-top: 10px;
 }
 
+/* ============================================
+   UTILITÁRIOS E ESTILOS GERAIS
+   ============================================ */
 
+p {
+    color: rgb(0, 0, 0) !important;
+}
 
-/* final do codigo copiado do html */
+#chat-vendor {
+    color: white !important;
+}
 
+#ordenar {
+    font-size: 17px;
+    margin-left: 6px;
+}
+
+/* Seções e Títulos */
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section-title i {
+    color: #00ff88;
+}
+
+.green-text {
+    color: #00ff88;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Créditos */
+.creditos {
+    font-style: normal;
+    color: #333; 
+    font-size: 14px;
+}
+
+.novatek a {
+    color: #28a745;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 4px;
+}
+
+.novatek a:hover {
+    color: #218838;
+}
+
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+
+@media (max-width: 480px) {
+    .app-container {
+        box-shadow: none;
+    }
+    
+    .social-login {
+        flex-direction: column;
+    }
+    
+    .seller-stats, .company-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .team-members {
+        gap: 15px;
+    }
+    
+    .chat-container {
+        width: 95%;
+        left: 2.5%;
+        height: 90vh;
+    }
+    
+    .reserva-content {
+        flex-direction: column;
+    }
+    
+    .linha-nomes {
+        flex-direction: column;
+    }
+    
+    .input-names, .input-names2 {
+        width: 100%;
+    }
+}
+/* ============================================
+   BOTÕES DE LOGIN SOCIAL - ATUALIZADOS
+   ============================================ */
+
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+/* Botão do Google */
+.btn-google {
+    background: #ffffff !important;
+    color: #5F6368 !important;
+    border: 1px solid #dadce0 !important;
+    border-radius: 12px !important;
+    padding: 14px 20px !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+.btn-google:hover {
+    background: #f8f9fa !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    border-color: #c6c9cf !important;
+}
+
+.btn-google:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+/* Ícone do Google */
+.btn-google::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%234285F4' d='M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z'/%3E%3Cpath fill='%2334A853' d='M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z'/%3E%3Cpath fill='%23FBBC05' d='M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z'/%3E%3Cpath fill='%23EA4335' d='M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+/* Efeito de ripple */
+.btn-google::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(66, 133, 244, 0.2);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+.btn-google:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+/* Botão do Facebook */
+.btn-facebook {
+    background: #1877F2 !important;
+    color: #ffffff !important;
+    border: 1px solid #1877F2 !important;
+    border-radius: 12px !important;
+    padding: 14px 20px !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 4px rgba(24, 119, 242, 0.2) !important;
+}
+
+.btn-facebook:hover {
+    background: #166FE5 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25) !important;
+    border-color: #166FE5 !important;
+}
+
+.btn-facebook:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(24, 119, 242, 0.2) !important;
+}
+
+/* Ícone do Facebook */
+.btn-facebook::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    filter: brightness(0) invert(1);
+}
+
+/* Efeito de ripple para Facebook */
+.btn-facebook::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+.btn-facebook:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+/* Animações para os efeitos de ripple */
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+/* Texto dentro dos botões */
+.btn-google span,
+.btn-facebook span {
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+}
+
+/* Para telas menores, ajustar o padding */
+@media (max-width: 480px) {
+    .btn-google,
+    .btn-facebook {
+        padding: 16px 20px !important;
+        font-size: 1rem !important;
+    }
+    
+    .btn-google::before,
+    .btn-facebook::before {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+/* Efeito de loading opcional (pode usar com JavaScript) */
+.btn-google.loading,
+.btn-facebook.loading {
+    position: relative;
+    color: transparent !important;
+}
+
+.btn-google.loading::after,
+.btn-facebook.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin: -10px 0 0 -10px;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-top-color: #4285F4;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.btn-facebook.loading::after {
+    border-top-color: #ffffff;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
