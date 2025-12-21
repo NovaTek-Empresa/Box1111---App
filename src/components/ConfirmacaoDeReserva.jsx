@@ -120,6 +120,8 @@ export default function ConfirmacaoDeReserva() {
           Continuar para Pagamento
         </button>
 
+        
+
         <span className="etapa">Etapa 1 de 2</span>
       </div>
 
