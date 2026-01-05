@@ -1,0 +1,4 @@
+Nesta pasta sera publicado as documentações do aplicativo.
+Nesta Pasta sera publicado as codificações do aplicativo
+Nesta Pasta sera publicado as Arquivos da documentação com a interface do app
+-------------------------------------------------------------------------------|

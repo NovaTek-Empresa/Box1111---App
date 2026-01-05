@@ -183,18 +183,18 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
         </div>
 
         <div>
-          <button className="btn btn-secondary" onClick={() => setShowAdvanced(!showAdvanced)}>{showAdvanced ? 'Ocultar filtros' : 'Filtros avançados'}</button>
+          <button className="btn btn-secondary" onClick={() => setShowAdvanced(!showAdvanced)}>{showAdvanced ? '-' : '+'}</button>
         </div>
       </div>
 
       {showAdvanced && (
         <div style={{padding:12,display:'flex',gap:12,alignItems:'center',flexWrap:'wrap',marginBottom:12}}>
           <div style={{display:'flex',flexDirection:'column',minWidth:140}}>
-            <label style={{color:'#ddd',fontSize:12}}>Preço mínimo</label>
+            <label style={{color:'#030303ff',fontSize:12}}>Preço mínimo</label>
             <input className="form-control" value={priceMin} onChange={e => setPriceMin(e.target.value)} placeholder="Ex.: 1000000" />
           </div>
           <div style={{display:'flex',flexDirection:'column',minWidth:140}}>
-            <label style={{color:'#ddd',fontSize:12}}>Preço máximo</label>
+            <label style={{color:'#ddd',fontSize:12, }}>Preço máximo</label>
             <input className="form-control" value={priceMax} onChange={e => setPriceMax(e.target.value)} placeholder="Ex.: 4000000" />
           </div>
           <div style={{display:'flex',flexDirection:'column',minWidth:120}}>
