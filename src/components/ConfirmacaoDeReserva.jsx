@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Pagamento from './Pagamento'
 
 export default function ConfirmacaoDeReserva() {
 
@@ -13,7 +14,7 @@ export default function ConfirmacaoDeReserva() {
     }
   }, [])
   
-
+  const [etapa, setEtapa] = useState('confirmacao')
   const [adultos, setAdultos] = useState(1)
   const [bebes, setBebes] = useState(0)
   const [pets, setPets] = useState(0)
@@ -29,6 +30,10 @@ export default function ConfirmacaoDeReserva() {
   if (tipo === 'bebes' && bebes > 0) setBebes(bebes - 1)
   if (tipo === 'pets' && pets > 0) setPets(pets - 1)
 }
+
+  if (etapa === 'pagamento') {
+    return <Pagamento />
+  }
 
   return (
     <div className="conf-page"   >
@@ -116,7 +121,7 @@ export default function ConfirmacaoDeReserva() {
           <label>R$3.200,00</label>
         </div>
 
-        <button className="btn-confirmar">
+        <button className="btn-confirmar" onClick={() => setEtapa('pagamento')}>
           Continuar para Pagamento
         </button>
 

@@ -899,17 +899,17 @@ h2 {
    ============================================ */
 
 .chat-container {
-    top: 20px;
+    top: 24px;
     left: 18px;
-    height: 680px;
-    width: 406px;
+    width: 100% !important;
+    height: 100%;
     display: flex;
     flex-direction: column;
     background: #0f0f0f;
-    border-radius: 20px;
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.1);
     margin: -25px;
+    margin-left: -18px;
     position: fixed;
     z-index: 99998;
 }
@@ -1668,14 +1668,25 @@ h2 {
 }
 
 .etapa2 {
-    background: rgb(255, 255, 255);
-    border-radius: 20px;
-    padding: 10px;
-    margin: 15px;
-    height: auto;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.192);
-    border: 1px solid #ffffff;
+  background: #fff;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 15px;
+
+  min-height: 85vh;
+  height: auto;
+
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.192);
+  border: 1px solid #fff;
 }
+
+/* Compensa o menu inferior fixo */
+.page-content-ajustada {
+  min-height: calc(100vh - 70px);
+  padding-bottom: 70px;
+}
+
+
 
 .btn-div {
     padding-bottom: 20px;
@@ -1748,6 +1759,33 @@ h2 {
     border-color: #00cc6a;
 }
 
+/* Botões de Boleto */
+.btn-blt {
+    margin-top: 10px;
+    width: 80px;
+    height: 50px;
+    border-radius: 7px;
+    border: 1px solid rgba(0, 0, 0, 0.192);
+    background-color: #dbdbdb17;
+}
+
+.btn-blt:hover {
+    background: #eaeaea;
+}
+
+.btn-blt.ativo {
+    background: #00cc6a;
+    color: #fff;
+    border-color: #00cc6a;
+}
+
+.tipo-documento {
+    display: flex;
+    align-items: center;
+    margin-left: 60px;
+    gap: 12px;
+}
+
 /* Campos de Cartão */
 .forma-cartao-btn, .input-boleto-name {
     width: 100%;
@@ -1761,11 +1799,11 @@ h2 {
 
 .btn-date {
     width: 100%;
-    height: 50px;
+    height: 49px !important;
     margin-top: 10px;
     padding-left: 10px;
     border-radius: 7px;
-    border: 1px solid rgba(0, 0, 0, 0.671);
+    border: 1px solid rgba(0, 0, 0, 0.656) !important;
 }
 
 .btn-cvv {
@@ -1788,6 +1826,12 @@ h2 {
     outline: none;
     border-color: #10b981;
     box-shadow: 0 0 0 1px #10b981;
+}
+
+.btn-date:focus {
+    outline: none !important;
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 1px #10b981 !important;
 }
 
 /* Textos de Pagamento */
@@ -1849,6 +1893,18 @@ h2 {
     margin-top: 14px;
 }
 
+.div-label-pix {
+    margin-top: 10px;
+}
+
+.text-ll {
+    margin-top: 10px;
+}
+
+.nome-card {
+    margin-top: 10px;
+}
+
 .class-name, .class-sobrenome {
     margin-top: 12px;
 }
@@ -1867,7 +1923,13 @@ h2 {
 }
 
 .date-text {
-    font-size: smaller;
+    font-size: small !important;
+    position: relative;
+    
+}
+
+.div-cvv {
+    align-items: flex-start;
 }
 
 .check-btn {
@@ -1959,9 +2021,9 @@ p {
     }
     
     .chat-container {
-        width: 95%;
-        left: 2.5%;
-        height: 90vh;
+        width: 100% !important;
+        height: 100%;
+        z-index: 1000px;
     }
     
     .reserva-content {

@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import ReactInputMask from "react-input-mask";
 
+
 export default function Pagamento() {
     const [forma, setForma] = useState(null);
+    const [tipoDocumento, setTipoDocumento] = useState("cpf");
+    const [documento, setDocumento] = useState("");
+    const somenteNumeros = documento.replace(/\D/g, "");
+
 
     return (
         <div className="etapa2">
@@ -69,7 +74,7 @@ export default function Pagamento() {
                     </div>
                     <div className="number-card">
                         <label className="number-text">Número do Cartão</label>
-                        <ReactInputMask className="forma-cartao-btn" type="text" placeholder="0000 0000 0000 0000" mask="9999 9999 9999 9999" />
+                        <ReactInputMask className="forma-cartao-btn" type="text" placeholder="0000 0000 0000 0000" mask="9999 9999 9999 9999" maskChar="" />
                     </div>
                     <div className="nome-card">
                         <label className="form-name-text">Nome do Dono do Cartão</label>
@@ -78,11 +83,13 @@ export default function Pagamento() {
                     <div className="div-cartao">
                         <div className="campo">
                             <label className="date-text">Data de Validade (MM/AA)</label>
-                            <input className="btn-date" type="month" placeholder="MM/AA" />
+                            <ReactInputMask className="btn-date" type="text" placeholder="MM/AA" mask="99/99" maskChar="" />
                         </div>
                         <div className="campo-cvv">
-                            <label className="cvv-text">CVV</label>
-                            <input className="btn-cvv" type="number" placeholder="123" />
+                            <div className="div-cvv">
+                                <label className="cvv-text">CVV</label>
+                            </div>
+                            <ReactInputMask className="btn-cvv" type="text" placeholder="123" mask="999" maskChar="" maxLength={3} />
                         </div>
                     </div>
                     <div className="end-cob">
@@ -141,20 +148,70 @@ export default function Pagamento() {
                 <div className="campos-pix">
                     <div className="details">
                         <h3 className="details-card">Dados para Boleto</h3>
-                        <div className="div-label-pix"><label className="details-pix">O Boleto será emitido para o seguinte nome e documento.</label></div>
+                        <div className="div-label-pix">
+                            <label className="details-pix">O Boleto será emitido para o seguinte nome e documento.</label>
+                        </div>
                     </div>
                     <div className="number-card">
                     <div className="linha-nomes">
-                        <div>
+                        <div className="text-ll">
                             <label className="text-px">Nome Completo para Boleto</label>
                             <input className="input-boleto-name" type="text" placeholder="Nome Completo" />
                         </div>
                     </div>
                     </div>
-                    <div className="nome-card">
-                        <label className="form-name-text">CPF/CNPJ para Boleto</label>
-                        <input className="forma-cartao-btn" type="text" placeholder="Ex: 000.000.000-00 ou CNPJ" />
+                <div className="nome-card">
+                    <label className="form-name-text">CPF/CNPJ para Boleto</label>
+                    <div className="tipo-documento">
+                        <div>
+                            <button
+                                type="button"
+                                className={`btn-blt ${tipoDocumento === "cpf" ? "ativo" : ""}`}
+                                onClick={() => {
+                                    setTipoDocumento("cpf");
+                                    setDocumento("");
+                                }}
+                            >
+                                CPF
+                            </button>
+                        </div>
+                            
+                        <div className="div-blt1">
+                        <button
+                            type="button"
+                            className={`btn-blt ${tipoDocumento === "cnpj" ? "ativo" : ""}`}
+                            onClick={() => {
+                                setTipoDocumento("cnpj");
+                                setDocumento("");
+                            }}
+                        >
+                            CNPJ
+                        </button>
+                        </div>
                     </div>
+
+                    <ReactInputMask
+                        className="forma-cartao-btn"
+                        mask={tipoDocumento === "cpf" ? "999.999.999-99" : "99.999.999/9999-99"}
+                        value={documento}
+                        onChange={(e) => setDocumento(e.target.value)}
+                        maskChar=""
+                    >
+                        {(props) => (
+                            <input
+                                {...props}
+                                type="text"
+                                placeholder={
+                                    tipoDocumento === "cpf"
+                                        ? "CPF: 000.000.000-00"
+                                        : "CNPJ: 00.000.000/0000-00"
+                                }
+                            />
+                        )}
+                    </ReactInputMask>
+
+                </div>
+
                     <div className="confirmacao">
                         <label className="confirmacao-text">3. Confirmação</label>
                         <div className="check-box">

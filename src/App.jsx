@@ -269,9 +269,6 @@ export default function App() {
         <div className="logo" style={{height:60, width:60, display:'flex', alignItems:'center', justifyContent:'center', marginRight:18}}>
           <img src={logoImg} alt="Logo BOX1111" className="logo-img" style={{height:50, width:50, objectFit:'contain', borderRadius:12, boxShadow:'0 2px 8px rgba(0,0,0,0.08)'}} />
         </div>
-        <button onClick={() => setActiveTab('pagamento')}>
-          Pagamento
-        </button>
 
         {/* Só mostra o bloco de visitante se não estiver na tela de login/cadastro */}
         {!(activeTab === 'profile' && !currentUser) && (
@@ -341,7 +338,6 @@ export default function App() {
 
               {activeTab === "confirmar" && <ConfirmacaoReserva />}
 
-              {activeTab === "pagamento" && <Pagamento />}
 
               {activeTab === 'all' && (
                 <AllPropertiesView
