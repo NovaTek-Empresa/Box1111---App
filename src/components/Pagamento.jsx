@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactInputMask from "react-input-mask";
 
 export default function Pagamento() {
     const [forma, setForma] = useState(null);
@@ -68,7 +69,7 @@ export default function Pagamento() {
                     </div>
                     <div className="number-card">
                         <label className="number-text">Número do Cartão</label>
-                        <input className="forma-cartao-btn" type="text" placeholder="0000 0000 0000 0000" />
+                        <ReactInputMask className="forma-cartao-btn" type="text" placeholder="0000 0000 0000 0000" mask="9999 9999 9999 9999" />
                     </div>
                     <div className="nome-card">
                         <label className="form-name-text">Nome do Dono do Cartão</label>

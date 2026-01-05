@@ -13,6 +13,7 @@ import AllPropertiesView from './components/AllPropertiesView'
 import FavoritesView from './components/FavoritesView'
 import Pagamento from './components/Pagamento'
 import ConfirmacaoDeReserva from './components/ConfirmacaoDeReserva'
+import ReactInputMask from 'react-input-mask'
 
 
 
