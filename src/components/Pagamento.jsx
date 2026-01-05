@@ -175,7 +175,6 @@ export default function Pagamento() {
                         </label>
                     </div>
 
-                    {/* Mensagem para o vendedor */}
                     <div className="mensagem-vendedor">
                             <label className="payment-text-label2">
                                 Mensagem para o Vendedor (opcional)
