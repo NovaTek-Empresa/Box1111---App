@@ -9,6 +9,8 @@ export default function Pagamento() {
     const somenteNumeros = documento.replace(/\D/g, "");
 
 
+
+
     return (
         <div className="etapa2">
             <div className="titulo">

@@ -71,6 +71,8 @@ export default function App() {
     return raw ? JSON.parse(raw) : initialUsers()
   })
 
+  const [tela, setTela] = React.useState('detail') 
+
 
   // Função utilitária: atualiza um usuário na lista e persiste
   function updateUser(updated) {
@@ -181,6 +183,18 @@ export default function App() {
       }
     })
   }
+
+  function App() {
+  const [exibirReserva, setExibirReserva] = useState(true);
+
+  if (!exibirReserva) {
+    return <MenuPrincipal />; // Ou o conteúdo do seu App.jsx
+  }
+
+  return (
+    <ConfirmacaoDeReserva voltar={() => setExibirReserva(false)} />
+  );
+}
 
   
 
@@ -335,8 +349,12 @@ export default function App() {
                 />
               )}
 
+              {tela === 'confirmar' && (
+                <ConfirmacaoDeReserva sair={() => setTela('detail')} />
+              )}
 
-              {activeTab === "confirmar" && <ConfirmacaoReserva />}
+
+
 
 
               {activeTab === 'all' && (
@@ -410,30 +428,50 @@ export default function App() {
       </main>
   )}
 
-      {activeTab !== "" && (
-      <div className="bottom-menu">
-        <div className={`menu-item ${activeTab==='home'?'active':''}`} onClick={() => setActiveTab('home')}>
-          <i className="fas fa-home"></i>
-          <span>Início</span>
-        </div>
-        <div className={`menu-item ${activeTab==='all'?'active':''}`} onClick={() => setActiveTab('all')}>
-          <i className="fas fa-th-list"></i>
-          <span>Todos Imóveis</span>
-        </div>
-        <div className={`menu-item ${activeTab==='favorites'?'active':''}`} onClick={() => setActiveTab('favorites')}>
-          <i className="fas fa-heart"></i>
-          <span>Favoritos</span>
-        </div>
-        <div className={`menu-item ${activeTab==='chat'?'active':''}`} onClick={() => setActiveTab('chat')}>
-          <i className="fas fa-comments"></i>
-          <span>Chat</span>
-        </div>
-        <div className={`menu-item ${activeTab==='company'?'active':''}`} onClick={() => setActiveTab('company')}>
-          <i className="fas fa-info-circle"></i>
-          <span>Sobre</span>
-        </div>
-      </div>
-      )}
+        {activeTab !== "confirmar" && (
+          <div className="bottom-menu">
+            <div
+              className={`menu-item ${activeTab === 'home' ? 'active' : ''}`}
+              onClick={() => setActiveTab('home')}
+            >
+              <i className="fas fa-home"></i>
+              <span>Início</span>
+            </div>
+
+            <div
+              className={`menu-item ${activeTab === 'all' ? 'active' : ''}`}
+              onClick={() => setActiveTab('all')}
+            >
+              <i className="fas fa-th-list"></i>
+              <span>Todos Imóveis</span>
+            </div>
+
+            <div
+              className={`menu-item ${activeTab === 'favorites' ? 'active' : ''}`}
+              onClick={() => setActiveTab('favorites')}
+            >
+              <i className="fas fa-heart"></i>
+              <span>Favoritos</span>
+            </div>
+
+            <div
+              className={`menu-item ${activeTab === 'chat' ? 'active' : ''}`}
+              onClick={() => setActiveTab('chat')}
+            >
+              <i className="fas fa-comments"></i>
+              <span>Chat</span>
+            </div>
+
+            <div
+              className={`menu-item ${activeTab === 'company' ? 'active' : ''}`}
+              onClick={() => setActiveTab('company')}
+            >
+              <i className="fas fa-info-circle"></i>
+              <span>Sobre</span>
+            </div>
+          </div>
+        )}
+
 
       {activeTab === 'company' && ( 
         <CompanyInfoView />
