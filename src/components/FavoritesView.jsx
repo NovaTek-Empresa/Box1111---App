@@ -1,8 +1,10 @@
 import React from 'react'
 
+
 // Lista de imóveis favoritos do usuário
-export default function FavoritesView({ properties, favorites, onViewDetails }) {
+export default function FavoritesView({ properties, favorites, onViewDetails, onToggleFavorite }) {
   const favoriteProps = properties.filter(p => favorites.includes(p.id));
+
 
   return (
     <div>
@@ -31,6 +33,12 @@ export default function FavoritesView({ properties, favorites, onViewDetails }) 
                 {(p.tags || []).slice(0,4).map((t,i) => (
                   <div key={i} className="property-tag">{t}</div>
                 ))}
+              </div>
+              <div className="property-actions">
+                <div className="action-btn secondary" onClick={() => onToggleFavorite(p.id)}>
+                  {(favorites || []).includes(p.id) ? 'Remover' : 'Favoritar'}
+                </div>
+                <div className="action-btn primary" onClick={() => onViewDetails(p)}>Ver Detalhes</div>
               </div>
             </div>
           </div>

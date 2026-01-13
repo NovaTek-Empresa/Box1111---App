@@ -1,9 +1,17 @@
 import React from 'react'
 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+
+
 // HomeView: lista de imóveis e cartões com filtros moderno
 // Inclui estilos responsivos locais para funcionar bem em mobile/app
 export default function HomeView({ properties, onViewDetails, favorites, onToggleFavorite, searchQuery = '', setSearchQuery = () => {}, activeFilter = 'all', setActiveFilter = () => {}, showAdvanced = false, setShowAdvanced = () => {}, priceMin = '', setPriceMin = () => {}, priceMax = '', setPriceMax = () => {}, bedroomsFilter = '', setBedroomsFilter = () => {} }){
   return (
+    
     <div>
       {/* Estilo para grid de 2 colunas responsivo */}
       <style>{`
@@ -222,6 +230,11 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
           <div className="property-image" style={{backgroundImage:`url(${(p.images && p.images[0]) || p.image})`, height: 300, cursor: 'pointer'}}>
             <div className="property-badge">{p.type}</div>
             <div className="property-price">{p.price}</div>
+            <div className="property-av">
+              <div className='div-span'>
+                <span className='span-property'>5.0 <i className="fa-solid fa-star"></i></span>
+              </div>
+            </div>
             <div className="property-favorite" onClick={() => onToggleFavorite(p.id)}>
               <i className="fas fa-heart" style={{color: favorites.includes(p.id)?'#ff3366':'#fff'}}></i>
             </div>
@@ -247,6 +260,7 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
             <div className="property-actions">
               <div className="action-btn secondary" onClick={() => onToggleFavorite(p.id)}>{favorites.includes(p.id)?'Remover':'Favoritar'}</div>
               <div className="action-btn primary" onClick={() => onViewDetails(p)}>Ver Detalhes</div>
+              
             </div>
           </div>
         </div>

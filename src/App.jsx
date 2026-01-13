@@ -374,6 +374,7 @@ export default function App() {
                   properties={properties}
                   favorites={favorites}
                   onViewDetails={viewPropertyDetails}
+                  onToggleFavorite={toggleFavorite}
                 />
               )}
               

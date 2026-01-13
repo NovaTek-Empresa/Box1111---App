@@ -83,10 +83,12 @@ const [activeTab, setActiveTab] = React.useState('detalhes');
         </div>
 
         <div style={{marginTop:18,display:'grid',gap:12}} className="property-actions">
-          <div className="action-btn green"  style={{background:'#22c55e',color:'#000000ff',}} onClick={() => setActiveTab('confirmar')}>
+          <div className="action-btn novo"  onClick={() => setActiveTab('confirmar')}>
             <i className="fas fa-key"></i>Alugar
           </div>
-          <div className="action-btn primary" onClick={() => onStartChat(seller.id)}><i className="fas fa-comments"></i>Conversar com Vendedor</div> 
+          <div className="action-btn novo" onClick={() => onStartChat(seller.id)}><i className="fas fa-comments"></i>Conversar com Vendedor</div> 
+          <div className="action-btn novo"><i className="fas fa-comments"></i>Ver Comentarios</div> 
+          <div className="action-btn avaliar"><i className="fa-solid fa-star"></i>Avaliar</div> 
         </div>
       </div>
 
