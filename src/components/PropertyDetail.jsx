@@ -1,11 +1,13 @@
 import React from 'react'
 import ConfirmacaoDeReserva from './ConfirmacaoDeReserva';
+import { useNavigate } from 'react-router-dom'; // IMPORTANTE: Adicionado para navegação
 
 // PropertyDetail: exibe o imóvel com galeria maior e controles
 // Comentários em PT-BR explicam cada função e linha chave
 
-
 export default function PropertyDetail({ property, onBack, isFavorite, onToggleFavorite, onStartChat, users, initialIndex = 0 }){
+  const navigate = useNavigate(); // Inicializa o hook de navegação
+
   // Estado para índice da imagem atual na galeria
   const [index, setIndex] = React.useState(initialIndex)
   // Estado para fullscreen simples (exibe imagem em overlay)
@@ -20,22 +22,24 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
 
   // Seller (vendedor) relacionado ao imóvel
   const seller = users.find(u => u.id === property.sellerId)
+
   // Se o initialIndex mudar externamente, atualiza o índice
   React.useEffect(() => {
     setIndex(initialIndex || 0)
   }, [initialIndex])
   
-const [activeTab, setActiveTab] = React.useState('detalhes');
+  const [activeTab, setActiveTab] = React.useState('detalhes');
 
-    if (activeTab === 'confirmar') {
-    return <ConfirmacaoDeReserva />;
+  // Lógica para mostrar a tela de confirmação internamente se o estado mudar
+  if (activeTab === 'confirmar') {
+    return <ConfirmacaoDeReserva voltar={() => setActiveTab('detalhes')} />;
   }
 
   return (
     <div className="property-detail-container fade-in" style={{paddingBottom:120}}>
       <button className="btn btn-secondary" onClick={onBack} style={{marginBottom:12}}>Voltar</button>
 
-      {/* Galeria grande: deixamos a imagem maior para melhor visualização */}
+      {/* Galeria grande */}
       <div style={{position:'relative',borderRadius:16,overflow:'hidden',marginBottom:16}}>
         <div className="property-image" style={{height:360, backgroundImage:`url(${(property.images && property.images[index]) || property.image})`, backgroundSize:'cover', backgroundPosition:'center'}} onClick={() => setFullscreen(true)} />
 
@@ -83,12 +87,26 @@ const [activeTab, setActiveTab] = React.useState('detalhes');
         </div>
 
         <div style={{marginTop:18,display:'grid',gap:12}} className="property-actions">
-          <div className="action-btn novo"  onClick={() => setActiveTab('confirmar')}>
+          {/* Alugar: Muda o estado interno para exibir ConfirmacaoDeReserva */}
+          <div className="action-btn novo" onClick={() => setActiveTab('confirmar')}>
             <i className="fas fa-key"></i>Alugar
           </div>
-          <div className="action-btn novo" onClick={() => onStartChat(seller.id)}><i className="fas fa-comments"></i>Conversar com Vendedor</div> 
+
+          <div className="action-btn novo" onClick={() => onStartChat(seller?.id)}><i className="fas fa-comments"></i>Conversar com Vendedor</div> 
+          
           <div className="action-btn novo"><i className="fas fa-comments"></i>Ver Comentarios</div> 
-          <div className="action-btn avaliar"><i className="fa-solid fa-star"></i>Avaliar</div> 
+          
+          {/* Avaliar: Agora usa o navigate corretamente */}
+          {/* Avaliar: Agora usa a rota correta */}
+          <div 
+            className="action-btn avaliar" 
+            onClick={() => navigate('/assessment')} // Alterado de '../components/AssessmentScreen.jsx' para '/assessment'
+            style={{ cursor: 'pointer' }}
+          >
+            <i className="fa-solid fa-star"></i>
+            Avaliar
+          </div>
+
         </div>
       </div>
 
@@ -101,14 +119,14 @@ const [activeTab, setActiveTab] = React.useState('detalhes');
         </div>
       )}
 
-      {/* Modal de reserva */}
+      {/* Modal de reserva (opcional se você já usa a tela de confirmar) */}
       {showReserve && (
         <div className="modal-overlay">
           <div className="modal-content" style={{maxWidth:600,padding:0}}>
-            {/* Importa o modal de reserva */}
             {React.createElement(require('./ReserveModal').default, { property, onClose: () => setShowReserve(false) })}
           </div>
         </div>
       )}
-  </div>
-)} 
+    </div>
+  )
+}

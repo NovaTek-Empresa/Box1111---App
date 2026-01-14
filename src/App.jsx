@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import logoImg from '../logo/Logo.png'
 import LoginScreen from './components/LoginScreen'
 import HomeView from './components/HomeView'
@@ -14,482 +14,10 @@ import FavoritesView from './components/FavoritesView'
 import Pagamento from './components/Pagamento'
 import ConfirmacaoDeReserva from './components/ConfirmacaoDeReserva'
 import ReactInputMask from 'react-input-mask'
+import AssessmentScreen from "./components/AssessmentScreen";
+import { Routes, Route, useNavigate, BrowserRouter, useLocation } from "react-router-dom";
 
-
-
-// App principal: converte a lógica do HTML original para React moderno
-// Comentários e explicações em PT-BR em cada função/parte importante
-
-export default function App() {
-    // Estado para tela de todos os imóveis
-    const [allSearchQuery, setAllSearchQuery] = React.useState('')
-    const [allPriceOrder, setAllPriceOrder] = React.useState('')
-  // Estado: usuário logado e dados iniciais (simulados)
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false) // controla interface de login
-  const [currentUser, setCurrentUser] = React.useState(null) // dados do usuário atual
-  const [activeTab, setActiveTab] = React.useState('home') // aba ativa do app
-  const [properties, setProperties] = React.useState(() => {
-    // Carregar propriedades do localStorage se existir
-    const raw = localStorage.getItem('box1111_properties')
-    return raw ? JSON.parse(raw) : initialProperties()
-  }) // lista de imóveis
-  const [favorites, setFavorites] = React.useState(() => {
-    const raw = localStorage.getItem('box1111_favorites')
-    return raw ? JSON.parse(raw) : [1,3]
-  }) // favoritos iniciais
-  // Estado: propriedade em visualização detalhada
-  const [viewingProperty, setViewingProperty] = React.useState(null)
-  // Índice da imagem selecionada ao abrir a visualização de detalhe
-  const [viewingImageIndex, setViewingImageIndex] = React.useState(0)
-  // Estado: chat ativo (objeto do usuário com quem conversa)
-  const [activeChat, setActiveChat] = React.useState(null)
-  // Estado: mensagens (lista global, persistida)
-  const [messages, setMessages] = React.useState(() => {
-    const raw = localStorage.getItem('box1111_messages')
-    return raw ? JSON.parse(raw) : []
-  })
-  // Chats (metadados das conversas): lastMessage, time, unread, userId
-  const [chats, setChats] = React.useState(() => {
-    const raw = localStorage.getItem('box1111_chats')
-    return raw ? JSON.parse(raw) : initialChats()
-  })
-  const [searchQuery, setSearchQuery] = React.useState('') // query de busca
-  const [activeFilter, setActiveFilter] = React.useState('all') // filtro ativo
-  // Filtros avançados
-  const [priceMin, setPriceMin] = React.useState('')
-  const [priceMax, setPriceMax] = React.useState('')
-  const [bedroomsFilter, setBedroomsFilter] = React.useState('')
-  const [showAdvancedFilters, setShowAdvancedFilters] = React.useState(false)
-  const [modalOpen, setModalOpen] = React.useState(false) // controle de modal
-  const [newProperty, setNewProperty] = React.useState(emptyProperty()) // formulário novo imóvel
-  const [isRegistering, setIsRegistering] = React.useState(false) // toggle registrar
-  const [authForm, setAuthForm] = React.useState({ name:'', email:'', password:'', confirmPassword:'', role:'usuario' })
-
-  // usuários simulados (dados locais) com persistência em localStorage
-  const [users, setUsers] = React.useState(() => {
-    const raw = localStorage.getItem('box1111_users')
-    return raw ? JSON.parse(raw) : initialUsers()
-  })
-
-  const [tela, setTela] = React.useState('detail') 
-
-
-  // Função utilitária: atualiza um usuário na lista e persiste
-  function updateUser(updated) {
-    setUsers(prev => {
-      const next = prev.map(u => u.id === updated.id ? { ...u, ...updated } : u)
-      localStorage.setItem('box1111_users', JSON.stringify(next))
-      return next
-    })
-    // Se o usuário atualizado for o currentUser, atualiza também
-    if (currentUser && updated.id === currentUser.id) {
-      const merged = { ...currentUser, ...updated }
-      setCurrentUser(merged)
-      localStorage.setItem('box1111_currentUser', JSON.stringify(merged))
-    }
-  }
-
-  // Função: executar login (simulado)
-  // Recebe e-mail/senha no authForm e verifica na lista `users`
-  function handleLogin(e) {
-    e?.preventDefault()
-    const user = users.find(u => u.email === authForm.email)
-    if (user) {
-      setCurrentUser(user)
-      setIsLoggedIn(true)
-      setAuthForm({ name:'', email:'', password:'', confirmPassword:'', role:'usuario' })
-    } else {
-      alert('Usuário não encontrado. Tente com admin@box1111.com ou cliente@box1111.com')
-    }
-  }
-
-  function initialChats(){
-    return [
-      { id: 1, userId: 2, lastMessage: 'Olá, gostaria de agendar uma visita...', time: '10:30', unread: 0 },
-      { id: 2, userId: 3, lastMessage: 'O apartamento ainda está disponível?', time: 'Ontem', unread: 0 },
-      { id: 3, userId: 1, lastMessage: 'Relatório mensal enviado', time: '22/10', unread: 0 }
-    ]
-  }
-
-  // Função: registrar novo usuário (simulado)
-  function handleRegister(e){
-    e?.preventDefault()
-    if(authForm.password !== authForm.confirmPassword){ alert('As senhas não coincidem!'); return }
-    const newUser = { id: users.length + 1, name: authForm.name, email: authForm.email, role: authForm.role, avatar: (authForm.name||'U').substring(0,2).toUpperCase(), approved: authForm.role === 'vendedor' ? false : true, docSubmitted: false }
-    setUsers(prev => [...prev, newUser])
-    setCurrentUser(newUser)
-    setIsLoggedIn(true)
-    setAuthForm({ name:'', email:'', password:'', confirmPassword:'', role:'usuario' })
-    alert('Cadastro realizado com sucesso!')
-  }
-
-  // Função: logout
-  function handleLogout(){
-    setIsLoggedIn(false); setCurrentUser(null); setActiveTab('home')
-  }
-
-  // Função: alterna favorito (adiciona/remove)
-  function toggleFavorite(id){
-    setFavorites(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])
-  }
-
-  // Função: abrir visualização detalhada do imóvel
-  function viewPropertyDetails(property, index = 0){
-    // Abre a visualização detalhada (PropertyDetail) e posiciona na imagem desejada
-    setViewingProperty(property)
-    setViewingImageIndex(index || 0)
-    // Muda a aba para 'detail' para garantir que a view apareça corretamente
-    setActiveTab('detail')
-  }
-
-  // Função: iniciar chat com um usuário (seller ou contato)
-  function startChat(userId){
-    // encontra o usuário pelo id
-    const user = users.find(u => u.id === userId)
-    if (!user) return
-    setActiveChat(user)
-    setActiveTab('chat')
-  }
-
-  // Função: enviar mensagem (cria e persiste)
-  function handleSendMessage(toUserId, text){
-    // cria objeto de mensagem com timestamp simples
-    const msg = {
-      id: Date.now(),
-      chatWith: toUserId,
-      senderId: currentUser ? currentUser.id : 0,
-      text,
-      time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
-    }
-    setMessages(prev => {
-      const next = [...prev, msg]
-      localStorage.setItem('box1111_messages', JSON.stringify(next))
-      return next
-    })
-
-    // Atualiza metadados da conversa (lastMessage, time, unread)
-    setChats(prev => {
-      const found = prev.find(c => c.userId === toUserId)
-      const time = msg.time
-      if (found) {
-        const updated = prev.map(c => c.userId === toUserId ? { ...c, lastMessage: text, time, unread: (c.unread || 0) + (currentUser && currentUser.id !== toUserId ? 1 : 0) } : c)
-        localStorage.setItem('box1111_chats', JSON.stringify(updated))
-        return updated
-      } else {
-        const nc = { id: Date.now(), userId: toUserId, lastMessage: text, time, unread: (currentUser && currentUser.id !== toUserId ? 1 : 0) }
-        const next = [nc, ...prev]
-        localStorage.setItem('box1111_chats', JSON.stringify(next))
-        return next
-      }
-    })
-  }
-
-  function App() {
-  const [exibirReserva, setExibirReserva] = useState(true);
-
-  if (!exibirReserva) {
-    return <MenuPrincipal />; // Ou o conteúdo do seu App.jsx
-  }
-
-  return (
-    <ConfirmacaoDeReserva voltar={() => setExibirReserva(false)} />
-  );
-}
-
-  
-
-  // Função: marcar conversa como lida (zera unread)
-  function markChatRead(userId){
-    setChats(prev => {
-      const next = prev.map(c => c.userId === userId ? { ...c, unread: 0 } : c)
-      localStorage.setItem('box1111_chats', JSON.stringify(next))
-      return next
-    })
-  }
-
-  // Filtra propriedades com base em `searchQuery` e `activeFilter`
-  const filteredProperties = properties.filter(p => {
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase()
-      if (!p.title.toLowerCase().includes(q) && !p.address.toLowerCase().includes(q) && !p.description.toLowerCase().includes(q)) return false
-    }
-    if (activeFilter !== 'all' && p.type !== activeFilter && p.status !== activeFilter) return false
-
-    // Filtro por número de quartos (se definido)
-    if (bedroomsFilter) {
-      const num = parseInt(bedroomsFilter)
-      if (!isNaN(num) && (isNaN(p.bedrooms) ? true : p.bedrooms < num)) return false
-    }
-
-    // Filtro por faixa de preço (se definido)
-    if (priceMin || priceMax) {
-      // Tenta extrair apenas números do preço (ex.: "R$ 2.500.000" -> 2500000)
-      const priceNum = parseFloat((p.price || '').replace(/[^0-9,\.]/g, '').replace(/\./g, '').replace(',', '.'))
-      if (!isNaN(priceNum)) {
-        if (priceMin) {
-          const min = parseFloat(priceMin.replace(/[^0-9,\.]/g, '').replace(/\./g, '').replace(',', '.'))
-          if (!isNaN(min) && priceNum < min) return false
-        }
-        if (priceMax) {
-          const max = parseFloat(priceMax.replace(/[^0-9,\.]/g, '').replace(/\./g, '').replace(',', '.'))
-          if (!isNaN(max) && priceNum > max) return false
-        }
-      }
-    }
-    return true
-  })
-
-  // Função: abrir modal de novo imóvel
-  function openAddProperty(){ setNewProperty(emptyProperty()); setModalOpen(true) }
-  function closeModal(){ setModalOpen(false); setNewProperty(emptyProperty()) }
-
-  // Função: adicionar imóvel (simulado) — exige usuário vendedor/admin
-  function handleAddProperty(e){
-    e?.preventDefault()
-    if (!currentUser) { alert('Faça login como vendedor ou admin para adicionar.'); return }
-    if (currentUser.role !== 'vendedor' && currentUser.role !== 'admin') { alert('Apenas vendedores/administradores podem adicionar.'); return }
-    const prop = { ...newProperty, id: properties.length + 1, sellerId: currentUser.id, image: newProperty.image || properties[0].image }
-    setProperties(prev => [prop, ...prev])
-    closeModal()
-    alert('Propriedade adicionada com sucesso!')
-  }
-
-  // Sincronizar estados importantes com localStorage
-  React.useEffect(() => {
-    localStorage.setItem('box1111_users', JSON.stringify(users))
-  }, [users])
-
-  React.useEffect(() => {
-    localStorage.setItem('box1111_properties', JSON.stringify(properties))
-  }, [properties])
-
-  React.useEffect(() => {
-    localStorage.setItem('box1111_favorites', JSON.stringify(favorites))
-  }, [favorites])
-
-  React.useEffect(() => {
-    localStorage.setItem('box1111_currentUser', JSON.stringify(currentUser))
-  }, [currentUser])
-
-  // Fluxo alterado: inicia direto no app, sem tela de login
-  // Se o usuário não estiver logado, só pede login ao tentar ver detalhes de imóvel
-
-  // Render quando logado
-  return (
-    <div className="app-container">
-      {!["company", "confirmar"].includes(activeTab) && (
-      <header className="app-header">
-        {/* Logo do app em imagem PNG, estilizada. O arquivo está na pasta /logo. */}
-        <div className="logo" style={{height:60, width:60, display:'flex', alignItems:'center', justifyContent:'center', marginRight:18}}>
-          <img src={logoImg} alt="Logo BOX1111" className="logo-img" style={{height:50, width:50, objectFit:'contain', borderRadius:12, boxShadow:'0 2px 8px rgba(0,0,0,0.08)'}} />
-        </div>
-
-        {/* Só mostra o bloco de visitante se não estiver na tela de login/cadastro */}
-        {!(activeTab === 'profile' && !currentUser) && (
-          <div className="user-profile" onClick={() => setActiveTab('profile')}>
-            <div className="user-avatar">
-              {currentUser && currentUser.avatarImg ? (
-                <img src={currentUser.avatarImg} alt="avatar" style={{width:36,height:36,borderRadius:'50%',objectFit:'cover'}} />
-              ) : currentUser ? currentUser.avatar : <i className="fas fa-user"></i>}
-            </div>
-            <div style={{display:'flex',flexDirection:'column'}}>
-              <div style={{fontWeight:700, color:'#000'}}>{currentUser ? currentUser.name.split(' ')[0] : 'Visitante'}</div>
-              <div style={{fontSize:'.8rem',color:'#000000ff'}}>{currentUser ? currentUser.role : 'Não logado'}</div>
-            </div>
-          </div>
-        )}
-      </header>
-      )
-    }
-      {/* Barra de busca só aparece nas telas de imóveis, nunca no perfil ou login/cadastro. */}
-      {(activeTab === 'home' || activeTab === 'all') && (
-        <div className="search-bar" style={{padding:'12px 18px', backgroundColor: '#fff'}}>
-          <div style={{display:'flex',gap:10}}>
-            <input className="search-input" placeholder="Buscar por local, tipo ou característica..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
-            <button className="search-btn" onClick={() => {}}><i className="fas fa-search"></i></button>
-          </div>
-        </div>
-      )}
-      
-
-      {activeTab !== "company" && (
-      
-      <main className="app-content"> 
-        <div>
-          {/* Se visitante clicar no perfil, mostra tela de login/cadastro */}
-          {activeTab === 'profile' && !currentUser ? (
-            <LoginScreen
-              authForm={authForm}
-              setAuthForm={setAuthForm}
-              isRegistering={isRegistering}
-              setIsRegistering={setIsRegistering}
-              onLogin={handleLogin}
-              onRegister={handleRegister}
-            />
-          ) : (
-            <>
-              {activeTab === 'home' && (
-                <HomeView
-                  properties={filteredProperties}
-                  onViewDetails={(p, i) => { viewPropertyDetails(p, i) }}
-                  favorites={favorites}
-                  onToggleFavorite={toggleFavorite}
-                  searchQuery={searchQuery}
-                  setSearchQuery={setSearchQuery}
-                  activeFilter={activeFilter}
-                  setActiveFilter={setActiveFilter}
-                  showAdvanced={showAdvancedFilters}
-                  setShowAdvanced={setShowAdvancedFilters}
-                  priceMin={priceMin}
-                  setPriceMin={setPriceMin}
-                  priceMax={priceMax}
-                  setPriceMax={setPriceMax}
-                  bedroomsFilter={bedroomsFilter}
-                  setBedroomsFilter={setBedroomsFilter}
-                />
-              )}
-
-              {tela === 'confirmar' && (
-                <ConfirmacaoDeReserva sair={() => setTela('detail')} />
-              )}
-
-
-
-
-
-              {activeTab === 'all' && (
-                <AllPropertiesView
-                  properties={properties}
-                  onViewDetails={viewPropertyDetails}
-                  searchQuery={allSearchQuery}
-                  setSearchQuery={setAllSearchQuery}
-                  priceOrder={allPriceOrder}
-                  setPriceOrder={setAllPriceOrder}
-                  favorites={favorites}
-                  onToggleFavorite={toggleFavorite}
-                />
-              )}
-              {activeTab === 'favorites' && (
-                <FavoritesView
-                  properties={properties}
-                  favorites={favorites}
-                  onViewDetails={viewPropertyDetails}
-                  onToggleFavorite={toggleFavorite}
-                />
-              )}
-              
-
-              {/* Visualização detalhada do imóvel (galeria maior) */}
-              {activeTab === 'detail' && viewingProperty && (
-                !isLoggedIn ? (
-                  <LoginScreen
-                    authForm={authForm}
-                    setAuthForm={setAuthForm}
-                    isRegistering={isRegistering}
-                    setIsRegistering={setIsRegistering}
-                    onLogin={handleLogin}
-                    onRegister={handleRegister}
-                  />
-                ) : (
-                  <PropertyDetail
-                    property={viewingProperty}
-                    initialIndex={viewingImageIndex}
-                    onBack={() => { setViewingProperty(null); setViewingImageIndex(0); setActiveTab('home') }}
-                    isFavorite={favorites.includes(viewingProperty.id)}
-                    onToggleFavorite={toggleFavorite}
-                    onStartChat={startChat}
-                    users={users}
-                  />
-                )
-              )}
-
-              {/* Chat: se a aba for 'chat' exibimos lista ou conversa ativa */}
-              {activeTab === 'chat' && (
-                <div>
-                  {activeChat ? (
-                    <Chat
-                      contact={activeChat}
-                      messages={messages.filter(m => m.chatWith === activeChat.id)}
-                      onSendMessage={handleSendMessage}
-                      onBack={() => { setActiveChat(null); setActiveTab('chat') }}
-                      currentUserId={currentUser?.id}
-                    />
-                  ) : (
-                    <ChatsListView chats={chats} users={users} onStartChat={(userId) => { startChat(userId); markChatRead(userId); }} />
-                  )}
-                </div>
-              )}
-
-              {activeTab === 'profile' && currentUser && (
-                <ProfileView user={currentUser} onLogout={handleLogout} onUpdateUser={updateUser} />
-              )}
-            </>
-          )}
-        </div>
-      </main>
-  )}
-
-        {activeTab !== "confirmar" && (
-          <div className="bottom-menu">
-            <div
-              className={`menu-item ${activeTab === 'home' ? 'active' : ''}`}
-              onClick={() => setActiveTab('home')}
-            >
-              <i className="fas fa-home"></i>
-              <span>Início</span>
-            </div>
-
-            <div
-              className={`menu-item ${activeTab === 'all' ? 'active' : ''}`}
-              onClick={() => setActiveTab('all')}
-            >
-              <i className="fas fa-th-list"></i>
-              <span>Todos Imóveis</span>
-            </div>
-
-            <div
-              className={`menu-item ${activeTab === 'favorites' ? 'active' : ''}`}
-              onClick={() => setActiveTab('favorites')}
-            >
-              <i className="fas fa-heart"></i>
-              <span>Favoritos</span>
-            </div>
-
-            <div
-              className={`menu-item ${activeTab === 'chat' ? 'active' : ''}`}
-              onClick={() => setActiveTab('chat')}
-            >
-              <i className="fas fa-comments"></i>
-              <span>Chat</span>
-            </div>
-
-            <div
-              className={`menu-item ${activeTab === 'company' ? 'active' : ''}`}
-              onClick={() => setActiveTab('company')}
-            >
-              <i className="fas fa-info-circle"></i>
-              <span>Sobre</span>
-            </div>
-          </div>
-        )}
-
-
-      {activeTab === 'company' && ( 
-        <CompanyInfoView />
-      )}
-    </div>
-  )
-}
-
-/* Remove scroll horizontal e vertical */
-
-
-function ocultarchat() {
-  document.getElementById()
-}
-
-
-// --- Helpers e dados iniciais ---
+// --- Helpers e dados iniciais (Movidos para fora para organização) ---
 
 function emptyProperty(){ return { title:'', address:'', price:'', status:'Venda', type:'Apartamento', description:'', bedrooms:'', bathrooms:'', area:'', tags:'', image:'' } }
 
@@ -569,7 +97,6 @@ function initialProperties(){
         ],
         bedrooms:1, bathrooms:1, area:'95m²', tags:['Centro histórico','Industrial','Pé-direito alto']
        },
-      // --- Novas propriedades baseadas no Loft Industrial ---
       {
         id: 4,
         title: "Studio Moderno no Centro",
@@ -658,4 +185,418 @@ function initialProperties(){
   ]
 }
 
+function MainApp() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  // --- Estados do App ---
+  const [allSearchQuery, setAllSearchQuery] = useState('')
+  const [allPriceOrder, setAllPriceOrder] = useState('')
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [currentUser, setCurrentUser] = useState(null)
+  const [activeTab, setActiveTab] = useState('home')
 
+  const isAssessmentPage = location.pathname === '/assessment';
+
+  // Sincroniza o activeTab com a rota de avaliação
+  useEffect(() => {
+    if (isAssessmentPage) {
+      setActiveTab('assessment');
+    } else if (activeTab === 'assessment') {
+      // Se saiu da página de avaliação mas o tab ainda é 'assessment', volta para 'home'
+      setActiveTab('home');
+    }
+  }, [isAssessmentPage, activeTab]);
+  const [exibirReserva, setExibirReserva] = useState(true);
+  const [tela, setTela] = useState('detail')
+  
+  const [properties, setProperties] = useState(() => {
+    const raw = localStorage.getItem('box1111_properties')
+    return raw ? JSON.parse(raw) : initialProperties()
+  })
+
+  const [favorites, setFavorites] = useState(() => {
+    const raw = localStorage.getItem('box1111_favorites')
+    return raw ? JSON.parse(raw) : [1,3]
+  })
+
+  const [viewingProperty, setViewingProperty] = useState(null)
+  const [viewingImageIndex, setViewingImageIndex] = useState(0)
+  const [activeChat, setActiveChat] = useState(null)
+  const [messages, setMessages] = useState(() => {
+    const raw = localStorage.getItem('box1111_messages')
+    return raw ? JSON.parse(raw) : []
+  })
+
+  const [chats, setChats] = useState(() => {
+    const raw = localStorage.getItem('box1111_chats')
+    return raw ? JSON.parse(raw) : initialChats()
+  })
+
+  const [searchQuery, setSearchQuery] = useState('')
+  const [activeFilter, setActiveFilter] = useState('all')
+  const [priceMin, setPriceMin] = useState('')
+  const [priceMax, setPriceMax] = useState('')
+  const [bedroomsFilter, setBedroomsFilter] = useState('')
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [newProperty, setNewProperty] = useState(emptyProperty())
+  const [isRegistering, setIsRegistering] = useState(false)
+  const [authForm, setAuthForm] = useState({ name:'', email:'', password:'', confirmPassword:'', role:'usuario' })
+
+  const [users, setUsers] = useState(() => {
+    const raw = localStorage.getItem('box1111_users')
+    return raw ? JSON.parse(raw) : initialUsers()
+  })
+
+  // --- Funções de Lógica ---
+  function initialChats(){
+    return [
+      { id: 1, userId: 2, lastMessage: 'Olá, gostaria de agendar uma visita...', time: '10:30', unread: 0 },
+      { id: 2, userId: 3, lastMessage: 'O apartamento ainda está disponível?', time: 'Ontem', unread: 0 },
+      { id: 3, userId: 1, lastMessage: 'Relatório mensal enviado', time: '22/10', unread: 0 }
+    ]
+  }
+
+  const irParaAvaliacao = () => {
+    setActiveTab('assessment');
+    navigate('/AssessmentScreen');
+  };
+
+  function updateUser(updated) {
+    setUsers(prev => {
+      const next = prev.map(u => u.id === updated.id ? { ...u, ...updated } : u)
+      localStorage.setItem('box1111_users', JSON.stringify(next))
+      return next
+    })
+    if (currentUser && updated.id === currentUser.id) {
+      const merged = { ...currentUser, ...updated }
+      setCurrentUser(merged)
+      localStorage.setItem('box1111_currentUser', JSON.stringify(merged))
+    }
+  }
+
+  function handleLogin(e) {
+    e?.preventDefault()
+    const user = users.find(u => u.email === authForm.email)
+    if (user) {
+      setCurrentUser(user)
+      setIsLoggedIn(true)
+      setAuthForm({ name:'', email:'', password:'', confirmPassword:'', role:'usuario' })
+    } else {
+      alert('Usuário não encontrado. Tente com admin@box1111.com ou cliente@box1111.com')
+    }
+  }
+
+  function handleRegister(e){
+    e?.preventDefault()
+    if(authForm.password !== authForm.confirmPassword){ alert('As senhas não coincidem!'); return }
+    const newUser = { id: users.length + 1, name: authForm.name, email: authForm.email, role: authForm.role, avatar: (authForm.name||'U').substring(0,2).toUpperCase(), approved: authForm.role === 'vendedor' ? false : true, docSubmitted: false }
+    setUsers(prev => [...prev, newUser])
+    setCurrentUser(newUser)
+    setIsLoggedIn(true)
+    setAuthForm({ name:'', email:'', password:'', confirmPassword:'', role:'usuario' })
+    alert('Cadastro realizado com sucesso!')
+  }
+
+  function handleLogout(){
+    setIsLoggedIn(false); setCurrentUser(null); setActiveTab('home')
+  }
+
+  function toggleFavorite(id){
+    setFavorites(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])
+  }
+
+  function viewPropertyDetails(property, index = 0){
+    setViewingProperty(property)
+    setViewingImageIndex(index || 0)
+    setActiveTab('detail')
+  }
+
+  function startChat(userId){
+    const user = users.find(u => u.id === userId)
+    if (!user) return
+    setActiveChat(user)
+    setActiveTab('chat')
+  }
+
+  function handleSendMessage(toUserId, text){
+    const msg = {
+      id: Date.now(),
+      chatWith: toUserId,
+      senderId: currentUser ? currentUser.id : 0,
+      text,
+      time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
+    }
+    setMessages(prev => {
+      const next = [...prev, msg]
+      localStorage.setItem('box1111_messages', JSON.stringify(next))
+      return next
+    })
+
+    setChats(prev => {
+      const found = prev.find(c => c.userId === toUserId)
+      const time = msg.time
+      if (found) {
+        const updated = prev.map(c => c.userId === toUserId ? { ...c, lastMessage: text, time, unread: (c.unread || 0) + (currentUser && currentUser.id !== toUserId ? 1 : 0) } : c)
+        localStorage.setItem('box1111_chats', JSON.stringify(updated))
+        return updated
+      } else {
+        const nc = { id: Date.now(), userId: toUserId, lastMessage: text, time, unread: (currentUser && currentUser.id !== toUserId ? 1 : 0) }
+        const next = [nc, ...prev]
+        localStorage.setItem('box1111_chats', JSON.stringify(next))
+        return next
+      }
+    })
+  }
+
+  function markChatRead(userId){
+    setChats(prev => {
+      const next = prev.map(c => c.userId === userId ? { ...c, unread: 0 } : c)
+      localStorage.setItem('box1111_chats', JSON.stringify(next))
+      return next
+    })
+  }
+
+  const filteredProperties = properties.filter(p => {
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase()
+      if (!p.title.toLowerCase().includes(q) && !p.address.toLowerCase().includes(q) && !p.description.toLowerCase().includes(q)) return false
+    }
+    if (activeFilter !== 'all' && p.type !== activeFilter && p.status !== activeFilter) return false
+    if (bedroomsFilter) {
+      const num = parseInt(bedroomsFilter)
+      if (!isNaN(num) && (isNaN(p.bedrooms) ? true : p.bedrooms < num)) return false
+    }
+    if (priceMin || priceMax) {
+      const priceNum = parseFloat((p.price || '').replace(/[^0-9,\.]/g, '').replace(/\./g, '').replace(',', '.'))
+      if (!isNaN(priceNum)) {
+        if (priceMin) {
+          const min = parseFloat(priceMin.replace(/[^0-9,\.]/g, '').replace(/\./g, '').replace(',', '.'))
+          if (!isNaN(min) && priceNum < min) return false
+        }
+        if (priceMax) {
+          const max = parseFloat(priceMax.replace(/[^0-9,\.]/g, '').replace(/\./g, '').replace(',', '.'))
+          if (!isNaN(max) && priceNum > max) return false
+        }
+      }
+    }
+    return true
+  })
+
+  function openAddProperty(){ setNewProperty(emptyProperty()); setModalOpen(true) }
+  function closeModal(){ setModalOpen(false); setNewProperty(emptyProperty()) }
+
+  function handleAddProperty(e){
+    e?.preventDefault()
+    if (!currentUser) { alert('Faça login como vendedor ou admin para adicionar.'); return }
+    if (currentUser.role !== 'vendedor' && currentUser.role !== 'admin') { alert('Apenas vendedores/administradores podem adicionar.'); return }
+    const prop = { ...newProperty, id: properties.length + 1, sellerId: currentUser.id, image: newProperty.image || properties[0].image }
+    setProperties(prev => [prop, ...prev])
+    closeModal()
+    alert('Propriedade adicionada com sucesso!')
+  }
+
+  useEffect(() => { localStorage.setItem('box1111_users', JSON.stringify(users)) }, [users])
+  useEffect(() => { localStorage.setItem('box1111_properties', JSON.stringify(properties)) }, [properties])
+  useEffect(() => { localStorage.setItem('box1111_favorites', JSON.stringify(favorites)) }, [favorites])
+  useEffect(() => { localStorage.setItem('box1111_currentUser', JSON.stringify(currentUser)) }, [currentUser])
+
+  // Lógica de Renderização Condicional da Reserva (conforme solicitado)
+  if (!exibirReserva) {
+    return <HomeView properties={filteredProperties} />; // Exemplo de fallback
+  }
+
+  return (
+    <div className="app-container">
+      {!["company", "confirmar"].includes(activeTab) && (
+      <header className="app-header">
+        <div className="logo" style={{height:60, width:60, display:'flex', alignItems:'center', justifyContent:'center', marginRight:18}}>
+          <img src={logoImg} alt="Logo BOX1111" className="logo-img" style={{height:50, width:50, objectFit:'contain', borderRadius:12, boxShadow:'0 2px 8px rgba(0,0,0,0.08)'}} />
+        </div>
+
+        {!(activeTab === 'profile' && !currentUser) && (
+          <div className="user-profile" onClick={() => setActiveTab('profile')}>
+            <div className="user-avatar">
+              {currentUser && currentUser.avatarImg ? (
+                <img src={currentUser.avatarImg} alt="avatar" style={{width:36,height:36,borderRadius:'50%',objectFit:'cover'}} />
+              ) : currentUser ? currentUser.avatar : <i className="fas fa-user"></i>}
+            </div>
+            <div style={{display:'flex',flexDirection:'column'}}>
+              <div style={{fontWeight:700, color:'#000'}}>{currentUser ? currentUser.name.split(' ')[0] : 'Visitante'}</div>
+              <div style={{fontSize:'.8rem',color:'#000000ff'}}>{currentUser ? currentUser.role : 'Não logado'}</div>
+            </div>
+          </div>
+        )}
+      </header>
+      )}
+
+      {(activeTab === 'home' || activeTab === 'all') && (
+        <div className="search-bar" style={{padding:'12px 18px', backgroundColor: '#fff'}}>
+          <div style={{display:'flex',gap:10}}>
+            <input className="search-input" placeholder="Buscar por local, tipo ou característica..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+            <button className="search-btn" onClick={() => {}}><i className="fas fa-search"></i></button>
+          </div>
+        </div>
+      )}
+      
+      {activeTab !== "company" && (
+      <main className="app-content"> 
+        <div>
+          {isAssessmentPage ? (
+            <Routes>
+              <Route path="/assessment" element={<AssessmentScreen />} />
+            </Routes>
+          ) : activeTab === 'profile' && !currentUser ? (
+            <LoginScreen
+              authForm={authForm}
+              setAuthForm={setAuthForm}
+              isRegistering={isRegistering}
+              setIsRegistering={setIsRegistering}
+              onLogin={handleLogin}
+              onRegister={handleRegister}
+            />
+          ) : (
+            <>
+              {activeTab === 'home' && (
+                <HomeView
+                  properties={filteredProperties}
+                  onViewDetails={(p, i) => { viewPropertyDetails(p, i) }}
+                  favorites={favorites}
+                  onToggleFavorite={toggleFavorite}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  activeFilter={activeFilter}
+                  setActiveFilter={setActiveFilter}
+                  showAdvanced={showAdvancedFilters}
+                  setShowAdvanced={setShowAdvancedFilters}
+                  priceMin={priceMin}
+                  setPriceMin={setPriceMin}
+                  priceMax={priceMax}
+                  setPriceMax={setPriceMax}
+                  bedroomsFilter={bedroomsFilter}
+                  setBedroomsFilter={setBedroomsFilter}
+                />
+              )}
+
+              {tela === 'confirmar' && (
+                <ConfirmacaoDeReserva sair={() => setTela('detail')} />
+              )}
+
+              {activeTab === 'all' && (
+                <AllPropertiesView
+                  properties={properties}
+                  onViewDetails={viewPropertyDetails}
+                  searchQuery={allSearchQuery}
+                  setSearchQuery={setAllSearchQuery}
+                  priceOrder={allPriceOrder}
+                  setPriceOrder={setAllPriceOrder}
+                  favorites={favorites}
+                  onToggleFavorite={toggleFavorite}
+                />
+              )}
+
+              {activeTab === 'favorites' && (
+                <FavoritesView
+                  properties={properties}
+                  favorites={favorites}
+                  onViewDetails={viewPropertyDetails}
+                  onToggleFavorite={toggleFavorite}
+                />
+              )}
+              
+              {activeTab === 'detail' && viewingProperty && (
+                !isLoggedIn ? (
+                  <LoginScreen
+                    authForm={authForm}
+                    setAuthForm={setAuthForm}
+                    isRegistering={isRegistering}
+                    setIsRegistering={setIsRegistering}
+                    onLogin={handleLogin}
+                    onRegister={handleRegister}
+                  />
+                ) : (
+                  <PropertyDetail
+                    property={viewingProperty}
+                    initialIndex={viewingImageIndex}
+                    onBack={() => { setViewingProperty(null); setViewingImageIndex(0); setActiveTab('home') }}
+                    isFavorite={favorites.includes(viewingProperty.id)}
+                    onToggleFavorite={toggleFavorite}
+                    onStartChat={startChat}
+                    users={users}
+                  />
+                )
+              )}
+
+              {activeTab === 'chat' && (
+                <div>
+                  {activeChat ? (
+                    <Chat
+                      contact={activeChat}
+                      messages={messages.filter(m => m.chatWith === activeChat.id)}
+                      onSendMessage={handleSendMessage}
+                      onBack={() => { setActiveChat(null); setActiveTab('chat') }}
+                      currentUserId={currentUser?.id}
+                    />
+                  ) : (
+                    <ChatsListView chats={chats} users={users} onStartChat={(userId) => { startChat(userId); markChatRead(userId); }} />
+                  )}
+                </div>
+              )}
+
+              {activeTab === 'profile' && currentUser && (
+                <ProfileView user={currentUser} onLogout={handleLogout} onUpdateUser={updateUser} />
+              )}
+
+                          </>
+          )}
+        </div>
+      </main>
+      )}
+
+      {activeTab !== "confirmar" && (
+        <div className="bottom-menu">
+          <div className={`menu-item ${activeTab === 'home' ? 'active' : ''}`} onClick={() => { setActiveTab('home'); navigate('/'); }}>
+            <i className="fas fa-home"></i>
+            <span>Início</span>
+          </div>
+
+          <div className={`menu-item ${activeTab === 'all' ? 'active' : ''}`} onClick={() => { setActiveTab('all'); navigate('/'); }}>
+            <i className="fas fa-th-list"></i>
+            <span>Todos</span>
+          </div>
+
+          <div className={`menu-item ${activeTab === 'favorites' ? 'active' : ''}`} onClick={() => { setActiveTab('favorites'); navigate('/'); }}>
+            <i className="fas fa-heart"></i>
+            <span>Favoritos</span>
+          </div>
+
+          <div className={`menu-item ${activeTab === 'chat' ? 'active' : ''}`} onClick={() => { setActiveTab('chat'); navigate('/'); }}>
+            <i className="fas fa-comments"></i>
+            <span>Chat</span>
+          </div>
+
+          <div className={`menu-item ${activeTab === 'company' ? 'active' : ''}`} onClick={() => { setActiveTab('company'); navigate('/'); }}>
+            <i className="fas fa-info-circle"></i>
+            <span>Sobre</span>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'company' && ( 
+        <CompanyInfoView />
+      )}
+    </div>
+  )
+}
+
+
+
+// O App exportado que envolve tudo com Router
+export default function App() {
+  return (
+    <BrowserRouter>
+      <MainApp />
+    </BrowserRouter>
+  );
+}

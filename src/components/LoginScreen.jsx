@@ -1,5 +1,4 @@
 import React, { useState } from 'react'; // Adicionado useState que faltava no seu import
-import './LoginScreen.css';
 import Logo from './Logo.png';
 
 // FontAwesome
