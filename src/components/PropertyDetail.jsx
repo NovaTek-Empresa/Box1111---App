@@ -1,36 +1,35 @@
 import React from 'react'
 import ConfirmacaoDeReserva from './ConfirmacaoDeReserva';
-import { useNavigate } from 'react-router-dom'; // IMPORTANTE: Adicionado para navegação
+import Comentario from "./Comentario";
+import { useNavigate } from 'react-router-dom'; 
 
-// PropertyDetail: exibe o imóvel com galeria maior e controles
-// Comentários em PT-BR explicam cada função e linha chave
+export default function PropertyDetail({ 
+  property, 
+  onBack, 
+  isFavorite, 
+  onToggleFavorite, 
+  onStartChat, 
+  users, 
+  initialIndex = 0,
+  abrirComentarios
+}) {
+  const navigate = useNavigate();
 
-export default function PropertyDetail({ property, onBack, isFavorite, onToggleFavorite, onStartChat, users, initialIndex = 0 }){
-  const navigate = useNavigate(); // Inicializa o hook de navegação
+  // --- ADICIONADO: Estado do index que faltava ---
+  const [index, setIndex] = React.useState(initialIndex || 0);
+  const [fullscreen, setFullscreen] = React.useState(false);
+  const [showReserve, setShowReserve] = React.useState(false);
+  const [activeTab, setActiveTab] = React.useState('detalhes');
 
-  // Estado para índice da imagem atual na galeria
-  const [index, setIndex] = React.useState(initialIndex)
-  // Estado para fullscreen simples (exibe imagem em overlay)
-  const [fullscreen, setFullscreen] = React.useState(false)
-  // Estado para modal de reserva
-  const [showReserve, setShowReserve] = React.useState(false)
-
-  // Função: avança para próxima imagem (roda)
   const next = () => setIndex(i => (i + 1) % (property.images ? property.images.length : 1))
-  // Função: volta para imagem anterior
   const prev = () => setIndex(i => (i - 1 + (property.images ? property.images.length : 1)) % (property.images ? property.images.length : 1))
 
-  // Seller (vendedor) relacionado ao imóvel
   const seller = users.find(u => u.id === property.sellerId)
 
-  // Se o initialIndex mudar externamente, atualiza o índice
   React.useEffect(() => {
     setIndex(initialIndex || 0)
   }, [initialIndex])
   
-  const [activeTab, setActiveTab] = React.useState('detalhes');
-
-  // Lógica para mostrar a tela de confirmação internamente se o estado mudar
   if (activeTab === 'confirmar') {
     return <ConfirmacaoDeReserva voltar={() => setActiveTab('detalhes')} />;
   }
@@ -41,9 +40,17 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
 
       {/* Galeria grande */}
       <div style={{position:'relative',borderRadius:16,overflow:'hidden',marginBottom:16}}>
-        <div className="property-image" style={{height:360, backgroundImage:`url(${(property.images && property.images[index]) || property.image})`, backgroundSize:'cover', backgroundPosition:'center'}} onClick={() => setFullscreen(true)} />
+        <div
+          className="property-image"
+          style={{
+            height: 360,
+            backgroundImage: `url(${(property.images && property.images[index]) ? property.images[index] : property.image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+          onClick={() => setFullscreen(true)}
+        />
 
-        {/* Controles da galeria */}
         <div style={{position:'absolute',left:12,top:'50%',transform:'translateY(-50%)'}}>
           <button className="close-modal" onClick={prev}><i className="fas fa-chevron-left"></i></button>
         </div>
@@ -51,7 +58,6 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
           <button className="close-modal" onClick={next}><i className="fas fa-chevron-right"></i></button>
         </div>
 
-        {/* Preço e ações */}
         <div style={{position:'absolute',bottom:12,left:12}} className="property-price">{property.price}</div>
         <div style={{position:'absolute',top:12,right:12}} className={`property-favorite ${isFavorite ? 'active' : ''}`} onClick={() => onToggleFavorite(property.id)}>
           <i className="fas fa-heart"></i>
@@ -61,11 +67,10 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
       {/* Thumbnails */}
       <div style={{display:'flex',gap:8,overflowX:'auto',marginBottom:18}}>
         {(property.images && property.images.length > 0 ? property.images : [property.image]).map((img, i) => (
-          <div key={i} onClick={() => setIndex(i)} style={{width:80,height:60,backgroundImage:`url(${img})`,backgroundSize:'cover',backgroundPosition:'center',borderRadius:8,border: i===index ? '2px solid #00ff88' : '1px solid rgba(255,255,255,0.06)'}} />
+          <div key={i} onClick={() => setIndex(i)} style={{width:80,height:60,backgroundImage:`url(${img})`,backgroundSize:'cover',backgroundPosition:'center',borderRadius:8,border: i===index ? '2px solid #00ff88' : '1px solid rgba(255,255,255,0.06)', cursor: 'pointer'}} />
         ))}
       </div>
 
-      {/* Informações do imóvel */}
       <div className="property-info" style={{marginBottom:16}}>
         <h2 className="property-title">{property.title}</h2>
         <div className="property-address">{property.address}</div>
@@ -87,43 +92,32 @@ export default function PropertyDetail({ property, onBack, isFavorite, onToggleF
         </div>
 
         <div style={{marginTop:18,display:'grid',gap:12}} className="property-actions">
-          {/* Alugar: Muda o estado interno para exibir ConfirmacaoDeReserva */}
           <div className="action-btn novo" onClick={() => setActiveTab('confirmar')}>
-            <i className="fas fa-key"></i>Alugar
+            <i className="fas fa-key"></i> Alugar
           </div>
 
-          <div className="action-btn novo" onClick={() => onStartChat(seller?.id)}><i className="fas fa-comments"></i>Conversar com Vendedor</div> 
+          <div className="action-btn novo" onClick={() => onStartChat(seller?.id)}>
+            <i className="fas fa-comments"></i> Conversar com Vendedor
+          </div> 
           
-          <div className="action-btn novo"><i className="fas fa-comments"></i>Ver Comentarios</div> 
+          <div className="action-btn novo" onClick={abrirComentarios}>
+              <i className="fas fa-comments"></i> Ver Comentários
+          </div>
           
-          {/* Avaliar: Agora usa o navigate corretamente */}
-          {/* Avaliar: Agora usa a rota correta */}
           <div 
             className="action-btn avaliar" 
-            onClick={() => navigate('/assessment')} // Alterado de '../components/AssessmentScreen.jsx' para '/assessment'
+            onClick={() => navigate('/assessment')}
             style={{ cursor: 'pointer' }}
           >
-            <i className="fa-solid fa-star"></i>
-            Avaliar
+            <i className="fa-solid fa-star"></i> Avaliar
           </div>
-
         </div>
       </div>
 
-      {/* Fullscreen overlay para imagem */}
       {fullscreen && (
         <div className="modal-overlay" onClick={() => setFullscreen(false)}>
           <div className="modal-content" style={{maxWidth:'95%',padding:6,background:'transparent',boxShadow:'none',border:'none'}}>
             <img src={(property.images && property.images[index]) || property.image} alt="imagem" style={{width:'100%',height:'auto',borderRadius:12}} />
-          </div>
-        </div>
-      )}
-
-      {/* Modal de reserva (opcional se você já usa a tela de confirmar) */}
-      {showReserve && (
-        <div className="modal-overlay">
-          <div className="modal-content" style={{maxWidth:600,padding:0}}>
-            {React.createElement(require('./ReserveModal').default, { property, onClose: () => setShowReserve(false) })}
           </div>
         </div>
       )}

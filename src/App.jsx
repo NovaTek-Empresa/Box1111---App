@@ -15,6 +15,7 @@ import Pagamento from './components/Pagamento'
 import ConfirmacaoDeReserva from './components/ConfirmacaoDeReserva'
 import ReactInputMask from 'react-input-mask'
 import AssessmentScreen from "./components/AssessmentScreen";
+import Comentario from "./components/Comentario";
 import { Routes, Route, useNavigate, BrowserRouter, useLocation } from "react-router-dom";
 
 // --- Helpers e dados iniciais (Movidos para fora para organização) ---
@@ -196,17 +197,28 @@ function MainApp() {
   const [currentUser, setCurrentUser] = useState(null)
   const [activeTab, setActiveTab] = useState('home')
 
-  const isAssessmentPage = location.pathname === '/assessment';
 
-  // Sincroniza o activeTab com a rota de avaliação
-  useEffect(() => {
-    if (isAssessmentPage) {
-      setActiveTab('assessment');
-    } else if (activeTab === 'assessment') {
-      // Se saiu da página de avaliação mas o tab ainda é 'assessment', volta para 'home'
-      setActiveTab('home');
-    }
-  }, [isAssessmentPage, activeTab]);
+  const isFullPageMode = location.pathname === '/assessment' || location.pathname === '/comentario';
+  const isComentPage = location.pathname === '/comentario';
+
+  const abrirComentarios = () => {
+  setActiveTab('comentario');
+  navigate('/'); 
+};
+
+
+
+useEffect(() => {
+  if (isFullPageMode) {
+    setActiveTab('assessment');
+  } else if (isComentPage) {
+    setActiveTab('comentario');
+  } else if (activeTab === 'assessment' || activeTab === 'comentario') {
+
+    setActiveTab('home');
+  }
+}, [isFullPageMode, isComentPage]);
+
   const [exibirReserva, setExibirReserva] = useState(true);
   const [tela, setTela] = useState('detail')
   
@@ -263,6 +275,12 @@ function MainApp() {
     navigate('/AssessmentScreen');
   };
 
+const irParaComentarios = () => {
+  navigate('/Comentario');
+  setActiveTab('comentario')
+};
+
+
   function updateUser(updated) {
     setUsers(prev => {
       const next = prev.map(u => u.id === updated.id ? { ...u, ...updated } : u)
@@ -312,6 +330,8 @@ function MainApp() {
     setViewingImageIndex(index || 0)
     setActiveTab('detail')
   }
+
+  
 
   function startChat(userId){
     const user = users.find(u => u.id === userId)
@@ -443,10 +463,14 @@ function MainApp() {
       {activeTab !== "company" && (
       <main className="app-content"> 
         <div>
-          {isAssessmentPage ? (
+          {isFullPageMode ? (
             <Routes>
               <Route path="/assessment" element={<AssessmentScreen />} />
+              <Route path="/comentario" element={<Comentario />} />
             </Routes>
+          
+
+            
           ) : activeTab === 'profile' && !currentUser ? (
             <LoginScreen
               authForm={authForm}
@@ -505,6 +529,7 @@ function MainApp() {
                 />
               )}
               
+              {/* Lógica de Detalhes do Imóvel */}
               {activeTab === 'detail' && viewingProperty && (
                 !isLoggedIn ? (
                   <LoginScreen
@@ -523,9 +548,15 @@ function MainApp() {
                     isFavorite={favorites.includes(viewingProperty.id)}
                     onToggleFavorite={toggleFavorite}
                     onStartChat={startChat}
+                    abrirComentarios={() => setActiveTab('comentario')} // Mudando o estado aqui
                     users={users}
                   />
                 )
+              )}
+
+              {/* Rota para a tela de Comentários */}
+              {activeTab === 'comentario' && (
+                <Comentario onBack={() => setActiveTab('detail')} />
               )}
 
               {activeTab === 'chat' && (
