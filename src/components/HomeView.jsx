@@ -101,12 +101,7 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
           flex-direction: column;
           gap: 8px;
         }
-        .property-title {
-          font-size: 1.15rem;
-          font-weight: 700;
-          margin: 0 0 4px 0;
-          color: #222;
-        }
+
         .property-address {
           font-size: 0.95rem;
           color: #888;
@@ -241,7 +236,9 @@ export default function HomeView({ properties, onViewDetails, favorites, onToggl
           </div>
           <div className="property-info">
             {/* Título clicável também abre detalhes */}
-            <h3 className="property-title" style={{cursor:'pointer'}}></h3>
+            <h3 className="property-title" style={{cursor:'pointer'}} onClick={() => onViewDetails(p)}>
+              {p.title}
+            </h3>
             <p className="property-address">{p.address}</p>
             <p style={{color:'#000000ff'}}>{p.description.substring(0,220)}...</p>
             {/* Tags do imóvel para ajudar na busca visual */}

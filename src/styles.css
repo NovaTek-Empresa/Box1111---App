@@ -2347,6 +2347,10 @@ h2 {
   letter-spacing: -2px;
 }
 
+.div-nota {
+    margin-left: 100px;
+}
+
 .estrelas-premium {
   color: var(--gold);
   font-size: 1.5rem;
@@ -2389,6 +2393,128 @@ h2 {
   align-items: center;
   justify-content: center;
   gap: 5px;
+}
+
+.container-wrapper {
+  background: #f8f9fa;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+
+.info-card {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  text-align: center;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.logo-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+}
+
+.brand-title {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #1e90ff;
+  margin: 0 0 4px 0;
+}
+
+.brand-subtitle {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #222;
+  margin-bottom: 6px;
+}
+
+.contact-item {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.contact-item a {
+  color: #1e90ff;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.contact-item a:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.email-margin {
+  margin-bottom: 20px;
+}
+
+.address-text {
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.social-links a {
+  font-size: 28px;
+  transition: transform 0.2s ease;
+}
+
+.social-links a:hover {
+  transform: translateY(-3px);
+}
+
+.icon-ig { color: #E1306C; }
+.icon-wa { color: #25D366; }
+.icon-li { color: #0077B5; }
+
+.footer-credits {
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+}
+
+.novatek a {
+  color: #1e90ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.copyright {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 20px;
 }
 
 .subtexto-verificado i { color: var(--primary-green); }
