@@ -28,7 +28,7 @@ export default function LoginScreen({ authForm, setAuthForm, isRegistering, setI
           </button>
 
           <div className="logo-container">
-            <div className="logo-box">
+            <div className="logo-box11">
               <img src={Logo} alt="Logo" className="logo-img" />
             </div>
           </div>

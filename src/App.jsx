@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import logoImg from '../logo/Logo.png'
+import PinheiroImg from '../logo/pinheiro.png'
 import LoginScreen from './components/LoginScreen'
 import HomeView from './components/HomeView'
 import ProfileView from './components/ProfileView'
@@ -608,7 +609,7 @@ const irParaComentarios = () => {
           </div>
 
           <div className={`menu-item ${activeTab === 'company' ? 'active' : ''}`} onClick={() => { setActiveTab('company'); navigate('/'); }}>
-            <i className="fas fa-info-circle"></i>
+            <img src={PinheiroImg} alt="" style={{ width: '26px', height: '28px' }} />
             <span>Sobre</span>
           </div>
         </div>
